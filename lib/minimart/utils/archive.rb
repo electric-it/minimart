@@ -6,21 +6,15 @@ module Minimart
     class Archive
 
       def self.extract_archive(archive_file, destination)
-        ::Archive::Tar::Minitar.unpack(Zlib::GzipReader.new(File.open(archive_file, 'rb')), destination)
+        tar = Zlib::GzipReader.new(File.open(archive_file, 'rb'))
+        ::Archive::Tar::Minitar.unpack(tar, destination)
       end
 
       def self.extract_cookbook(archive_file, destination)
-        tmpdir = Dir.mktmpdir
+        tmpdir = FileHelper.make_temporary_directory
         extract_archive(archive_file, tmpdir)
-
-        FileUtils.rmdir destination
-
-        if Minimart::Utils::FileHelper.cookbook_file_in_path?(tmpdir)
-          FileUtils.mv tmpdir, destination, force: true
-        else
-          cookbook_dir = Minimart::Utils::FileHelper.find_cookbook_directory(tmpdir)
-          FileUtils.mv cookbook_dir, destination, force: true
-        end
+        FileHelper.remove_directory(destination)
+        FileHelper.move_directory FileHelper.cookbook_path_in_directory(tmpdir), destination
       end
 
     end
