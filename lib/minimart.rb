@@ -7,7 +7,8 @@ require 'minimart/version'
 require 'minimart/mirror'
 require 'minimart/configuration'
 
-require 'minimart/lib/archive'
+require 'minimart/utils/archive'
+require 'minimart/utils/file_helper'
 
 require 'minimart/mirror/source'
 require 'minimart/mirror/inventory'

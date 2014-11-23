@@ -30,7 +30,7 @@ module Minimart
 
         @downloaded_cookbooks ||= base_source.download_cookbooks do |cookbook, archived_cookbook|
           destination = "#{inventory_directory}/#{cookbook.name}-#{cookbook.version}"
-          Minimart::Lib::Archive.extract_archive(archived_cookbook, destination)
+          Minimart::Utils::Archive.extract_cookbook(archived_cookbook, destination)
         end
 
         Minimart::Configuration.output.puts "Done building inventory..."

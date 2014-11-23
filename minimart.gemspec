@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency 'hashie', '~> 3.3'
+  sepc.add_dependency 'minitar', '~> 0.5.4'
   spec.add_dependency 'thor', '~> 0.19'
   spec.add_dependency 'rest-client', '~> 1.7'
   spec.add_dependency 'solve', '~> 1.2'
