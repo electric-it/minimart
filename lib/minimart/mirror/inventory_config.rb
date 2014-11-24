@@ -4,10 +4,12 @@ module Minimart
   class Mirror
     class InventoryConfig
 
-      attr_reader :config_contents
+      attr_reader :inventory_config_path,
+                  :config_contents
 
       def initialize(inventory_config_path)
-        @config_contents = parse_config_file(inventory_config_path)
+        @inventory_config_path = inventory_config_path
+        @config_contents       = parse_config_file
       end
 
       def sources
@@ -18,12 +20,12 @@ module Minimart
 
       private
 
-      def parse_config_file(path)
-        unless Utils::FileHelper.file_exists?(path)
+      def parse_config_file
+        unless Utils::FileHelper.file_exists?(inventory_config_path)
           raise InvalidInventoryError.new 'The inventory configuration file could not be found'
         end
 
-        YAML.load(File.open(path))
+        YAML.load(File.open(inventory_config_path))
       end
     end
 

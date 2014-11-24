@@ -1,14 +1,20 @@
 module Minimart
   class Mirror
 
-    attr_reader :inventory
+    attr_reader :inventory_config,
+                :inventory_directory
 
-    def initialize(options)
-      @inventory = Minimart::Mirror::Inventory.new(options)
+    # options
+    #  :inventory_config
+    #  :inventory_directory
+    def initialize(opts)
+      @inventory_directory = opts[:inventory_directory]
+      @inventory_config    = Mirror::InventoryConfig.new(opts[:inventory_config])
     end
 
     def execute!
-      inventory.build
+      builder = InventoryBuilder.new(inventory_directory, inventory_config.sources)
+      builder.build!
     end
 
   end
