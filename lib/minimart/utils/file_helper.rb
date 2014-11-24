@@ -1,6 +1,6 @@
 module Minimart
   module Utils
-    class FileHelper
+    module FileHelper
       def self.cookbook_path_in_directory(path)
         cookbook_file_in_path?(path) ? path : find_cookbook_directory(path)
       end

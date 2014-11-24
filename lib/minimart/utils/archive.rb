@@ -3,7 +3,7 @@ require 'zlib'
 
 module Minimart
   module Utils
-    class Archive
+    module Archive
 
       def self.extract_archive(archive_file, destination)
         tar = Zlib::GzipReader.new(File.open(archive_file, 'rb'))
