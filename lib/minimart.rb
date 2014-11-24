@@ -12,8 +12,10 @@ require 'minimart/utils/archive'
 require 'minimart/utils/file_helper'
 require 'minimart/utils/http'
 
+require 'minimart/mirror/inventory_builder'
+require 'minimart/mirror/inventory_config'
+require 'minimart/mirror/local_source'
 require 'minimart/mirror/source'
-require 'minimart/mirror/inventory'
 require 'minimart/mirror/universe'
 
 
