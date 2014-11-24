@@ -49,10 +49,8 @@ describe Minimart::Mirror::Universe do
     end
 
     context 'when no cookbook can be found for the given dependency' do
-      it 'should raise the proper exception' do
-        expect {
-          subject.resolve_dependency('not_in_universe', '>= 0.0.0')
-        }.to raise_error Solve::Errors::NoSolutionError
+      it 'should return nil' do
+        expect(subject.resolve_dependency('not_in_universe', '>= 0.0.0')).to be_nil
       end
     end
 

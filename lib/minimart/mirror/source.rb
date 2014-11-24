@@ -2,47 +2,53 @@ module Minimart
   class Mirror
     class Source
 
-      attr_reader :url,
-                  :cookbooks
+      attr_accessor :url,
+                    :cookbooks,
+                    :universe
 
-      def initialize(url, cookbooks)
-        @url       = url
-        @cookbooks = cookbooks
+      alias_method :explicit_dependencies, :cookbooks
+
+      def initialize(url, raw_cookbooks)
+        self.url       = url
+        self.cookbooks = build_cookbooks(raw_cookbooks)
+        self.universe  = Universe.new(url)
       end
 
-      def download_cookbooks(&block)
-        cookbooks.each do |cookbook_name, attrs|
-          attrs['versions'].each do |version|
-            fetch_cookbook(cookbook_name, version, &block)
-          end
+      def download_explicit_dependencies(&block)
+        explicit_dependencies.each do |dependency|
+          download_cookbook dependency, &block
         end
+      end
+
+      def download_cookbook(dependency, &block)
+        cookbook     = universe.find_cookbook(dependency.name, dependency.version)
+        archive_file = download_cookbook_archive_file(cookbook)
+        block.call(cookbook, archive_file)
+      end
+
+      def resolve_dependency(name, requirements)
+        universe.resolve_dependency(name, requirements)
       end
 
       private
 
-      def fetch_cookbook(cookbook_name, cookbook_version, &block)
-        cookbook = universe.find_cookbook(cookbook_name, cookbook_version)
+      def build_cookbooks(raw_cookbooks)
+        raw_cookbooks.each_with_object([]) do |cookbook, memo|
+          cookbook_name     = cookbook[0]
+          cookbook_versions = cookbook[1]['versions']
 
-        block.call(cookbook, download_cookbook_archive_file(cookbook))
+          cookbooks = cookbook_versions.map do |version|
+            Hashie::Mash.new(name: cookbook_name, version: version)
+          end
 
-        cookbook.dependencies.each do |dependency_name, dependency_requirements|
-          version = universe.resolve_dependency(dependency_name, dependency_requirements)
-          fetch_cookbook(dependency_name, version, &block)
+          memo.concat cookbooks
         end
       end
 
       def download_cookbook_archive_file(cookbook)
         Configuration.output.puts "Downloading #{cookbook.name} #{cookbook.version}"
 
-        result = Tempfile.new("#{cookbook.name}-#{cookbook.version}")
-        result.binmode
-        result.write(RestClient.get(cookbook.download_url))
-        result.close(false)
-        result
-      end
-
-      def universe
-        @universe ||= Universe.new(url)
+        Utils::Http.get_binary("#{cookbook.name}-#{cookbook.version}", cookbook.download_url)
       end
 
     end

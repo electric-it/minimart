@@ -1,4 +1,5 @@
 require 'spec_helper'
 
-pending Minimart::Mirror::LocalSource do
+describe Minimart::Mirror::LocalSource do
+  pending
 end
