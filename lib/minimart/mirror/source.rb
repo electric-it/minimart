@@ -21,7 +21,6 @@ module Minimart
       private
 
       def fetch_cookbook(cookbook_name, cookbook_version, &block)
-        Minimart::Configuration.output.puts "Downloading #{cookbook_name} #{cookbook_version}"
         cookbook = universe.find_cookbook(cookbook_name, cookbook_version)
 
         block.call(cookbook, download_cookbook_archive_file(cookbook))
@@ -33,6 +32,8 @@ module Minimart
       end
 
       def download_cookbook_archive_file(cookbook)
+        Configuration.output.puts "Downloading #{cookbook.name} #{cookbook.version}"
+
         result = Tempfile.new("#{cookbook.name}-#{cookbook.version}")
         result.binmode
         result.write(RestClient.get(cookbook.download_url))
