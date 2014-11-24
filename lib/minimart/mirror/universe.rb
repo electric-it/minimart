@@ -2,7 +2,7 @@ module Minimart
   class Mirror
     class Universe
 
-      attr_reader :base_url
+      attr_accessor :base_url
 
       def initialize(base_url)
         @base_url = base_url
@@ -62,7 +62,8 @@ module Minimart
       end
 
       def universe_url
-        URI.join(base_url, '/universe')
+        src_url = base_url[-1, 1] == '/' ? base_url : "#{base_url}/"
+        URI.join("#{base_url}/", 'universe')
       end
     end
 

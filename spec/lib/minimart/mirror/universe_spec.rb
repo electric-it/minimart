@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Minimart::Mirror::Universe do
 
-  let(:base_url) { 'https://fakesupermarket.com' }
+  let(:base_url) { 'https://fakesupermarket.com/chef' }
 
   subject { Minimart::Mirror::Universe.new(base_url) }
 
