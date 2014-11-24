@@ -10,9 +10,11 @@ require 'minimart/cli'
 
 require 'minimart/utils/archive'
 require 'minimart/utils/file_helper'
+require 'minimart/utils/http'
 
 require 'minimart/mirror/source'
 require 'minimart/mirror/inventory'
+require 'minimart/mirror/universe'
 
 
 module Minimart

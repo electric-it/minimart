@@ -1,4 +1,7 @@
 require 'rspec'
+require 'pry'
+require 'webmock/rspec'
+
 require 'minimart'
 
 RSpec.configure do |config|
