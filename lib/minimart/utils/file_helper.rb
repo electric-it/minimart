@@ -6,16 +6,24 @@ module Minimart
       end
 
       def self.find_cookbook_directory(path)
-        Dir.glob(::File.join(path, '/*/')).select { |d| cookbook_file_in_path?(d) }.first
+        Dir.glob(File.join(path, '/*/')).select { |d| cookbook_file_in_path?(d) }.first
       end
 
       def self.cookbook_file_in_path?(path)
-        ::File.exists?(File.join(path, 'metadata.json')) ||
-          ::File.exists?(File.join(path, 'metadata.rb'))
+        file_exists?(File.join(path, 'metadata.json')) ||
+          file_exists?(File.join(path, 'metadata.rb'))
+      end
+
+      def self.file_exists?(path)
+        File.exists?(path)
       end
 
       def self.make_temporary_directory
         Dir.mktmpdir
+      end
+
+      def self.make_directory(directory_name)
+        FileUtils.mkdir_p(directory_name)
       end
 
       def self.remove_directory(path)

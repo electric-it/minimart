@@ -6,6 +6,7 @@ require 'thor'
 require 'minimart/version'
 require 'minimart/mirror'
 require 'minimart/configuration'
+require 'minimart/cli'
 
 require 'minimart/utils/archive'
 require 'minimart/utils/file_helper'
