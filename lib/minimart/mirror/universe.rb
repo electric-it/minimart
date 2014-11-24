@@ -16,10 +16,17 @@ module Minimart
       end
 
       def resolve_dependency(cookbook_name, requirements)
-        Solve.it!(dependency_graph, [[cookbook_name, requirements]])[cookbook_name]
+        resolve_dependency!(cookbook_name, requirements)
+
+      rescue Solve::Errors::NoSolutionError
+        return nil
       end
 
       private
+
+      def resolve_dependency!(cookbook_name, requirements)
+        Solve.it!(dependency_graph, [[cookbook_name, requirements]])[cookbook_name]
+      end
 
       def cookbooks
         @cookbooks ||= fetch_universe_data.each_with_object([]) do |cookbook_info, memo|
