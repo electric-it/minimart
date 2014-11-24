@@ -5,9 +5,9 @@ module Minimart
       attr_reader :url,
                   :cookbooks
 
-      def initialize(opts)
-        @url       = opts['url']
-        @cookbooks = opts['cookbooks']
+      def initialize(url, cookbooks)
+        @url       = url
+        @cookbooks = cookbooks
       end
 
       def download_cookbooks(&block)

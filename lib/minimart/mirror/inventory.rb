@@ -30,8 +30,10 @@ module Minimart
       def download_cookbooks!
         Configuration.output.puts "Building inventory..."
 
-        base_source.download_cookbooks do |cookbook, archived_cookbook|
-          Utils::Archive.extract_cookbook(archived_cookbook, inventory_destination(cookbook))
+        sources.each do |source|
+          source.download_cookbooks do |cookbook, archived_cookbook|
+            Utils::Archive.extract_cookbook(archived_cookbook, inventory_destination(cookbook))
+          end
         end
 
         Configuration.output.puts "Done building inventory..."
@@ -41,8 +43,10 @@ module Minimart
         "#{inventory_directory}/#{cookbook.name}-#{cookbook.version}"
       end
 
-      def base_source
-        @base_source ||= Minimart::Mirror::Source.new(inventory_config['base_source'])
+      def sources
+        @sources ||= inventory_config.map do |endpoint, attrs|
+          Minimart::Mirror::Source.new(endpoint, attrs['cookbooks'])
+        end
       end
 
       def parse_config_file(path)
