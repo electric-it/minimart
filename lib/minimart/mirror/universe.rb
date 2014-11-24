@@ -15,10 +15,14 @@ module Minimart
         cookbooks[index] unless index.nil?
       end
 
+      def find_cookbook_for_requirements(cookbook_name, requirements)
+        find_cookbook(cookbook_name, resolve_dependency!(cookbook_name, requirements))
+      end
+
       def resolve_dependency(cookbook_name, requirements)
         resolve_dependency!(cookbook_name, requirements)
 
-      rescue Solve::Errors::NoSolutionError
+      rescue DependencyNotMet
         return nil
       end
 
@@ -26,6 +30,9 @@ module Minimart
 
       def resolve_dependency!(cookbook_name, requirements)
         Solve.it!(dependency_graph, [[cookbook_name, requirements]])[cookbook_name]
+
+      rescue Solve::Errors::NoSolutionError
+        raise DependencyNotMet, "could not fulfill dependency #{cookbook_name} with requirements `#{requirements}`"
       end
 
       def cookbooks
@@ -68,5 +75,6 @@ module Minimart
     end
 
     class UniverseNotFoundError < Exception; end
+    class DependencyNotMet < Exception; end
   end
 end

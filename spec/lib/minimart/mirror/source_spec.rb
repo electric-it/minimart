@@ -17,11 +17,11 @@ describe Minimart::Mirror::Source do
       expect(subject.url).to eq url
     end
 
-    it 'should build the proper cookbooks' do
-      cookbooks = subject.cookbooks
-      expect(cookbooks.any? { |c| c.name == 'mysql' && c.version = '3.5' }).to eq true
-      expect(cookbooks.any? { |c| c.name == 'mysql' && c.version = '4.0' }).to eq true
-      expect(cookbooks.any? { |c| c.name == 'yum' && c.version = '3.4' }).to eq true
+    it 'should build the proper dependencies' do
+      dependencies = subject.dependencies
+      expect(dependencies.any? { |c| c.name == 'mysql' && c.version = '3.5' }).to eq true
+      expect(dependencies.any? { |c| c.name == 'mysql' && c.version = '4.0' }).to eq true
+      expect(dependencies.any? { |c| c.name == 'yum' && c.version = '3.4' }).to eq true
     end
 
     it 'should build a universe' do
@@ -39,7 +39,7 @@ describe Minimart::Mirror::Source do
     let(:block) { Proc.new { true } }
 
     before(:each) do
-      subject.cookbooks = [mysql_dependency, yum_dependency]
+      subject.dependencies = [mysql_dependency, yum_dependency]
     end
 
     it 'should download the dependencies' do
@@ -61,7 +61,7 @@ describe Minimart::Mirror::Source do
     let(:block) { Proc.new { true } }
 
     before(:each) do
-      allow(subject.universe).to receive(:find_cookbook).and_return mock_cookbook
+      allow(subject.universe).to receive(:find_cookbook_for_requirements).and_return mock_cookbook
     end
 
     it 'should download the cookbook from the source' do

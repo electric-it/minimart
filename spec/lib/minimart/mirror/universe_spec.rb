@@ -43,6 +43,23 @@ describe Minimart::Mirror::Universe do
     end
   end
 
+  describe '#find_cookbook_for_requirements' do
+    it 'should return the matching cookbook' do
+      result = subject.find_cookbook_for_requirements('yum', '> 0.0')
+      expect(result.name).to eq 'yum'
+      expect(result.version).to eq '3.4.1'
+    end
+
+    context 'when the requirements can not be met' do
+      it 'should raise an exception' do
+        expect {
+          subject.find_cookbook_for_requirements('yum', '> 100.0')
+        }.to raise_error(Minimart::Mirror::DependencyNotMet,
+          "could not fulfill dependency yum with requirements `> 100.0`")
+      end
+    end
+  end
+
   describe '#resolve_dependency' do
     it 'should return the best resolution for the dependency' do
       expect(subject.resolve_dependency('yum', '>= 0.0.0')).to eq '3.4.1'

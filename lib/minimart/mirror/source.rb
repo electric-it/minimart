@@ -3,15 +3,15 @@ module Minimart
     class Source
 
       attr_accessor :url,
-                    :cookbooks,
+                    :dependencies,
                     :universe
 
-      alias_method :explicit_dependencies, :cookbooks
+      alias_method :explicit_dependencies, :dependencies
 
       def initialize(url, raw_cookbooks)
-        self.url       = url
-        self.cookbooks = build_cookbooks(raw_cookbooks)
-        self.universe  = Universe.new(url)
+        self.url          = url
+        self.dependencies = build_dependencies(raw_cookbooks)
+        self.universe     = Universe.new(url)
       end
 
       def download_explicit_dependencies(&block)
@@ -21,8 +21,8 @@ module Minimart
       end
 
       def download_cookbook(dependency, &block)
-        cookbook     = universe.find_cookbook(dependency.name, dependency.version)
-        archive_file = download_cookbook_archive_file(cookbook)
+        cookbook       = universe.find_cookbook_for_requirements(dependency.name, dependency.requirements)
+        archive_file   = download_cookbook_archive_file(cookbook)
         block.call(cookbook, archive_file)
       end
 
@@ -32,16 +32,16 @@ module Minimart
 
       private
 
-      def build_cookbooks(raw_cookbooks)
+      def build_dependencies(raw_cookbooks)
         raw_cookbooks.each_with_object([]) do |cookbook, memo|
           cookbook_name     = cookbook[0]
           cookbook_versions = cookbook[1]['versions']
 
-          cookbooks = cookbook_versions.map do |version|
-            Hashie::Mash.new(name: cookbook_name, version: version)
+          dependencies = cookbook_versions.map do |version|
+            Hashie::Mash.new(name: cookbook_name, requirements: version)
           end
 
-          memo.concat cookbooks
+          memo.concat dependencies
         end
       end
 
