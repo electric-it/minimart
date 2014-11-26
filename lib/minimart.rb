@@ -17,7 +17,7 @@ require 'minimart/utils/http'
 
 require 'minimart/mirror/dependency_graph'
 require 'minimart/mirror/inventory_builder'
-require 'minimart/mirror/inventory_config'
+require 'minimart/mirror/inventory_parser'
 
 require 'minimart/source/git'
 require 'minimart/source/local'

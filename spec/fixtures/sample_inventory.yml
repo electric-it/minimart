@@ -1,7 +1,7 @@
-"https://supermarket.getchef.com":
-  type: 'supermarket'
-  cookbooks:
-    mysql:
-      versions:
-        - 5.6.1
-        - 1.0.1
+sources:
+  - "https://supermarket.getchef.com"
+cookbooks:
+  mysql:
+    versions:
+      - 5.6.1
+      - 1.0.1
