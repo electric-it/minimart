@@ -1,6 +1,6 @@
 module Minimart
-  class Mirror
-    class LocalSource
+  class Source
+    class Local
 
       attr_reader :inventory_directory
 

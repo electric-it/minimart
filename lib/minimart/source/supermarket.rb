@@ -1,12 +1,10 @@
 module Minimart
-  class Mirror
-    class Source
+  class Source
+    class Supermarket
 
       attr_accessor :url,
-                    :dependencies,
-                    :universe
-
-      alias_method :explicit_dependencies, :dependencies
+        :dependencies,
+        :universe
 
       def initialize(url, raw_cookbooks)
         self.url          = url
@@ -14,16 +12,17 @@ module Minimart
         self.universe     = Universe.new(url)
       end
 
-      def download_explicit_dependencies(&block)
-        explicit_dependencies.each do |dependency|
-          download_cookbook dependency, &block
+      def download_cookbooks(destination, &block)
+        dependencies.each do |dependency|
+          download_cookbook dependency, destination, &block
         end
       end
 
-      def download_cookbook(dependency, &block)
+      def download_cookbook(dependency, destination, &block)
         cookbook       = universe.find_cookbook_for_requirements(dependency.name, dependency.requirements)
         archive_file   = download_cookbook_archive_file(cookbook)
-        block.call(cookbook, archive_file)
+        Utils::Archive.extract_cookbook(archive_file, extract_destination(destination, cookbook))
+        block.call(cookbook)
       end
 
       def resolve_dependency(name, requirements)
@@ -49,6 +48,10 @@ module Minimart
         Configuration.output.puts "Downloading #{cookbook.name} #{cookbook.version}"
 
         Utils::Http.get_binary("#{cookbook.name}-#{cookbook.version}", cookbook.download_url)
+      end
+
+      def extract_destination(destination, cookbook)
+        File.join(destination, "/#{cookbook.name}-#{cookbook.version}")
       end
 
     end

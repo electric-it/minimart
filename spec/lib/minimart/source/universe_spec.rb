@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Minimart::Mirror::Universe do
+describe Minimart::Source::Universe do
 
   let(:base_url) { 'https://fakesupermarket.com/chef' }
 
-  subject { Minimart::Mirror::Universe.new(base_url) }
+  subject { Minimart::Source::Universe.new(base_url) }
 
   let(:raw_universe) { File.open('spec/fixtures/universe.json').read }
 
@@ -37,7 +37,7 @@ describe Minimart::Mirror::Universe do
         expect {
           subject.find_cookbook('mysql', '5.6.1')
         }.to raise_error(
-          Minimart::Mirror::UniverseNotFoundError,
+          Minimart::Source::UniverseNotFoundError,
           "no universe found for #{base_url}")
       end
     end
@@ -54,7 +54,7 @@ describe Minimart::Mirror::Universe do
       it 'should raise an exception' do
         expect {
           subject.find_cookbook_for_requirements('yum', '> 100.0')
-        }.to raise_error(Minimart::Mirror::DependencyNotMet,
+        }.to raise_error(Minimart::Source::DependencyNotMet,
           "could not fulfill dependency yum with requirements `> 100.0`")
       end
     end
@@ -80,7 +80,7 @@ describe Minimart::Mirror::Universe do
         expect {
           subject.resolve_dependency('yum', '>= 0.0.0')
         }.to raise_error(
-          Minimart::Mirror::UniverseNotFoundError,
+          Minimart::Source::UniverseNotFoundError,
           "no universe found for #{base_url}")
       end
     end

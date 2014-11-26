@@ -1,5 +1,5 @@
 module Minimart
-  class Mirror
+  class Source
     class Universe
 
       attr_accessor :base_url
@@ -65,7 +65,7 @@ module Minimart
         Utils::Http.get_json(universe_url)
 
       rescue RestClient::ResourceNotFound
-        raise Minimart::Mirror::UniverseNotFoundError, "no universe found for #{base_url}"
+        raise UniverseNotFoundError.new "no universe found for #{base_url}"
       end
 
       def universe_url
