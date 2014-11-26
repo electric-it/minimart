@@ -12,6 +12,7 @@ require 'minimart/cli'
 
 require 'minimart/utils/archive'
 require 'minimart/utils/file_helper'
+require 'minimart/utils/hash_with_indifferent_access'
 require 'minimart/utils/http'
 
 require 'minimart/mirror/inventory_builder'
