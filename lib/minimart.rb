@@ -1,5 +1,7 @@
+require 'git'
 require 'hashie'
 require 'rest_client'
+require 'ridley'
 require 'solve'
 require 'thor'
 
@@ -14,9 +16,12 @@ require 'minimart/utils/http'
 
 require 'minimart/mirror/inventory_builder'
 require 'minimart/mirror/inventory_config'
-require 'minimart/mirror/local_source'
-require 'minimart/mirror/source'
-require 'minimart/mirror/universe'
+
+require 'minimart/source/git'
+require 'minimart/source/local'
+require 'minimart/source/supermarket'
+require 'minimart/source/source_list'
+require 'minimart/source/universe'
 
 
 module Minimart

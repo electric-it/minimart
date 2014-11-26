@@ -35,6 +35,10 @@ module Minimart
         FileUtils.mv source, destination
       end
 
+      def self.copy_directory(source, destination)
+        FileUtils.cp_r source, destination
+      end
+
     end
   end
 end

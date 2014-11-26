@@ -8,7 +8,7 @@ module Minimart
 
       def initialize(url, raw_cookbooks)
         self.url          = url
-        self.dependencies = build_dependencies(raw_cookbooks)
+        self.dependencies = build_dependencies(raw_cookbooks || [])
         self.universe     = Universe.new(url)
       end
 
