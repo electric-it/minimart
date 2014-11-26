@@ -20,13 +20,11 @@ describe Minimart::Mirror::InventoryConfig do
     end
   end
 
-  describe '#sources' do
+  describe '#parse_sources' do
     subject { Minimart::Mirror::InventoryConfig.new(config_file_path) }
 
-    let(:sources) { subject.sources }
-
     it 'should create sources for the correct endpoints' do
-      source_urls = subject.sources.map(&:url)
+      source_urls = subject.parse_sources.map(&:url)
       expect(source_urls).to include 'https://supermarket.getchef.com'
     end
   end

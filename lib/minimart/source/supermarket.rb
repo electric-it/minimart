@@ -3,8 +3,8 @@ module Minimart
     class Supermarket
 
       attr_accessor :url,
-        :dependencies,
-        :universe
+                    :dependencies,
+                    :universe
 
       def initialize(url, raw_cookbooks)
         self.url          = url
@@ -33,8 +33,8 @@ module Minimart
 
       def build_dependencies(raw_cookbooks)
         raw_cookbooks.each_with_object([]) do |cookbook, memo|
-          cookbook_name     = cookbook[0]
-          cookbook_versions = cookbook[1]['versions']
+          cookbook_name     = cookbook[0].to_s
+          cookbook_versions = cookbook[1][:versions]
 
           dependencies = cookbook_versions.map do |version|
             Hashie::Mash.new(name: cookbook_name, requirements: version)

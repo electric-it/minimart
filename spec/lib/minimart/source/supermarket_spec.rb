@@ -5,8 +5,8 @@ describe Minimart::Source::Supermarket do
   let(:url) { 'https://fakechefsupermarket.com' }
   let(:raw_cookbooks) do
     {
-      "mysql" => { "versions" => ["3.5", "4.0"] },
-      "yum"   => { "versions" => ["3.4"] }
+      mysql: { versions: ["3.5", "4.0"] },
+      yum:   { versions: ["3.4"] }
     }
   end
 

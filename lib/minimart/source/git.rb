@@ -9,10 +9,10 @@ module Minimart
                     :git_repo
 
       def initialize(url, opts)
-        self.url = url
-        self.branches = opts['branches'] || []
-        self.tags = opts['tags'] || []
-        self.refs = opts['refs'] || []
+        self.url      = url
+        self.branches = opts[:branches] || []
+        self.tags     = opts[:tags] || []
+        self.refs     = opts[:refs] || []
       end
 
       def download_cookbooks(output_directory, &block)

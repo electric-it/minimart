@@ -7,7 +7,7 @@ describe Minimart::Source::SourceList do
   describe '::build_source' do
     context 'when the type provided is "git"' do
       it 'should build a Source::Git' do
-        new_source = Minimart::Source::SourceList.build_source(url, 'type' => 'git')
+        new_source = Minimart::Source::SourceList.build_source(url, type: 'git')
         expect(new_source).to be_a Minimart::Source::Git
       end
     end

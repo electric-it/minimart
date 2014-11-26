@@ -4,10 +4,10 @@ module Minimart
 
       class << self
         def build_source(url, opts)
-          if opts['type'] == 'git'
+          if opts[:type] == 'git'
             Source::Git.new(url, opts)
           else
-            Source::Supermarket.new(url, opts['cookbooks'])
+            Source::Supermarket.new(url, opts[:cookbooks])
           end
         end
       end

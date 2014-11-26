@@ -12,10 +12,10 @@ module Minimart
         @config_contents       = parse_config_file
       end
 
-      def sources
+      def parse_sources
         @sources ||= Source::SourceList.new.tap do |source_list|
           config_contents.map do |endpoint, attrs|
-            source_list.build_source(endpoint, Hashie::Mash.new(attrs))
+            source_list.build_source(endpoint, Utils::HashWithIndifferentAccess.new(attrs))
           end
         end
       end
