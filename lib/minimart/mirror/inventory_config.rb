@@ -13,8 +13,10 @@ module Minimart
       end
 
       def sources
-        @sources ||= config_contents.map do |endpoint, attrs|
-          Minimart::Mirror::Source.new(endpoint, attrs['cookbooks'])
+        @sources ||= Source::SourceList.new.tap do |source_list|
+          config_contents.map do |endpoint, attrs|
+            source_list.build_source(endpoint, Hashie::Mash.new(attrs))
+          end
         end
       end
 
