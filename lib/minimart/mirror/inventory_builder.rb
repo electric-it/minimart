@@ -3,17 +3,20 @@ module Minimart
     class InventoryBuilder
 
       attr_reader :inventory_directory,
-                  :sources
-                  :local_source
+                  :sources,
+                  :inventory_cookbooks,
+                  :dependency_graph
 
-      def initialize(inventory_directory, sources)
+      def initialize(inventory_directory, sources, inventory_cookbooks)
         @inventory_directory = inventory_directory
         @sources             = sources
+        @inventory_cookbooks = inventory_cookbooks
+        @dependency_graph    = DependencyGraph.new
       end
 
       def build!
         make_inventory_directory
-        fetch_explicit_sources
+        build_dependency_graph
         fetch_inventory
       end
 
@@ -23,52 +26,43 @@ module Minimart
         Utils::FileHelper.make_directory(inventory_directory)
       end
 
-      def fetch_explicit_sources
-        sources.with_location_specifications.each do |source|
-          source.download_cookbooks(inventory_directory) do |cookbook|
-            handle_downloaded_cookbook(source, cookbook)
+      def build_dependency_graph
+        add_cookbooks_to_dependency_graph
+        add_requirements_to_dependency_graph
+      end
+
+      def add_cookbooks_to_dependency_graph
+        sources.each do |source|
+          source.cookbooks.each do |cookbook|
+            dependency_graph.add_remote_cookbook(cookbook)
           end
+        end
+      end
+
+      def add_requirements_to_dependency_graph
+        inventory_cookbooks.each do |cookbook|
+          dependency_graph.add_inventory_requirement(cookbook)
         end
       end
 
       def fetch_inventory
-        sources.with_supermarket_specifications.each do |source|
-          source.download_cookbooks(inventory_directory) do |cookbook|
-            handle_downloaded_cookbook(source, cookbook)
-          end
+        dependency_graph.resolved_requirements.each do |resolved_requirement|
+          name, version   = resolved_requirement
+          Configuration.output.puts "-- Downloading #{name} #{version}"
+
+          remote_cookbook = find_remote_cookbook(name, version)
+          destination     = File.join(inventory_directory, "#{name}-#{version}")
+          CookbookDownloader.download(remote_cookbook, destination)
         end
       end
 
-      def handle_downloaded_cookbook(source, cookbook)
-        resolve_non_explicit_dependencies(source, cookbook)
-      end
-
-      def resolve_non_explicit_dependencies(current_source, cookbook)
-        return if cookbook.dependencies.nil? || cookbook.dependencies.empty?
-
-        cookbook.dependencies.each do |name, requirements|
-          return if download_cookbook_for_source(current_source, name, requirements)
-
-          sources.each do |source|
-            return if download_cookbook_for_source(source, name, requirements)
-          end
-
-          raise UnresolvedDependency
+      def find_remote_cookbook(name, version)
+        sources.each do |source|
+          result = source.find_cookbook(name, version)
+          return result unless result.nil?
         end
       end
 
-      def download_cookbook_for_source(source, name, requirements)
-        return if (dependency_version = source.resolve_dependency(name, requirements)).nil?
-
-        dependency = Hashie::Mash.new(name: name, version: dependency_version)
-        source.download_cookbook(dependency, inventory_directory) do |cookbook|
-          handle_downloaded_cookbook(source, cookbook)
-        end
-
-        return dependency
-      end
     end
-
-    class UnresolvedDependency < Exception; end
   end
 end
