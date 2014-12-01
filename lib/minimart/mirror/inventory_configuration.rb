@@ -41,7 +41,11 @@ module Minimart
       end
 
       def build_cookbooks_from_git_location(name, requirements)
-        []
+        requirements[:branches].map do |branch|
+          InventoryCookbook::GitCookbook.new(name,
+          url: requirements[:url],
+          branch: branch)
+        end
       end
 
       def build_cookbooks_from_supermarket_location(name, requirements)

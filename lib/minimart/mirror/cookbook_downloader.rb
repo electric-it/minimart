@@ -6,8 +6,11 @@ module Minimart
         ##
         # TODO support all Berkshelf API sources
         ##
-        archive_file = Utils::Http.get_binary("#{cookbook.name}-#{cookbook.version}", cookbook.download_url)
-        Utils::Archive.extract_cookbook(archive_file, destination)
+        Configuration.output.puts "-- Downloading #{cookbook.name} #{cookbook.version}"
+
+        directory = "#{cookbook.name}-#{cookbook.version}"
+        archive_file = Utils::Http.get_binary(directory, cookbook.download_url)
+        Utils::Archive.extract_cookbook(archive_file, File.join(destination, directory))
       end
 
     end

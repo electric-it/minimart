@@ -14,6 +14,10 @@ module Minimart
         false
       end
 
+      def install
+        raise 'not implemented'
+      end
+
     end
   end
 end
