@@ -2,7 +2,7 @@ require 'yaml'
 
 module Minimart
   class Mirror
-    class InventoryParser
+    class InventoryConfiguration
 
       attr_reader :inventory_config_path,
                   :configuration
@@ -13,11 +13,19 @@ module Minimart
       end
 
       def sources
-        configuration[:sources]
+        @sources ||= configuration[:sources].map do |source_url|
+          Source.new(source_url)
+        end
       end
 
       def cookbooks
-        configuration[:cookbooks]
+        configuration[:cookbooks].map do |name, requirements|
+          if requirements[:type] == 'git'
+            build_cookbooks_from_git_location(name, requirements)
+          else
+            build_cookbooks_from_supermarket_location(name, requirements)
+          end
+        end.flatten
       end
 
       private
@@ -30,6 +38,16 @@ module Minimart
         file  = File.open(inventory_config_path)
         yaml  = YAML.load(file)
         Utils::HashWithIndifferentAccess.new(yaml)
+      end
+
+      def build_cookbooks_from_git_location(name, requirements)
+        []
+      end
+
+      def build_cookbooks_from_supermarket_location(name, requirements)
+        requirements[:versions].map do |version|
+          InventoryCookbook::BaseCookbook.new(name, version_requirement: version)
+        end
       end
     end
 
