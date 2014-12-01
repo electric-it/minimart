@@ -26,7 +26,8 @@ module Minimart
       private
 
       def build_cookbook(name, version, attrs)
-        RemoteCookbook.new(attrs.merge(name: name, version: version))
+        attrs = Utils::HashWithIndifferentAccess.new(attrs).merge(name: name, version: version)
+        RemoteCookbook.new(attrs)
       end
 
       def fetch_universe_data
