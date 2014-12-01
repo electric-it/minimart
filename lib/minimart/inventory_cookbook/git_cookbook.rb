@@ -22,6 +22,8 @@ module Minimart
       end
 
       def install(output_directory)
+        Configuration.output.puts "-- Downloading #{name}(#{version}) from #{url}"
+
         git_repo.checkout version
         git_repo.reset_hard version
         new_directory = File.join(output_directory, "/#{name}-#{version}")
