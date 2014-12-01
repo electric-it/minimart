@@ -15,15 +15,15 @@ require 'minimart/utils/file_helper'
 require 'minimart/utils/hash_with_indifferent_access'
 require 'minimart/utils/http'
 
+require 'minimart/inventory_cookbook/base_cookbook'
+require 'minimart/inventory_cookbook/git_cookbook'
+
+require 'minimart/mirror/cookbook_downloader'
 require 'minimart/mirror/dependency_graph'
 require 'minimart/mirror/inventory_builder'
-require 'minimart/mirror/inventory_parser'
-
-require 'minimart/source/git'
-require 'minimart/source/local'
-require 'minimart/source/supermarket'
-require 'minimart/source/source_list'
-require 'minimart/source/universe'
+require 'minimart/mirror/inventory_configuration'
+require 'minimart/mirror/remote_cookbook'
+require 'minimart/mirror/source'
 
 
 module Minimart
