@@ -19,6 +19,9 @@ describe Minimart::Mirror::Source do
         result = subject.find_cookbook('mysql', '5.6.1')
         expect(result.name).to eq 'mysql'
         expect(result.version).to eq '5.6.1'
+        expect(result.location_path).to eq 'https://supermarket.getchef.com/api/v1'
+        expect(result.download_url).to eq 'https://supermarket.getchef.com/api/v1/cookbooks/mysql/versions/5.6.1/download'
+        expect(result.dependencies).to eq("yum-mysql-community" => ">= 0.0.0")
       end
     end
 

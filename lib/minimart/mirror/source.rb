@@ -9,11 +9,9 @@ module Minimart
       end
 
       def find_cookbook(cookbook_name, version)
-        index = cookbooks.find_index do |cookbook|
+        cookbooks.find do |cookbook|
           cookbook.name == cookbook_name && cookbook.version == version
         end
-
-        cookbooks[index] unless index.nil?
       end
 
       def cookbooks
