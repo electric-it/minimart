@@ -13,18 +13,11 @@ module Minimart
       end
 
       def sources
-        @sources ||= configuration[:sources].map do |source_url|
-          Source.new(source_url)
-        end
+        @sources ||= Sources.new(configuration[:sources])
       end
 
       def cookbooks
-        @cookbooks ||= configuration[:cookbooks].map do |name, requirements|
-          result = []
-          result.concat(build_cookbooks(name, requirements[:versions]))
-          result.concat(build_git_cookbooks(name, requirements[:git]))
-          result
-        end.flatten.compact
+        @cookbooks ||= parse_cookbooks
       end
 
       private
@@ -39,36 +32,41 @@ module Minimart
         Utils::HashWithIndifferentAccess.new(yaml)
       end
 
+      def parse_cookbooks
+        configuration[:cookbooks].map do |name, reqs|
+          build_cookbooks(name, reqs.fetch(:versions, [])) +
+            build_git_cookbooks(name, reqs.fetch(:git, {}))
+        end.flatten.compact
+      end
+
       def build_cookbooks(name, requirements)
-        requirements ||= []
         requirements.map do |version|
           InventoryCookbook::BaseCookbook.new(name, version_requirement: version)
         end
       end
 
-      def build_git_cookbooks(name, requirements)
-        result = []
+      def build_git_cookbooks(name, reqs)
+        cookbooks_from_branches(name, reqs[:url], reqs.fetch(:branches, [])) +
+          cookbooks_from_tags(name, reqs[:url], reqs.fetch(:tags, [])) +
+          cookbooks_from_refs(name, reqs[:url], reqs.fetch(:refs, []))
+      end
 
-        requirements ||= {}
-        result.concat((requirements[:branches] || []).map do |branch|
-          InventoryCookbook::GitCookbook.new(name,
-            url: requirements[:url],
-            branch: branch)
-        end)
+      def cookbooks_from_branches(name, url, branches)
+        branches.map do |branch|
+          InventoryCookbook::GitCookbook.new(name, url: url, branch: branch)
+        end
+      end
 
-        result.concat((requirements[:tags] || []).map do |tag|
-          InventoryCookbook::GitCookbook.new(name,
-            url: requirements[:url],
-            tag: tag)
-        end)
+      def cookbooks_from_tags(name, url, tags)
+        tags.map do |tag|
+          InventoryCookbook::GitCookbook.new(name, url: url, tag: tag)
+        end
+      end
 
-        result.concat((requirements[:refs] || []).map do |ref|
-          InventoryCookbook::GitCookbook.new(name,
-            url: requirements[:url],
-            ref: ref)
-        end)
-
-        result
+      def cookbooks_from_refs(name, url, refs)
+        refs.map do |ref|
+          InventoryCookbook::GitCookbook.new(name, url: url, ref: ref)
+        end
       end
     end
 

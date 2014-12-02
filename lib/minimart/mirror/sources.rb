@@ -1,20 +1,17 @@
 module Minimart
   class Mirror
-    class Sources
-
-      attr_reader :sources
+    class Sources < Array
 
       def initialize(source_urls = [])
-        @sources = []
         source_urls.each { |source_url| add_source(source_url) }
       end
 
       def each_cookbook(&block)
-        sources.each { |source| source.cookbooks.each &block }
+        each { |source| source.cookbooks.each(&block) }
       end
 
       def find_cookbook(name, version)
-        sources.each do |source|
+        each do |source|
           cookbook = source.find_cookbook(name, version)
           return cookbook if cookbook
         end
@@ -25,7 +22,7 @@ module Minimart
       private
 
       def add_source(source_url)
-        sources << Source.new(source_url)
+        self << Source.new(source_url)
       end
     end
 

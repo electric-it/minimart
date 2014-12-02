@@ -15,10 +15,6 @@ module Minimart
         false
       end
 
-      def cookbook
-        raise 'not implemented'
-      end
-
       def requirements
         {name => version_requirement}
       end

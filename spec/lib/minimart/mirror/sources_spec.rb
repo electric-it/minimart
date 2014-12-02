@@ -11,11 +11,11 @@ describe Minimart::Mirror::Sources do
     end
 
     it 'should build a source with the first url provided' do
-      expect(subject.sources.map &:base_url ).to include source_1
+      expect(subject.map &:base_url ).to include source_1
     end
 
     it 'should build a source with the second url provided' do
-      expect(subject.sources.map &:base_url ).to include source_2
+      expect(subject.map &:base_url ).to include source_2
     end
   end
 
