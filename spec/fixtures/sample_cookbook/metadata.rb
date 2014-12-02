@@ -5,3 +5,5 @@ license          'All rights reserved'
 description      'Installs/Configures sample_cookbook'
 long_description 'Installs/Configures sample_cookbook'
 version          '1.2.3'
+
+depends 'yum', '> 4.0.0'

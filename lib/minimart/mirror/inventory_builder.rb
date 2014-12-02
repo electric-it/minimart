@@ -23,12 +23,12 @@ module Minimart
       private
 
       def download_cookbooks_with_location_specifications
-        # commenting out until this is redone
-        # inventory_cookbooks.each do |inventory_cookbook|
-        #   next unless inventory_cookbook.location_specification?
-        #   cookbook = inventory_cookbook.install(inventory_directory)
-        #   dependency_graph.add_remote_cookbook(cookbook)
-        # end
+        inventory_cookbooks.each do |inventory_cookbook|
+          next unless inventory_cookbook.location_specification?
+
+          dependency_graph.add_remote_cookbook(inventory_cookbook.cookbook_info)
+          local_store.add_cookbook_from_directory(inventory_cookbook.cookbook_path)
+        end
       end
 
       def build_dependency_graph
@@ -46,7 +46,7 @@ module Minimart
 
       def add_requirements_to_dependency_graph
         inventory_cookbooks.each do |cookbook|
-          dependency_graph.add_inventory_requirement(cookbook)
+          dependency_graph.add_inventory_requirement(cookbook.requirements)
         end
       end
 
@@ -55,8 +55,7 @@ module Minimart
           name, version   = resolved_requirement
           next if local_store.installed?(name, version)
 
-          remote_cookbook = find_remote_cookbook(name, version)
-          path = CookbookDownloader.download(remote_cookbook)
+          path = CookbookDownloader.download(find_remote_cookbook(name, version))
           local_store.add_cookbook_from_directory(path)
         end
       end
@@ -67,9 +66,11 @@ module Minimart
           return result unless result.nil?
         end
 
-        return nil
+        raise CookbookNotFound, "The cookbook #{name} with the version #{version} could not be found"
       end
 
     end
+
+    class CookbookNotFound < Exception; end
   end
 end

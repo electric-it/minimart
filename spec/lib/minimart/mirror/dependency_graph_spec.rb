@@ -69,13 +69,9 @@ describe Minimart::Mirror::DependencyGraph do
   end
 
   describe '#add_inventory_requirement' do
-    let(:inventory_requirement) do
-      Minimart::InventoryCookbook::BaseCookbook.new('yum', version_requirement: '~> 1.0.0')
-    end
-
     it 'should add the requirement' do
-      subject.add_inventory_requirement(inventory_requirement)
-      expect(subject.inventory_requirements).to include inventory_requirement
+      subject.add_inventory_requirement('yum' => '~> 1.0.0')
+      expect(subject.inventory_requirements).to include ['yum', '~> 1.0.0']
     end
   end
 
@@ -88,21 +84,13 @@ describe Minimart::Mirror::DependencyGraph do
       Minimart::Mirror::RemoteCookbook.new(name: 'yum', version: '5.0.0')
     end
 
-    let(:apt_requirement) do
-      Minimart::InventoryCookbook::BaseCookbook.new('apt', version_requirement: '> 1.0.0')
-    end
-
-    let(:mysql_requirement) do
-      Minimart::InventoryCookbook::BaseCookbook.new('mysql', version_requirement: '= 1.0.0')
-    end
-
     context 'when all dependencies are met' do
       before(:each) do
         subject.add_remote_cookbook(cookbook)
         subject.add_remote_cookbook(yum_cookbook)
         subject.add_remote_cookbook(apt_cookbook)
-        subject.add_inventory_requirement(apt_requirement)
-        subject.add_inventory_requirement(mysql_requirement)
+        subject.add_inventory_requirement('apt' => '> 1.0.0')
+        subject.add_inventory_requirement('mysql' => '= 1.0.0')
       end
 
       it 'should return a resolved mysql version' do
@@ -122,7 +110,7 @@ describe Minimart::Mirror::DependencyGraph do
       before(:each) do
         # leaving out the yum dependency needed for mysql
         subject.add_remote_cookbook(cookbook)
-        subject.add_inventory_requirement(mysql_requirement)
+        subject.add_inventory_requirement('mysql' => '= 1.0.0')
       end
 
       it 'should raise an error' do

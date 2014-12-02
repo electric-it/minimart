@@ -17,7 +17,7 @@ describe Minimart::Mirror do
     end
 
     it 'should build an inventory config' do
-      expect(subject.inventory_config).to be_a Minimart::Mirror::InventoryConfig
+      expect(subject.inventory_config).to be_a Minimart::Mirror::InventoryConfiguration
     end
 
     it 'should pass the inventory config file path' do

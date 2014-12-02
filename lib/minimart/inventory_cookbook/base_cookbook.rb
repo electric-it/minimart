@@ -3,7 +3,8 @@ module Minimart
     class BaseCookbook
 
       attr_reader :name,
-                  :version_requirement
+                  :version_requirement,
+                  :cached_cookbook
 
       def initialize(name, opts)
         @name = name
@@ -14,8 +15,12 @@ module Minimart
         false
       end
 
-      def install
+      def cookbook
         raise 'not implemented'
+      end
+
+      def requirements
+        {name => version_requirement}
       end
 
     end

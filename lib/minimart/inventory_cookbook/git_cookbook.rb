@@ -21,39 +21,33 @@ module Minimart
         true
       end
 
-      def install(output_directory)
-        Configuration.output.puts "-- Downloading #{name}(#{version}) from #{url}"
+      def cookbook
+        @cookbook ||= fetch_cookbook
+      end
 
-        git_repo.checkout version
-        git_repo.reset_hard version
-        new_directory = File.join(output_directory, "/#{name}-#{version}")
-        Utils::FileHelper.copy_directory(tmp_path, new_directory)
-        Utils::FileHelper.remove_directory(File.join(new_directory, '/.git'))
+      def requirements
+        cookbook_info.dependencies
+      end
 
-        metadata = Ridley::Chef::Cookbook.from_path(new_directory).metadata
+      def cookbook_info
+        cookbook.metadata
+      end
 
-        @cookbook = Minimart::Mirror::RemoteCookbook.new(
-          name:         metadata.name,
-          version:      metadata.version,
-          dependencies: metadata.dependencies)
-
-        @version_requirement = @cookbook.version
-
-        return @cookbook
+      def cookbook_path
+        cookbook.path
       end
 
       private
 
-      def version
+      def fetch_cookbook
+        Configuration.output.puts "-- Downloading #{name}(#{commitish}) from #{url}"
+
+        path = Download::GitRepository.new(url).download(commitish)
+        Ridley::Chef::Cookbook.from_path(path)
+      end
+
+      def commitish
         ref || branch || tag
-      end
-
-      def git_repo
-        @git_repo ||= Git.clone(url, tmp_path)
-      end
-
-      def tmp_path
-        @tmp_path ||= Utils::FileHelper.make_temporary_directory
       end
 
     end

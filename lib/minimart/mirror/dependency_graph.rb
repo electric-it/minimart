@@ -14,7 +14,6 @@ module Minimart
         @inventory_requirements = []
       end
 
-
       def add_remote_cookbook(cookbook)
         return if remote_cookbook_added?(cookbook)
 
@@ -34,8 +33,8 @@ module Minimart
         graph.find(cookbook.name, cookbook.version)
       end
 
-      def add_inventory_requirement(requirement)
-        inventory_requirements << requirement
+      def add_inventory_requirement(requirements = {})
+        inventory_requirements.concat(requirements.to_a)
       end
 
       def resolved_requirements
@@ -47,7 +46,7 @@ module Minimart
       private
 
       def resolve_requirement(requirement)
-        Solve.it!(graph, [[requirement.name, requirement.version_requirement]])
+        Solve.it!(graph, [requirement])
 
       rescue Solve::Errors::NoSolutionError => e
         raise UnresolvedDependency, e.message

@@ -23,4 +23,10 @@ describe Minimart::InventoryCookbook::BaseCookbook do
       expect(subject.location_specification?).to eq false
     end
   end
+
+  describe '#requirements' do
+    it 'should return the proper requirements' do
+      expect(subject.requirements).to eq 'mysql' => '> 1.0.0'
+    end
+  end
 end
