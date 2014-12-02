@@ -16,8 +16,8 @@ module Minimart
 
         add_cookbook_to_store(cookbook.metadata.name, cookbook.metadata.version)
         new_directory = File.join(directory, "/#{cookbook.name}")
-        Utils::FileHelper.remove_directory(new_directory)
-        Utils::FileHelper.copy_directory(path_to_cookbook, new_directory)
+        FileUtils.remove_dir(new_directory) if Dir.exists?(new_directory)
+        FileUtils.cp_r(path_to_cookbook, new_directory)
       end
 
       def installed?(cookbook_name, cookbook_version)
@@ -34,7 +34,7 @@ module Minimart
 
       def directory
         # lazily create the directory to hold the store
-        @directory ||= Utils::FileHelper.make_directory(directory_path)
+        @directory ||= FileUtils.mkdir_p(directory_path).first
       end
 
     end
