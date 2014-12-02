@@ -10,7 +10,6 @@ module Minimart
 
       def initialize(name, opts)
         super
-
         @branch = opts[:branch]
         @ref    = opts[:ref]
         @tag    = opts[:tag]

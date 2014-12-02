@@ -15,12 +15,12 @@ module Minimart
 #     versions:
 #       - "~> 4.0.2"
 #       - "> 5.0.0"
-#   yum:
-#     type: git
-#     branches:
-#       - a_branch_name
-#     refs:
-#       - SHA
+#     git:
+#       url:
+#       branches:
+#         - a_branch_name
+#       refs:
+#         - SHA
 YML
       end
     end

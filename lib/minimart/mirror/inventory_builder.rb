@@ -2,16 +2,14 @@ module Minimart
   class Mirror
     class InventoryBuilder
 
-      attr_reader :sources,
-                  :inventory_cookbooks,
+      attr_reader :inventory_configuration,
                   :dependency_graph,
                   :local_store
 
-      def initialize(inventory_directory, sources, inventory_cookbooks)
-        @sources             = sources
-        @inventory_cookbooks = inventory_cookbooks
-        @dependency_graph    = DependencyGraph.new
-        @local_store         = LocalStore.new(inventory_directory)
+      def initialize(inventory_directory, inventory_configuration)
+        @inventory_configuration = inventory_configuration
+        @dependency_graph        = DependencyGraph.new
+        @local_store             = LocalStore.new(inventory_directory)
       end
 
       def build!
@@ -67,6 +65,14 @@ module Minimart
         end
 
         raise CookbookNotFound, "The cookbook #{name} with the version #{version} could not be found"
+      end
+
+      def inventory_cookbooks
+        inventory_configuration.cookbooks
+      end
+
+      def sources
+        inventory_configuration.sources
       end
 
     end

@@ -13,7 +13,7 @@ module Minimart
     end
 
     def execute!
-      builder = InventoryBuilder.new(inventory_directory, inventory_config.sources, inventory_config.cookbooks)
+      builder = InventoryBuilder.new(inventory_directory, inventory_config)
       builder.build!
     end
 
