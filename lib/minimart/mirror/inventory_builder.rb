@@ -55,7 +55,7 @@ module Minimart
           name, version   = resolved_requirement
           next if local_store.installed?(name, version)
 
-          path = CookbookDownloader.download(find_remote_cookbook(name, version))
+          path = Download::Supermarket.download(find_remote_cookbook(name, version))
           local_store.add_cookbook_from_directory(path)
         end
       end
