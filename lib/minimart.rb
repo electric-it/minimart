@@ -27,6 +27,7 @@ require 'minimart/mirror/inventory_builder'
 require 'minimart/mirror/inventory_configuration'
 require 'minimart/mirror/remote_cookbook'
 require 'minimart/mirror/source'
+require 'minimart/mirror/sources'
 
 
 module Minimart
