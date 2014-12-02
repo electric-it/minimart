@@ -2,11 +2,11 @@ module Minimart
   class Mirror
     class LocalStore
 
-      attr_reader :directory,
+      attr_reader :directory_path,
                   :cookbooks
 
-      def initialize(directory)
-        @directory = directory
+      def initialize(directory_path)
+        @directory_path = directory_path
         @cookbooks = {}
       end
 
@@ -14,7 +14,7 @@ module Minimart
         path_to_cookbook  = Utils::FileHelper.cookbook_path_in_directory(path_to_cookbook)
         cookbook          = Ridley::Chef::Cookbook.from_path(path_to_cookbook)
 
-        add_to_cookbook_store(cookbook.metadata)
+        add_cookbook_to_store(cookbook.metadata.name, cookbook.metadata.version)
         new_directory = File.join(directory, "/#{cookbook.name}")
         Utils::FileHelper.remove_directory(new_directory)
         Utils::FileHelper.copy_directory(path_to_cookbook, new_directory)
@@ -25,11 +25,16 @@ module Minimart
           cookbooks[cookbook_name].include?(cookbook_version))
       end
 
+      def add_cookbook_to_store(name, version)
+        cookbooks[name] ||= []
+        cookbooks[name] << version
+      end
+
       private
 
-      def add_to_cookbook_store(cookbook_metadata)
-        @cookbooks[cookbook_metadata.name] ||= []
-        @cookbooks[cookbook_metadata.name] << cookbook_metadata.version
+      def directory
+        # lazily create the directory to hold the store
+        @directory ||= Utils::FileHelper.make_directory(directory_path)
       end
 
     end

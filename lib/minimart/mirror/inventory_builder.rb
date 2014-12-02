@@ -2,20 +2,19 @@ module Minimart
   class Mirror
     class InventoryBuilder
 
-      attr_reader :inventory_directory,
-                  :sources,
+      attr_reader :sources,
                   :inventory_cookbooks,
-                  :dependency_graph
+                  :dependency_graph,
+                  :local_store
 
       def initialize(inventory_directory, sources, inventory_cookbooks)
-        @inventory_directory = inventory_directory
         @sources             = sources
         @inventory_cookbooks = inventory_cookbooks
         @dependency_graph    = DependencyGraph.new
+        @local_store         = LocalStore.new(inventory_directory)
       end
 
       def build!
-        make_inventory_directory
         download_cookbooks_with_location_specifications
         build_dependency_graph
         fetch_inventory
@@ -23,16 +22,13 @@ module Minimart
 
       private
 
-      def make_inventory_directory
-        Utils::FileHelper.make_directory(inventory_directory)
-      end
-
       def download_cookbooks_with_location_specifications
-        inventory_cookbooks.each do |inventory_cookbook|
-          next unless inventory_cookbook.location_specification?
-          cookbook = inventory_cookbook.install(inventory_directory)
-          dependency_graph.add_remote_cookbook(cookbook)
-        end
+        # commenting out until this is redone
+        # inventory_cookbooks.each do |inventory_cookbook|
+        #   next unless inventory_cookbook.location_specification?
+        #   cookbook = inventory_cookbook.install(inventory_directory)
+        #   dependency_graph.add_remote_cookbook(cookbook)
+        # end
       end
 
       def build_dependency_graph
@@ -57,9 +53,11 @@ module Minimart
       def fetch_inventory
         dependency_graph.resolved_requirements.each do |resolved_requirement|
           name, version   = resolved_requirement
+          next if local_store.installed?(name, version)
+
           remote_cookbook = find_remote_cookbook(name, version)
-          next if remote_cookbook.nil?
-          CookbookDownloader.download(remote_cookbook, inventory_directory)
+          path = CookbookDownloader.download(remote_cookbook)
+          local_store.add_cookbook_from_directory(path)
         end
       end
 

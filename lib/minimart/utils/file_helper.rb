@@ -23,7 +23,7 @@ module Minimart
       end
 
       def self.make_directory(directory_name)
-        FileUtils.mkdir_p(directory_name)
+        FileUtils.mkdir_p(directory_name).first
       end
 
       def self.remove_directory(path)

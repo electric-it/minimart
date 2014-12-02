@@ -4,9 +4,9 @@ describe Minimart::Mirror::LocalStore do
 
   subject { Minimart::Mirror::LocalStore.new(test_directory) }
 
-  let(:sample_cookbook_path) { 'spec/fixtures/sample_cookbook' }
-
   describe "#add_cookbook_from_directory" do
+    let(:sample_cookbook_path) { 'spec/fixtures/sample_cookbook' }
+
     before(:each) do
       subject.add_cookbook_from_directory(sample_cookbook_path)
     end
@@ -24,7 +24,7 @@ describe Minimart::Mirror::LocalStore do
   describe '#installed?' do
     context 'when a cookbook is installed' do
       before(:each) do
-        subject.add_cookbook_from_directory(sample_cookbook_path)
+        subject.add_cookbook_to_store('sample_cookbook', '1.2.3')
       end
 
       it 'should return true for a matching version' do
