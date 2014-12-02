@@ -20,6 +20,7 @@ require 'minimart/inventory_cookbook/git_cookbook'
 
 require 'minimart/mirror/cookbook_downloader'
 require 'minimart/mirror/dependency_graph'
+require 'minimart/mirror/local_store'
 require 'minimart/mirror/inventory_builder'
 require 'minimart/mirror/inventory_configuration'
 require 'minimart/mirror/remote_cookbook'
