@@ -10,14 +10,12 @@ module Minimart
         @cookbooks = {}
       end
 
-      def add_cookbook_from_directory(path_to_cookbook)
+      def add_cookbook_from_path(path_to_cookbook)
         path_to_cookbook  = Utils::FileHelper.cookbook_path_in_directory(path_to_cookbook)
         cookbook          = Ridley::Chef::Cookbook.from_path(path_to_cookbook)
 
         add_cookbook_to_store(cookbook.metadata.name, cookbook.metadata.version)
-        new_directory = File.join(directory, "/#{cookbook.name}")
-        FileUtils.remove_dir(new_directory) if Dir.exists?(new_directory)
-        FileUtils.cp_r(path_to_cookbook, new_directory)
+        copy_cookbook(path_to_cookbook,  File.join(directory, "/#{cookbook.name}"))
       end
 
       def installed?(cookbook_name, cookbook_version)
@@ -31,6 +29,15 @@ module Minimart
       end
 
       private
+
+      def copy_cookbook(source, destination)
+        FileUtils.rmdir(destination) if Dir.exists?(destination)
+        FileUtils.cp_r(source, destination)
+
+        # clean destination directory
+        git_dir = File.join(destination, '/.git')
+        FileUtils.rmdir(git_dir) if Dir.exists?(git_dir)
+      end
 
       def directory
         # lazily create the directory to hold the store

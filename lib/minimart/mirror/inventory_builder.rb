@@ -3,80 +3,91 @@ module Minimart
     class InventoryBuilder
 
       attr_reader :inventory_configuration,
-                  :dependency_graph,
+                  :graph,
                   :local_store
 
       def initialize(inventory_directory, inventory_configuration)
         @inventory_configuration = inventory_configuration
-        @dependency_graph        = DependencyGraph.new
-        @local_store             = LocalStore.new(inventory_directory)
+        @graph = DependencyGraph.new
+        @local_store = LocalStore.new(inventory_directory)
       end
 
       def build!
-        download_cookbooks_with_location_specifications
-        build_dependency_graph
+        install_cookbooks_with_location_dependency
+        add_remote_cookbooks_to_graph
+        add_inventory_requirements_to_graph
         fetch_inventory
       end
 
       private
 
-      def download_cookbooks_with_location_specifications
-        inventory_cookbooks.each do |inventory_cookbook|
-          next unless inventory_cookbook.location_specification?
-
-          dependency_graph.add_remote_cookbook(inventory_cookbook.cookbook_info)
-          local_store.add_cookbook_from_directory(inventory_cookbook.cookbook_path)
+      def install_cookbooks_with_location_dependency
+        inventory_cookbooks.each do |dependency|
+          next unless dependency.location_specification?
+          # any dependencies found here take precendence over those from sources listed in the inventory
+          add_cookbook_to_graph(dependency.cookbook_info)
+          add_cookbook_to_local_store(dependency.cookbook_path)
         end
       end
 
-      def build_dependency_graph
-        add_cookbooks_to_dependency_graph
-        add_requirements_to_dependency_graph
-      end
-
-      def add_cookbooks_to_dependency_graph
-        sources.each do |source|
-          source.cookbooks.each do |cookbook|
-            dependency_graph.add_remote_cookbook(cookbook)
-          end
+      def add_remote_cookbooks_to_graph
+        sources.each_cookbook do |cookbook|
+          add_cookbook_to_graph(cookbook)
         end
       end
 
-      def add_requirements_to_dependency_graph
+      def add_inventory_requirements_to_graph
         inventory_cookbooks.each do |cookbook|
-          dependency_graph.add_inventory_requirement(cookbook.requirements)
+          add_inventory_requirement_to_graph(cookbook.requirements)
         end
       end
 
       def fetch_inventory
-        dependency_graph.resolved_requirements.each do |resolved_requirement|
-          name, version   = resolved_requirement
-          next if local_store.installed?(name, version)
-
-          path = Download::Supermarket.download(find_remote_cookbook(name, version))
-          local_store.add_cookbook_from_directory(path)
+        resolved_requirements.each do |resolved_requirement|
+          install_cookbook(*resolved_requirement)
         end
       end
 
-      def find_remote_cookbook(name, version)
-        sources.each do |source|
-          result = source.find_cookbook(name, version)
-          return result unless result.nil?
-        end
+      def resolved_requirements
+        graph.resolved_requirements
+      end
 
-        raise CookbookNotFound, "The cookbook #{name} with the version #{version} could not be found"
+      def install_cookbook(name, version)
+        return if cookbook_already_installed?(name, version)
+        add_cookbook_to_local_store(download_cookbook(name, version))
+      end
+
+      def cookbook_already_installed?(name, version)
+        local_store.installed?(name, version)
+      end
+
+      def add_cookbook_to_local_store(cookbook_path)
+        local_store.add_cookbook_from_path(cookbook_path)
+      end
+
+      def download_cookbook(name, version)
+        Download::Supermarket.download(find_cookbook(name, version))
+      end
+
+      def find_cookbook(name, version)
+        sources.find_cookbook(name, version)
       end
 
       def inventory_cookbooks
         inventory_configuration.cookbooks
       end
 
+      def add_cookbook_to_graph(cookbook)
+        graph.add_remote_cookbook(cookbook)
+      end
+
+      def add_inventory_requirement_to_graph(requirements)
+        graph.add_inventory_requirement(requirements)
+      end
+
       def sources
         inventory_configuration.sources
       end
-
     end
-
-    class CookbookNotFound < Exception; end
   end
 end

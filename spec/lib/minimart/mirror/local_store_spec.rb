@@ -4,11 +4,11 @@ describe Minimart::Mirror::LocalStore do
 
   subject { Minimart::Mirror::LocalStore.new(test_directory) }
 
-  describe "#add_cookbook_from_directory" do
+  describe "#add_cookbook_from_path" do
     let(:sample_cookbook_path) { 'spec/fixtures/sample_cookbook' }
 
     before(:each) do
-      subject.add_cookbook_from_directory(sample_cookbook_path)
+      subject.add_cookbook_from_path(sample_cookbook_path)
     end
 
     it 'should copy the sample cookbook' do
