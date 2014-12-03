@@ -2,8 +2,7 @@ module Minimart
   module InventoryCookbook
     class GitCookbook < BaseCookbook
 
-      attr_reader :name,
-                  :url,
+      attr_reader :url,
                   :branch,
                   :ref,
                   :tag
@@ -20,26 +19,14 @@ module Minimart
         true
       end
 
-      def cookbook
-        @cookbook ||= fetch_cookbook
-      end
-
       def requirements
         cookbook_info.dependencies
-      end
-
-      def cookbook_info
-        cookbook.metadata
-      end
-
-      def cookbook_path
-        cookbook.path
       end
 
       private
 
       def fetch_cookbook
-        Configuration.output.puts "-- Downloading #{name}(#{commitish}) from #{url}"
+        Configuration.output.puts "-- Downloading '#{name}[#{commitish}]' from '#{url}'"
 
         path = Download::GitRepository.new(url).download(commitish)
         Ridley::Chef::Cookbook.from_path(path)

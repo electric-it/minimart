@@ -47,6 +47,10 @@ describe Minimart::Mirror::InventoryConfiguration do
     it 'should build cookbooks for any git refs' do
       expect(subject.cookbooks.any? { |c| c.respond_to?(:ref) && c.ref == 'git-ref-sha' }).to eq true
     end
+
+    it 'should build any cookbooks for local paths' do
+      expect(subject.cookbooks.any? { |c| c.respond_to?(:path) && c.path == 'spec/fixtures/sample_cookbook' }).to eq true
+    end
   end
 
 end

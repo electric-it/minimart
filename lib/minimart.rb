@@ -20,6 +20,7 @@ require 'minimart/utils/http'
 
 require 'minimart/inventory_cookbook/base_cookbook'
 require 'minimart/inventory_cookbook/git_cookbook'
+require 'minimart/inventory_cookbook/local_cookbook'
 
 require 'minimart/mirror/dependency_graph'
 require 'minimart/mirror/local_store'

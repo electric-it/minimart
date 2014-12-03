@@ -33,12 +33,12 @@ module Minimart
       private
 
       def copy_cookbook(source, destination)
-        FileUtils.rmdir(destination) if Dir.exists?(destination)
+        FileUtils.rm_rf(destination) if Dir.exists?(destination)
         FileUtils.cp_r(source, destination)
 
         # clean destination directory
         git_dir = File.join(destination, '/.git')
-        FileUtils.rmdir(git_dir) if Dir.exists?(git_dir)
+        FileUtils.rm_rf(git_dir) if Dir.exists?(git_dir)
       end
 
       def load_local_inventory

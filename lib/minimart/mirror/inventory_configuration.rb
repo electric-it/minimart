@@ -35,7 +35,8 @@ module Minimart
       def parse_cookbooks
         configuration[:cookbooks].map do |name, reqs|
           build_cookbooks(name, reqs.fetch(:versions, [])) +
-            build_git_cookbooks(name, reqs.fetch(:git, {}))
+            build_git_cookbooks(name, reqs.fetch(:git, {})) +
+            build_local_cookbooks(name, reqs.fetch(:path, nil))
         end.flatten.compact
       end
 
@@ -49,6 +50,10 @@ module Minimart
         cookbooks_from_branches(name, reqs[:url], reqs.fetch(:branches, [])) +
           cookbooks_from_tags(name, reqs[:url], reqs.fetch(:tags, [])) +
           cookbooks_from_refs(name, reqs[:url], reqs.fetch(:refs, []))
+      end
+
+      def build_local_cookbooks(name, path)
+        path ? [InventoryCookbook::LocalCookbook.new(name, path: path)] : []
       end
 
       def cookbooks_from_branches(name, url, branches)

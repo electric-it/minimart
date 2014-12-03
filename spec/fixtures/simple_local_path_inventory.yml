@@ -1,0 +1,5 @@
+sources:
+  - "https://supermarket.getchef.com"
+cookbooks:
+  sample_cookbook:
+    path: 'spec/fixtures/sample_cookbook'

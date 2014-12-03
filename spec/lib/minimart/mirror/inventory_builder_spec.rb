@@ -37,6 +37,31 @@ describe Minimart::Mirror::InventoryBuilder do
       end
     end
 
+    describe 'when a cookbook with a local path is present' do
+      let(:inventory_config) do
+        Minimart::Mirror::InventoryConfiguration.new('spec/fixtures/simple_local_path_inventory.yml')
+      end
+
+      around(:each) do |e|
+        VCR.use_cassette('local_path_cookbooks') { e.call }
+      end
+
+      it 'should add the cookbook to the graph' do
+        subject.build!
+        expect(subject.graph.remote_cookbook_added?('sample_cookbook', '1.2.3')).to eq true
+      end
+
+      it 'should add the cookbook to the local store' do
+        subject.build!
+        expect(subject.local_store.installed?('sample_cookbook', '1.2.3')).to eq true
+      end
+
+      it 'should add any dependencies of the cookbook to the local store' do
+        subject.build!
+        expect(subject.local_store.installed?('yum', '3.5.1')).to eq true
+      end
+    end
+
     describe 'fetching cookbooks from a supermarket' do
       let(:inventory_config) do
         Minimart::Mirror::InventoryConfiguration.new('spec/fixtures/simple_inventory.yml')
