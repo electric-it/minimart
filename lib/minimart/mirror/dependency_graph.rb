@@ -51,11 +51,9 @@ module Minimart
         Solve.it!(graph, [requirement])
 
       rescue Solve::Errors::NoSolutionError => e
-        raise UnresolvedDependency, e.message
+        raise Error::UnresolvedDependency, e.message
       end
 
     end
-
-    class UnresolvedDependency < Exception; end
   end
 end

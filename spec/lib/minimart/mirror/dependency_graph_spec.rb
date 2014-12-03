@@ -116,7 +116,7 @@ describe Minimart::Mirror::DependencyGraph do
       it 'should raise an error' do
         expect {
           subject.resolved_requirements
-        }.to raise_error Minimart::Mirror::UnresolvedDependency
+        }.to raise_error Minimart::Error::UnresolvedDependency
       end
     end
   end

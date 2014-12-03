@@ -40,7 +40,7 @@ describe Minimart::Mirror::Source do
         expect {
           subject.find_cookbook('mysql', '5.6.1')
         }.to raise_error(
-          Minimart::Mirror::UniverseNotFoundError,
+          Minimart::Error::UniverseNotFoundError,
           "no universe found for #{base_url}")
       end
     end

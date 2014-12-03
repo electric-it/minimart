@@ -5,6 +5,7 @@ module Minimart
   require 'minimart/version'
 
   require 'minimart/configuration'
+  require 'minimart/error'
   require 'minimart/mirror'
 
   require 'minimart/download/git_repository'

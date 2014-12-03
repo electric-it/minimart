@@ -15,7 +15,7 @@ describe Minimart::Mirror::InventoryConfiguration do
         expect {
           Minimart::Mirror::InventoryConfiguration.new('not_a_real_config.yml')
         }.to raise_error(
-          Minimart::Mirror::InvalidInventoryError,
+          Minimart::Error::InvalidInventoryError,
           'The inventory configuration file could not be found')
       end
     end

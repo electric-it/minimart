@@ -24,7 +24,7 @@ module Minimart
 
       def parse_config_file
         unless Utils::FileHelper.file_exists?(inventory_config_path)
-          raise InvalidInventoryError, 'The inventory configuration file could not be found'
+          raise Error::InvalidInventoryError, 'The inventory configuration file could not be found'
         end
 
         file  = File.open(inventory_config_path)
@@ -131,7 +131,5 @@ module Minimart
         [InventoryRequirement::LocalPathRequirement.new(name, path: path)]
       end
     end
-
-    class InvalidInventoryError < Exception; end
   end
 end

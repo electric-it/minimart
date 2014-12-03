@@ -41,7 +41,7 @@ describe Minimart::Mirror::Sources do
         expect {
           subject.find_cookbook('mysql', '2.0.0')
         }.to raise_error(
-          Minimart::Mirror::CookbookNotFound,
+          Minimart::Error::CookbookNotFound,
           "The cookbook mysql with the version 2.0.0 could not be found")
       end
     end

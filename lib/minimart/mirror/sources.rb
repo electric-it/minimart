@@ -16,7 +16,7 @@ module Minimart
           return cookbook if cookbook
         end
 
-        raise CookbookNotFound, "The cookbook #{name} with the version #{version} could not be found"
+        raise Error::CookbookNotFound, "The cookbook #{name} with the version #{version} could not be found"
       end
 
       private
@@ -25,7 +25,5 @@ module Minimart
         self << Source.new(source_url)
       end
     end
-
-    class CookbookNotFound < Exception; end
   end
 end

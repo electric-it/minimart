@@ -34,7 +34,7 @@ module Minimart
         Utils::Http.get_json(universe_url)
 
       rescue RestClient::ResourceNotFound
-        raise UniverseNotFoundError.new "no universe found for #{base_url}"
+        raise Error::UniverseNotFoundError.new "no universe found for #{base_url}"
       end
 
       def universe_url
@@ -42,8 +42,5 @@ module Minimart
         URI.join("#{base_url}/", 'universe')
       end
     end
-
-    class UniverseNotFoundError < Exception; end
-    class DependencyNotMet < Exception; end
   end
 end
