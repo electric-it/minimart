@@ -31,25 +31,25 @@ describe Minimart::Mirror::InventoryConfiguration do
     end
   end
 
-  describe '#cookbooks' do
+  describe '#requirements' do
     it 'should build any cookbooks for any listed versions' do
-      expect(subject.cookbooks.any? { |c| c.version_requirement == '~> 5.6.1' }).to eq true
+      expect(subject.requirements.any? { |c| c.version_requirement == '~> 5.6.1' }).to eq true
     end
 
     it 'should build cookbooks for any git branches' do
-      expect(subject.cookbooks.any? { |c| c.respond_to?(:branch) && c.branch == 'windows' }).to eq true
+      expect(subject.requirements.any? { |c| c.respond_to?(:branch) && c.branch == 'windows' }).to eq true
     end
 
     it 'should build cookbooks for any git tags' do
-      expect(subject.cookbooks.any? { |c| c.respond_to?(:tag) && c.tag == 'v5.2.0' }).to eq true
+      expect(subject.requirements.any? { |c| c.respond_to?(:tag) && c.tag == 'v5.2.0' }).to eq true
     end
 
     it 'should build cookbooks for any git refs' do
-      expect(subject.cookbooks.any? { |c| c.respond_to?(:ref) && c.ref == 'git-ref-sha' }).to eq true
+      expect(subject.requirements.any? { |c| c.respond_to?(:ref) && c.ref == 'git-ref-sha' }).to eq true
     end
 
     it 'should build any cookbooks for local paths' do
-      expect(subject.cookbooks.any? { |c| c.respond_to?(:path) && c.path == 'spec/fixtures/sample_cookbook' }).to eq true
+      expect(subject.requirements.any? { |c| c.respond_to?(:path) && c.path == 'spec/fixtures/sample_cookbook' }).to eq true
     end
   end
 

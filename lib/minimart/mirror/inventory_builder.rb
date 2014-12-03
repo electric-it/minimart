@@ -22,11 +22,11 @@ module Minimart
       private
 
       def install_cookbooks_with_location_dependency
-        inventory_cookbooks.each do |dependency|
-          next unless dependency.location_specification?
+        inventory_requirements.each do |cookbook_requirement|
+          next unless cookbook_requirement.location_specification?
           # any dependencies found here take precendence over those from sources listed in the inventory
-          add_cookbook_to_graph(dependency.cookbook_info)
-          add_cookbook_to_local_store(dependency.cookbook_path)
+          add_cookbook_to_graph(cookbook_requirement.cookbook_info)
+          add_cookbook_to_local_store(cookbook_requirement.cookbook_path)
         end
       end
 
@@ -37,8 +37,8 @@ module Minimart
       end
 
       def add_inventory_requirements_to_graph
-        inventory_cookbooks.each do |cookbook|
-          add_inventory_requirement_to_graph(cookbook.requirements)
+        inventory_requirements.each do |cookbook_requirement|
+          add_inventory_requirement_to_graph(cookbook_requirement.requirements)
         end
       end
 
@@ -77,16 +77,16 @@ module Minimart
         sources.find_cookbook(name, version)
       end
 
-      def inventory_cookbooks
-        inventory_configuration.cookbooks
-      end
-
       def add_cookbook_to_graph(cookbook)
         graph.add_remote_cookbook(cookbook)
       end
 
       def add_inventory_requirement_to_graph(requirements)
         graph.add_inventory_requirement(requirements)
+      end
+
+      def inventory_requirements
+        inventory_configuration.requirements
       end
 
       def sources

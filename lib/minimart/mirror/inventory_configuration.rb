@@ -13,10 +13,10 @@ module Minimart
       end
 
       def sources
-        @sources ||= Sources.new(configuration[:sources])
+        @sources ||= Sources.new(raw_sources)
       end
 
-      def cookbooks
+      def requirements
         @cookbooks ||= parse_cookbooks
       end
 
@@ -33,45 +33,102 @@ module Minimart
       end
 
       def parse_cookbooks
-        configuration[:cookbooks].map do |name, reqs|
-          build_cookbooks(name, reqs.fetch(:versions, [])) +
-            build_git_cookbooks(name, reqs.fetch(:git, {})) +
-            build_local_cookbooks(name, reqs.fetch(:path, nil))
+        raw_cookbooks.map do |name, reqs|
+          market_requirements(name, reqs) + git_requirements(name, reqs) + local_path_requirements(name, reqs)
         end.flatten.compact
       end
 
-      def build_cookbooks(name, requirements)
-        requirements.map do |version|
-          InventoryRequirement::BaseRequirement.new(name, version_requirement: version)
+      def market_requirements(name, reqs)
+        CookbookRequirementsBuilder.new(name, reqs).build
+      end
+
+      def git_requirements(name, reqs)
+        GitRequirementsBuilder.new(name, reqs.fetch(:git, {})).build
+      end
+
+      def local_path_requirements(name, reqs)
+        LocalRequirementsBuilder.new(name, reqs).build
+      end
+
+      def raw_sources
+        configuration[:sources]
+      end
+
+      def raw_cookbooks
+        configuration[:cookbooks]
+      end
+    end
+
+
+    class CookbookRequirementsBuilder
+      attr_reader :name,
+                  :versions
+
+      def initialize(name, reqs)
+        @name     = name
+        @versions = reqs.fetch(:versions, [])
+      end
+
+      def build
+        versions.map do |v|
+          InventoryRequirement::BaseRequirement.new(name, version_requirement: v)
         end
       end
+    end
 
-      def build_git_cookbooks(name, reqs)
-        cookbooks_from_branches(name, reqs[:url], reqs.fetch(:branches, [])) +
-          cookbooks_from_tags(name, reqs[:url], reqs.fetch(:tags, [])) +
-          cookbooks_from_refs(name, reqs[:url], reqs.fetch(:refs, []))
+
+    class GitRequirementsBuilder
+
+      attr_reader :name,
+                  :url,
+                  :branches,
+                  :tags,
+                  :refs
+
+      def initialize(name, reqs)
+        @name     = name
+        @url      = reqs[:url]
+        @branches = reqs.fetch(:branches, [])
+        @tags     = reqs.fetch(:tags, [])
+        @refs     = reqs.fetch(:refs, [])
       end
 
-      def build_local_cookbooks(name, path)
-        path ? [InventoryRequirement::LocalPathRequirement.new(name, path: path)] : []
+      def build
+        from_branches + from_tags + from_refs
       end
 
-      def cookbooks_from_branches(name, url, branches)
-        branches.map do |branch|
-          InventoryRequirement::GitRequirement.new(name, url: url, branch: branch)
-        end
+      private
+
+      def from_branches
+        branches.map { |b| build_requirement(:branch, b) }
       end
 
-      def cookbooks_from_tags(name, url, tags)
-        tags.map do |tag|
-          InventoryRequirement::GitRequirement.new(name, url: url, tag: tag)
-        end
+      def from_tags
+        tags.map { |t| build_requirement(:tag, t) }
       end
 
-      def cookbooks_from_refs(name, url, refs)
-        refs.map do |ref|
-          InventoryRequirement::GitRequirement.new(name, url: url, ref: ref)
-        end
+      def from_refs
+        refs.map { |r| build_requirement(:ref, r) }
+      end
+
+      def build_requirement(type, value)
+        InventoryRequirement::GitRequirement.new(name, url: url, type => value)
+      end
+    end
+
+
+    class LocalRequirementsBuilder
+      attr_reader :name,
+                  :path
+
+      def initialize(name, reqs)
+        @name = name
+        @path = reqs[:path]
+      end
+
+      def build
+        return [] unless path
+        [InventoryRequirement::LocalPathRequirement.new(name, path: path)]
       end
     end
 
