@@ -1,6 +1,6 @@
 module Minimart
-  module InventoryCookbook
-    class BaseCookbook
+  module InventoryRequirement
+    class BaseRequirement
 
       attr_reader :name,
                   :version_requirement,

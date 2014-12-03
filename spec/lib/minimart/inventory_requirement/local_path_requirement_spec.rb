@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Minimart::InventoryCookbook::LocalCookbook do
+describe Minimart::InventoryRequirement::LocalPathRequirement do
 
   subject do
-    Minimart::InventoryCookbook::LocalCookbook.new('sample_cookbook',
+    Minimart::InventoryRequirement::LocalPathRequirement.new('sample_cookbook',
       path: 'spec/fixtures/sample_cookbook')
   end
 

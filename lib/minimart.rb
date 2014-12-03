@@ -15,7 +15,7 @@ module Minimart
   require 'minimart/utils/hash_with_indifferent_access'
   require 'minimart/utils/http'
 
-  require 'minimart/inventory_cookbook/base_cookbook'
-  require 'minimart/inventory_cookbook/git_cookbook'
-  require 'minimart/inventory_cookbook/local_cookbook'
+  require 'minimart/inventory_requirement/base_requirement'
+  require 'minimart/inventory_requirement/git_requirement'
+  require 'minimart/inventory_requirement/local_path_requirement'
 end

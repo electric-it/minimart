@@ -1,6 +1,6 @@
 module Minimart
-  module InventoryCookbook
-    class LocalCookbook < BaseCookbook
+  module InventoryRequirement
+    class LocalPathRequirement < BaseRequirement
 
       attr_reader :path
 

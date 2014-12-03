@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Minimart::InventoryCookbook::GitCookbook do
+describe Minimart::InventoryRequirement::GitRequirement do
 
   subject do
-    Minimart::InventoryCookbook::GitCookbook.new(
+    Minimart::InventoryRequirement::GitRequirement.new(
       'sample_cookbook',
       branch: 'new-feature-branch')
   end
@@ -27,14 +27,14 @@ describe Minimart::InventoryCookbook::GitCookbook do
 
     context 'when a ref is provided' do
       it 'should set the sha' do
-        cookbook = Minimart::InventoryCookbook::GitCookbook.new('sample_cookbook', ref: 'SHA')
+        cookbook = Minimart::InventoryRequirement::GitRequirement.new('sample_cookbook', ref: 'SHA')
         expect(cookbook.ref).to eq 'SHA'
       end
     end
 
     context 'when a tag is provided' do
       it 'should set the tag' do
-        cookbook = Minimart::InventoryCookbook::GitCookbook.new('sample_cookbook', tag: 'v1.0.0')
+        cookbook = Minimart::InventoryRequirement::GitRequirement.new('sample_cookbook', tag: 'v1.0.0')
         expect(cookbook.tag).to eq 'v1.0.0'
       end
     end

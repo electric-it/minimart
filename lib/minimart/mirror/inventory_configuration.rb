@@ -42,7 +42,7 @@ module Minimart
 
       def build_cookbooks(name, requirements)
         requirements.map do |version|
-          InventoryCookbook::BaseCookbook.new(name, version_requirement: version)
+          InventoryRequirement::BaseRequirement.new(name, version_requirement: version)
         end
       end
 
@@ -53,24 +53,24 @@ module Minimart
       end
 
       def build_local_cookbooks(name, path)
-        path ? [InventoryCookbook::LocalCookbook.new(name, path: path)] : []
+        path ? [InventoryRequirement::LocalPathRequirement.new(name, path: path)] : []
       end
 
       def cookbooks_from_branches(name, url, branches)
         branches.map do |branch|
-          InventoryCookbook::GitCookbook.new(name, url: url, branch: branch)
+          InventoryRequirement::GitRequirement.new(name, url: url, branch: branch)
         end
       end
 
       def cookbooks_from_tags(name, url, tags)
         tags.map do |tag|
-          InventoryCookbook::GitCookbook.new(name, url: url, tag: tag)
+          InventoryRequirement::GitRequirement.new(name, url: url, tag: tag)
         end
       end
 
       def cookbooks_from_refs(name, url, refs)
         refs.map do |ref|
-          InventoryCookbook::GitCookbook.new(name, url: url, ref: ref)
+          InventoryRequirement::GitRequirement.new(name, url: url, ref: ref)
         end
       end
     end

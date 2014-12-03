@@ -1,6 +1,6 @@
 module Minimart
-  module InventoryCookbook
-    class GitCookbook < BaseCookbook
+  module InventoryRequirement
+    class GitRequirement < BaseRequirement
 
       attr_reader :url,
                   :branch,

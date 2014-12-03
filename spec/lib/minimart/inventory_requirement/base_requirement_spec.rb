@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Minimart::InventoryCookbook::BaseCookbook do
+describe Minimart::InventoryRequirement::BaseRequirement do
 
   subject do
-    Minimart::InventoryCookbook::BaseCookbook.new(
+    Minimart::InventoryRequirement::BaseRequirement.new(
       'mysql',
       version_requirement: '> 1.0.0')
   end
