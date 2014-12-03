@@ -1,3 +1,5 @@
+require 'rest_client'
+
 module Minimart
   module Utils
     module Http

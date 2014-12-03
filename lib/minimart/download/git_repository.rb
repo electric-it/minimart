@@ -1,3 +1,5 @@
+require 'git'
+
 module Minimart
   module Download
     class GitRepository

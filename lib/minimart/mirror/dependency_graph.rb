@@ -1,3 +1,5 @@
+require 'solve'
+
 ##
 # A class for managing a listing of remote cookbooks and their dependencies.
 # This can be used to resolve any requirements found in the inventory file.

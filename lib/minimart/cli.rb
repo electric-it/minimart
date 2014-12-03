@@ -1,4 +1,5 @@
 require 'minimart'
+require 'thor'
 
 module Minimart
   class Cli < Thor
