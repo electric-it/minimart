@@ -53,7 +53,11 @@ module Minimart
       end
 
       def install_cookbook(name, version)
-        return if cookbook_already_installed?(name, version)
+        if cookbook_already_installed?(name, version)
+          Configuration.output.puts("cookbook already installed: #{name}-#{version}.")
+          return
+        end
+
         add_cookbook_to_local_store(download_cookbook(name, version))
       end
 
