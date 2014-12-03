@@ -4,6 +4,16 @@ describe Minimart::Mirror::LocalStore do
 
   subject { Minimart::Mirror::LocalStore.new(test_directory) }
 
+  describe '::new' do
+    context 'when a cookbook is found in the path' do
+      subject { Minimart::Mirror::LocalStore.new('spec/fixtures') }
+
+      it 'should add the cookbook to the store' do
+        expect(subject.installed?('sample_cookbook', '1.2.3')).to eq true
+      end
+    end
+  end
+
   describe "#add_cookbook_from_path" do
     let(:sample_cookbook_path) { 'spec/fixtures/sample_cookbook' }
 

@@ -3,11 +3,11 @@ module Minimart
     module FileHelper
 
       def self.cookbook_path_in_directory(path)
-        cookbook_in_path?(path) ? path : find_cookbook_directory(path)
+        cookbook_in_path?(path) ? path : find_cookbooks_in_directory(path).first
       end
 
-      def self.find_cookbook_directory(path)
-        Dir.glob(File.join(path, '/*/')).select { |d| cookbook_in_path?(d) }.first
+      def self.find_cookbooks_in_directory(path)
+        Dir.glob(File.join(path, '/*/')).select { |d| cookbook_in_path?(d) }
       end
 
       def self.cookbook_in_path?(path)
