@@ -15,7 +15,7 @@ module Minimart
       end
 
       def add_remote_cookbook(cookbook)
-        return if remote_cookbook_added?(cookbook)
+        return if remote_cookbook_added?(cookbook.name, cookbook.version)
 
         graph.artifact(cookbook.name, cookbook.version)
 
@@ -25,8 +25,8 @@ module Minimart
         end
       end
 
-      def remote_cookbook_added?(cookbook)
-        graph.artifact?(cookbook.name,  cookbook.version)
+      def remote_cookbook_added?(name, version)
+        graph.artifact?(name, version)
       end
 
       def find_graph_artifact(cookbook)

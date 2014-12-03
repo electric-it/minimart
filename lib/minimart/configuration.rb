@@ -6,7 +6,11 @@ module Minimart
 
     class << self
       def output
-        $stdout
+        @output || $stdout
+      end
+
+      def output=(io)
+        @output = io
       end
     end
   end

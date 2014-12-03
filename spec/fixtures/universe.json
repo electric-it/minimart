@@ -17,6 +17,14 @@
       }
     }
   },
+  "yum-mysql-community": {
+    "0.1.10": {
+      "location_type": "opscode",
+      "location_path": "https://supermarket.getchef.com/api/v1",
+      "download_url": "https://supermarket.getchef.com/api/v1/cookbooks/yum-mysql-community/versions/0.1.10/download",
+      "dependencies": {}
+    }
+  },
   "yum": {
     "3.4.1": {
       "location_type": "opscode",

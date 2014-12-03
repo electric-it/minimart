@@ -23,7 +23,7 @@ describe Minimart::Mirror::DependencyGraph do
     end
 
     it 'should add the cookbook to the graph' do
-      expect(subject.remote_cookbook_added?(cookbook)).to eq true
+      expect(subject.remote_cookbook_added?(cookbook.name, cookbook.version)).to eq true
     end
 
     it 'should add any possible dependencies to the graph' do
@@ -57,13 +57,13 @@ describe Minimart::Mirror::DependencyGraph do
       before(:each) { subject.add_remote_cookbook(cookbook) }
 
       it 'should return true' do
-        expect(subject.remote_cookbook_added?(cookbook)).to eq true
+        expect(subject.remote_cookbook_added?(cookbook.name, cookbook.version)).to eq true
       end
     end
 
     context 'when the cookbook has not been added' do
       it 'should return false' do
-        expect(subject.remote_cookbook_added?(cookbook)).to eq false
+        expect(subject.remote_cookbook_added?(cookbook.name, cookbook.version)).to eq false
       end
     end
   end

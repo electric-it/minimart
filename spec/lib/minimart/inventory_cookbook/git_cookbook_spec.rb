@@ -48,7 +48,7 @@ describe Minimart::InventoryCookbook::GitCookbook do
 
   describe '#requirements' do
     it 'should return the requirements specified in the cookbook metadata' do
-      expect(subject.requirements).to eq 'yum' => '> 4.0.0'
+      expect(subject.requirements).to eq 'yum' => '> 3.0.0'
     end
   end
 
@@ -57,7 +57,7 @@ describe Minimart::InventoryCookbook::GitCookbook do
       info = subject.cookbook_info
       expect(info.name).to eq 'sample_cookbook'
       expect(info.version).to eq '1.2.3'
-      expect(info.dependencies).to eq 'yum' => '> 4.0.0'
+      expect(info.dependencies).to eq 'yum' => '> 3.0.0'
     end
   end
 
