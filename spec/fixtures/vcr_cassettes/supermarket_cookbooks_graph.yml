@@ -2,6 +2,60 @@
 http_interactions:
 - request:
     method: get
+    uri: https://supermarket.getchef.com/api/v1/cookbooks/mysql/versions/5_5_4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 04 Dec 2014 15:23:43 GMT
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Id:
+      - 76aebda9-1ec8-4e56-ac4e-2bdcadeaf812
+      X-Runtime:
+      - '0.015053'
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Length:
+      - '203'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA52OXYrCQBCEryL9HKc1GFgCCp4ktJM2Ds6f0xMlinffXtm9
+        wNLUS1NVX73AO8tRGHo4ZrIXXrVmAw1UKifyfjg7z4O4pxradvvVNXDnIi5F
+        DXSmMzv1kr5o4qFQdXGCPs7eN2BTup5UarzUmqVHlDlzCVSuXM3EVWlnY1NA
+        yg7vW/xLCIZFbl6bf+j/zuPvUsHPUBzTI/pEo/aOnDmOHK1jgf4FyxzWH+Za
+        54Q5uroo9rBfbYwevN/fawxKiCgBAAA=
+    http_version: 
+  recorded_at: Thu, 04 Dec 2014 15:23:42 GMT
+- request:
+    method: get
     uri: https://supermarket.getchef.com/api/v1/cookbooks/mysql/versions/5.5.4/download
     body:
       encoding: US-ASCII
@@ -23,7 +77,7 @@ http_interactions:
       Content-Type:
       - text/html; charset=utf-8
       Date:
-      - Wed, 03 Dec 2014 16:36:41 GMT
+      - Thu, 04 Dec 2014 15:23:44 GMT
       Location:
       - https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/8173/original/mysql20141007-39112-pokv7k.tar.gz?1412718328
       Server:
@@ -35,9 +89,9 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       X-Request-Id:
-      - 8125edfa-13e4-40d8-83b5-d0c989537a9a
+      - 5194bcae-b898-4e7f-8f31-173c6df13d24
       X-Runtime:
-      - '0.018466'
+      - '0.017186'
       X-Xss-Protection:
       - 1; mode=block
       Content-Length:
@@ -48,7 +102,7 @@ http_interactions:
       encoding: UTF-8
       string: <html><body>You are being <a href="https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/8173/original/mysql20141007-39112-pokv7k.tar.gz?1412718328">redirected</a>.</body></html>
     http_version: 
-  recorded_at: Wed, 03 Dec 2014 16:36:41 GMT
+  recorded_at: Thu, 04 Dec 2014 15:23:43 GMT
 - request:
     method: get
     uri: https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/8173/original/mysql20141007-39112-pokv7k.tar.gz?1412718328
@@ -68,11 +122,11 @@ http_interactions:
       message: OK
     headers:
       X-Amz-Id-2:
-      - BNEOG6kG299m/B1/wE4WS7vBbl9qMzmegQow1FtaSxSvbmuSe9YCeX+S6ogWaBF1
+      - iQt7e8FPKkK8ztpC3oZHOtrjnGyjB2FyYfZ31b6qmK0J0D13d6m5gAGsAj/iy0Uz
       X-Amz-Request-Id:
-      - 37F0A7E94503937D
+      - B50B5C3CE75E2AA2
       Date:
-      - Wed, 03 Dec 2014 16:36:42 GMT
+      - Thu, 04 Dec 2014 15:23:45 GMT
       Last-Modified:
       - Tue, 07 Oct 2014 21:45:30 GMT
       Etag:
@@ -582,7 +636,61 @@ http_interactions:
         Fzn2tcwh7jQQi//FDCOLe1CaSL4VE8ki/r8JA8BC/b+T5v/w3/L+h608m9X/
         d2JKLiVH0J13VrQCaPTHX8cAENcvVf9S9S+f8imf8imf3Of/A1J/xSYAjAIA
     http_version: 
-  recorded_at: Wed, 03 Dec 2014 16:36:42 GMT
+  recorded_at: Thu, 04 Dec 2014 15:23:43 GMT
+- request:
+    method: get
+    uri: https://supermarket.getchef.com/api/v1/cookbooks/yum-mysql-community/versions/0_1_10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 04 Dec 2014 15:23:45 GMT
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Id:
+      - 6f8e76d4-db01-417b-a5bb-23034800c8f8
+      X-Runtime:
+      - '0.009210'
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Length:
+      - '203'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA62QTY7CMAyFr4K8LjGFYVMJJE5SmdSUiPwRp6CCuDtGzNxg
+        Ft7Yz/7e8xO8sxyFoYNDJnvmxdqsoIFK5Uje9yfnuRf3UMH2Z7Nt4MZFXIqq
+        X5nWtB8taY9G7gtVF0fo4uR9Azaly1FLledas3SIMmUugcqFqxm5Ku1kbApI
+        2eGtxb8NwXkKyzDL1S91HKbo6qycj5d/uoa/MQS/KXBI9+gTDYoZOHMcOFrH
+        At0T1IxS97vFRj/zer0BXKhxazMBAAA=
+    http_version: 
+  recorded_at: Thu, 04 Dec 2014 15:23:44 GMT
 - request:
     method: get
     uri: https://supermarket.getchef.com/api/v1/cookbooks/yum-mysql-community/versions/0.1.10/download
@@ -606,7 +714,7 @@ http_interactions:
       Content-Type:
       - text/html; charset=utf-8
       Date:
-      - Wed, 03 Dec 2014 16:36:42 GMT
+      - Thu, 04 Dec 2014 15:23:45 GMT
       Location:
       - https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/7119/original/yum-mysql-community20140721-45637-imvboj.tar.gz?1405996586
       Server:
@@ -618,9 +726,9 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       X-Request-Id:
-      - de17635e-a22a-4c92-9411-923aa31ec77f
+      - 67307e77-4ed8-4c93-9f6c-d91f88fe7993
       X-Runtime:
-      - '0.024528'
+      - '0.018253'
       X-Xss-Protection:
       - 1; mode=block
       Content-Length:
@@ -631,7 +739,7 @@ http_interactions:
       encoding: UTF-8
       string: <html><body>You are being <a href="https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/7119/original/yum-mysql-community20140721-45637-imvboj.tar.gz?1405996586">redirected</a>.</body></html>
     http_version: 
-  recorded_at: Wed, 03 Dec 2014 16:36:42 GMT
+  recorded_at: Thu, 04 Dec 2014 15:23:45 GMT
 - request:
     method: get
     uri: https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/7119/original/yum-mysql-community20140721-45637-imvboj.tar.gz?1405996586
@@ -651,11 +759,11 @@ http_interactions:
       message: OK
     headers:
       X-Amz-Id-2:
-      - "+zn3sKTHVO+iqt2PkNjdX6JDylHdU7eo8fkb1YoQTJtsYxhJuCJtVEe3ss5xNiko"
+      - G50Cd50n3RoY+Hs4bftAe0ljhO5Bi4SadKO52p0Cc5I0A+kQSSgHqszpMzbn+1Km
       X-Amz-Request-Id:
-      - 991A9BCC7A807451
+      - 9A993BEEB468DB70
       Date:
-      - Wed, 03 Dec 2014 16:36:44 GMT
+      - Thu, 04 Dec 2014 15:23:46 GMT
       Last-Modified:
       - Tue, 22 Jul 2014 02:36:28 GMT
       Etag:
@@ -793,5 +901,5 @@ http_interactions:
         4uj5/zqHl+T/W6fSsfk/85L8f4Po+Px/G2nU/H8rj0j5/977PA7l/8yr8v8t
         1NHy/10Mjsr/N4mPy/+ZXyX/P5dzOZdft/w/AhVAcwCQAAA=
     http_version: 
-  recorded_at: Wed, 03 Dec 2014 16:36:43 GMT
+  recorded_at: Thu, 04 Dec 2014 15:23:45 GMT
 recorded_with: VCR 2.9.3
