@@ -80,14 +80,14 @@ module Minimart
     class GitRequirementsBuilder
 
       attr_reader :name,
-                  :url,
+                  :location,
                   :branches,
                   :tags,
                   :refs
 
       def initialize(name, reqs)
         @name     = name
-        @url      = reqs[:url]
+        @location = reqs[:location]
         @branches = reqs.fetch(:branches, [])
         @tags     = reqs.fetch(:tags, [])
         @refs     = reqs.fetch(:refs, [])
@@ -112,7 +112,7 @@ module Minimart
       end
 
       def build_requirement(type, value)
-        InventoryRequirement::GitRequirement.new(name, url: url, type => value)
+        InventoryRequirement::GitRequirement.new(name, location: location, type => value)
       end
     end
 

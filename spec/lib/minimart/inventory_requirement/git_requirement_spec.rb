@@ -9,7 +9,7 @@ describe Minimart::InventoryRequirement::GitRequirement do
   end
 
   before(:each) do
-    allow_any_instance_of(Minimart::Download::GitRepository).to receive(:download).
+    allow_any_instance_of(Minimart::Download::GitRepository).to receive(:fetch).
       with('new-feature-branch').
       and_return('spec/fixtures/sample_cookbook')
   end

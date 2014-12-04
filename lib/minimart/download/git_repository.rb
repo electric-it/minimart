@@ -4,15 +4,15 @@ module Minimart
   module Download
     class GitRepository
 
-      attr_reader :url
+      attr_reader :location
 
-      def initialize(url)
-        @url = url
+      def initialize(location)
+        @location = location
       end
 
-      def download(commitish)
+      def fetch(commitish)
         bare_repo_path = Dir.mktmpdir
-        bare_repo      = Git.clone(url, bare_repo_path, bare: true)
+        bare_repo      = Git.clone(location, bare_repo_path, bare: true)
         revision       = bare_repo.revparse(commitish)
 
         result = Dir.mktmpdir

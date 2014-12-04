@@ -14,7 +14,7 @@ describe Minimart::Mirror::InventoryBuilder do
 
       before(:each) do
         # stub out actually cloning the repo
-        allow_any_instance_of(Minimart::Download::GitRepository).to receive(:download).and_return 'spec/fixtures/sample_cookbook'
+        allow_any_instance_of(Minimart::Download::GitRepository).to receive(:fetch).and_return 'spec/fixtures/sample_cookbook'
       end
 
       around(:each) do |e|

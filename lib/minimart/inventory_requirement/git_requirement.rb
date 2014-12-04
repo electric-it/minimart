@@ -2,17 +2,17 @@ module Minimart
   module InventoryRequirement
     class GitRequirement < BaseRequirement
 
-      attr_reader :url,
+      attr_reader :location,
                   :branch,
                   :ref,
                   :tag
 
       def initialize(name, opts)
         super
-        @branch = opts[:branch]
-        @ref    = opts[:ref]
-        @tag    = opts[:tag]
-        @url    = opts[:url]
+        @branch   = opts[:branch]
+        @ref      = opts[:ref]
+        @tag      = opts[:tag]
+        @location = opts[:location]
       end
 
       def location_specification?
@@ -26,9 +26,9 @@ module Minimart
       private
 
       def fetch_cookbook
-        Configuration.output.puts "-- Downloading '#{name}[#{commitish}]' from '#{url}'"
+        Configuration.output.puts "-- Fetching '#{name}[#{commitish}]' from '#{location}'"
 
-        path = Download::GitRepository.new(url).download(commitish)
+        path = Download::GitRepository.new(location).fetch(commitish)
         Ridley::Chef::Cookbook.from_path(path)
       end
 
