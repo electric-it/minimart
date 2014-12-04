@@ -1,0 +1,6 @@
+sources:
+  - "https://supermarket.getchef.com"
+cookbooks:
+  mysql:
+    versions:
+      - "~> 5.5.0"

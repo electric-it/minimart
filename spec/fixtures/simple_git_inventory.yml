@@ -1,0 +1,8 @@
+sources:
+  - "https://supermarket.getchef.com"
+cookbooks:
+  mysql:
+    git:
+      url: sample_git_repo
+      tags:
+        - v1.2.3

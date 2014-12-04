@@ -1,0 +1,16 @@
+sources:
+  - "https://supermarket.getchef.com"
+cookbooks:
+  sample_cookbook:
+    path: spec/fixtures/sample_cookbook
+  mysql:
+    versions:
+      - ~> 5.6.1
+    git:
+      url: https://github.com/opscode-cookbooks/mysql
+      branches:
+        - windows
+      refs:
+        - git-ref-sha
+      tags:
+        - v5.2.0
