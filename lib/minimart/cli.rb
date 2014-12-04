@@ -17,7 +17,7 @@ module Minimart
 #       - "~> 4.0.2"
 #       - "> 5.0.0"
 #     git:
-#       url:
+#       location: url | path
 #       branches:
 #         - a_branch_name
 #       refs:
