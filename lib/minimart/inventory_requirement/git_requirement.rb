@@ -1,3 +1,5 @@
+require 'minimart/download/git_repository'
+
 module Minimart
   module InventoryRequirement
     class GitRequirement < BaseRequirement

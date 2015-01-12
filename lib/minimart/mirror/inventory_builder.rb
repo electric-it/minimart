@@ -1,3 +1,5 @@
+require 'minimart/download/supermarket'
+
 module Minimart
   class Mirror
     class InventoryBuilder

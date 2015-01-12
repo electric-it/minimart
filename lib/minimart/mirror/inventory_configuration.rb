@@ -1,5 +1,9 @@
 require 'yaml'
 
+require 'minimart/inventory_requirement/base_requirement'
+require 'minimart/inventory_requirement/git_requirement'
+require 'minimart/inventory_requirement/local_path_requirement'
+
 module Minimart
   class Mirror
 
