@@ -1,3 +1,11 @@
+begin
+  require 'simplecov'
+  SimpleCov.start do
+    add_filter '/spec/'
+  end
+rescue LoadError
+end
+
 require 'rspec'
 require 'pry'
 require 'webmock/rspec'
