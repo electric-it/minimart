@@ -2,25 +2,34 @@ require 'yaml'
 
 module Minimart
   class Mirror
+
+    # This class is responsible for parsing a user defined Minimart configuration file.
     class InventoryConfiguration
 
-      attr_reader :inventory_config_path,
-                  :configuration
+      # The path to the inventory configuration file
+      attr_reader :inventory_config_path
 
       def initialize(inventory_config_path)
         @inventory_config_path = inventory_config_path
         @configuration         = parse_config_file
       end
 
+      # The collection of files defined in the inventory file
+      # @return [Minimart::Mirror::Sources]
       def sources
         @sources ||= Sources.new(raw_sources)
       end
 
+      # The collection of cookbook requirements defined in the inventory file
+      # @return [Array]
       def requirements
         @cookbooks ||= parse_cookbooks
       end
 
       private
+
+      # The raw parsed configuration file
+      attr_reader :configuration
 
       def parse_config_file
         unless Utils::FileHelper.file_exists?(inventory_config_path)
@@ -34,8 +43,14 @@ module Minimart
 
       def parse_cookbooks
         raw_cookbooks.map do |name, reqs|
-          market_requirements(name, reqs) + git_requirements(name, reqs) + local_path_requirements(name, reqs)
+          build_requirements_for(name, reqs)
         end.flatten.compact
+      end
+
+      def build_requirements_for(name, reqs)
+        market_requirements(name, reqs) +
+          git_requirements(name, reqs) +
+          local_path_requirements(name, reqs)
       end
 
       def market_requirements(name, reqs)
@@ -43,7 +58,7 @@ module Minimart
       end
 
       def git_requirements(name, reqs)
-        GitRequirementsBuilder.new(name, reqs.fetch('git', {})).build
+        GitRequirementsBuilder.new(name, reqs).build
       end
 
       def local_path_requirements(name, reqs)
@@ -91,10 +106,12 @@ module Minimart
 
       def initialize(name, reqs)
         @name     = name
-        @location = reqs['location']
-        @branches = reqs.fetch('branches', [])
-        @tags     = reqs.fetch('tags', [])
-        @refs     = reqs.fetch('refs', [])
+        git_reqs  = reqs.fetch('git', {})
+
+        @location = git_reqs['location']
+        @branches = git_reqs.fetch('branches', [])
+        @tags     = git_reqs.fetch('tags', [])
+        @refs     = git_reqs.fetch('refs', [])
       end
 
       def build

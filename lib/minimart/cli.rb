@@ -2,6 +2,7 @@ require 'minimart'
 require 'thor'
 
 module Minimart
+  # The command line interface for Minimart.
   class Cli < Thor
     include Thor::Actions
 

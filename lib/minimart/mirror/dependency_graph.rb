@@ -16,7 +16,7 @@ module Minimart
         @inventory_requirements = []
       end
 
-      def add_remote_cookbook(cookbook)
+      def add_artifact(cookbook)
         return if remote_cookbook_added?(cookbook.name, cookbook.version)
 
         graph.artifact(cookbook.name, cookbook.version)
@@ -35,7 +35,7 @@ module Minimart
         graph.find(cookbook.name, cookbook.version)
       end
 
-      def add_inventory_requirement(requirements = {})
+      def add_requirement(requirements = {})
         inventory_requirements.concat(requirements.to_a)
       end
 

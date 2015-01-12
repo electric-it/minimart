@@ -6,39 +6,48 @@ module Minimart
                   :graph,
                   :local_store
 
+      # @param [String] inventory_directory The directory to store the inventory.
+      # @param [Minimart::Mirror::InventoryConfiguration] The inventory as defined by a user of Minimart.
       def initialize(inventory_directory, inventory_configuration)
+        @graph                   = DependencyGraph.new
+        @local_store             = LocalStore.new(inventory_directory)
         @inventory_configuration = inventory_configuration
-        @graph       = DependencyGraph.new
-        @local_store = LocalStore.new(inventory_directory)
       end
 
+      # Build the inventory!
       def build!
         install_cookbooks_with_location_dependency
         add_remote_cookbooks_to_graph
-        add_inventory_requirements_to_graph
+        add_requirements_to_graph
         fetch_inventory
       end
 
       private
 
+      # First we must install any cookbooks with a location specification (git, local path, etc..).
+      # These cookbooks and their associated metadata (any dependencies they have) take
+      # precedence over information found elsewhere.
       def install_cookbooks_with_location_dependency
-        inventory_requirements.each do |cookbook_requirement|
-          next unless cookbook_requirement.location_specification?
-          # any dependencies found here take precendence over those from sources listed in the inventory
-          add_cookbook_to_graph(cookbook_requirement.cookbook_info)
-          add_cookbook_to_local_store(cookbook_requirement.cookbook_path)
+        inventory_requirements.each do |requirement|
+          next unless requirement.location_specification?
+
+          add_artifact_to_graph(requirement.cookbook_info)
+          add_cookbook_to_local_store(requirement.cookbook_path)
         end
       end
 
+      # Fetch the universe from any of the defined sources, and add them as artifacts
+      #  to the dependency resolution graph.
       def add_remote_cookbooks_to_graph
         sources.each_cookbook do |cookbook|
-          add_cookbook_to_graph(cookbook)
+          add_artifact_to_graph(cookbook)
         end
       end
 
-      def add_inventory_requirements_to_graph
+      # Add any cookbooks defined in the inventory file as requirements to the graph
+      def add_requirements_to_graph
         inventory_requirements.each do |cookbook_requirement|
-          add_inventory_requirement_to_graph(cookbook_requirement.requirements)
+          add_requirement_to_graph(cookbook_requirement.requirements)
         end
       end
 
@@ -77,12 +86,12 @@ module Minimart
         sources.find_cookbook(name, version)
       end
 
-      def add_cookbook_to_graph(cookbook)
-        graph.add_remote_cookbook(cookbook)
+      def add_artifact_to_graph(cookbook)
+        graph.add_artifact(cookbook)
       end
 
-      def add_inventory_requirement_to_graph(requirements)
-        graph.add_inventory_requirement(requirements)
+      def add_requirement_to_graph(requirements)
+        graph.add_requirement(requirements)
       end
 
       def inventory_requirements
