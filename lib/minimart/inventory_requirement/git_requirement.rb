@@ -25,7 +25,7 @@ module Minimart
 
       private
 
-      def fetch_cookbook
+      def download_cookbook
         Configuration.output.puts "-- Fetching '#{name}[#{commitish}]' from '#{location}'"
 
         path = Download::GitRepository.new(location).fetch(commitish)

@@ -47,12 +47,16 @@ describe Minimart::InventoryRequirement::GitRequirement do
   end
 
   describe '#requirements' do
+    before(:each) { subject.fetch_cookbook }
+
     it 'should return the requirements specified in the cookbook metadata' do
       expect(subject.requirements).to eq 'yum' => '> 3.0.0'
     end
   end
 
   describe '#cookbook_info' do
+    before(:each) { subject.fetch_cookbook }
+
     it 'should return relevant information' do
       info = subject.cookbook_info
       expect(info.name).to eq 'sample_cookbook'
@@ -62,6 +66,8 @@ describe Minimart::InventoryRequirement::GitRequirement do
   end
 
   describe '#cookbook_path' do
+    before(:each) { subject.fetch_cookbook }
+
     it 'should return the path to the cookbook' do
       expect(subject.cookbook_path.to_s).to match 'spec/fixtures/sample_cookbook'
     end

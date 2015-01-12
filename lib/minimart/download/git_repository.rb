@@ -1,8 +1,15 @@
 require 'git'
+require 'minimart/download/git_cache'
 
 module Minimart
   module Download
     class GitRepository
+
+      class << self
+        def cache
+          @cache ||= GitCache.new
+        end
+      end
 
       attr_reader :location
 
@@ -11,15 +18,21 @@ module Minimart
       end
 
       def fetch(commitish)
-        bare_repo_path = Dir.mktmpdir
-        bare_repo      = Git.clone(location, bare_repo_path, bare: true)
-        revision       = bare_repo.revparse(commitish)
-
-        result = Dir.mktmpdir
+        result      = Dir.mktmpdir
         result_repo = Git.clone(bare_repo_path, result)
         result_repo.fetch(bare_repo_path, tags: true)
-        result_repo.reset_hard(revision)
+        result_repo.reset_hard(bare_repo.revparse(commitish))
         result
+      end
+
+      private
+
+      def bare_repo_path
+        bare_repo.repo.path
+      end
+
+      def bare_repo
+        @bare_repo ||= self.class.cache.get_repository(location)
       end
 
     end

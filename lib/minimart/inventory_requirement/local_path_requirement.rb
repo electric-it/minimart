@@ -19,7 +19,7 @@ module Minimart
 
       private
 
-      def fetch_cookbook
+      def download_cookbook
         Configuration.output.puts "-- Fetching '#{name}' from path '#{path}'"
         Ridley::Chef::Cookbook.from_path(path)
       end

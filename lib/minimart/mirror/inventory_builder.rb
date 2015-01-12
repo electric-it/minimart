@@ -31,6 +31,7 @@ module Minimart
         inventory_requirements.each do |requirement|
           next unless requirement.location_specification?
 
+          requirement.fetch_cookbook
           add_artifact_to_graph(requirement.cookbook_info)
           add_cookbook_to_local_store(requirement.cookbook_path)
         end
