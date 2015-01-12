@@ -70,11 +70,26 @@ module Minimart
           return
         end
 
-        add_cookbook_to_local_store(download_cookbook(name, version))
+        verify_dependency_can_be_installed(name, version)
+        cookbook_path = download_cookbook(name, version)
+        add_cookbook_to_local_store(cookbook_path)
       end
 
       def cookbook_already_installed?(name, version)
         local_store.installed?(name, version)
+      end
+
+      def verify_dependency_can_be_installed(name, version)
+        return unless non_required_version?(name, version)
+
+        msg = "The dependency #{name}-#{version} could not be installed."
+        msg << " This is because a cookbook listed in the inventory depends on a version of '#{name}'"
+        msg << " that does not match the explicit requirements for the '#{name}' cookbook."
+        raise Error::BrokenDependency, msg
+      end
+
+      def non_required_version?(name, version)
+        !inventory_requirements.version_required?(name, version)
       end
 
       def add_cookbook_to_local_store(cookbook_path)

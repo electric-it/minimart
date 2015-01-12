@@ -32,6 +32,14 @@ module Minimart
         @cookbook ||= download_cookbook
       end
 
+      def to_demand
+        [name, version_requirement]
+      end
+
+      def version_requirement?
+        !!version_requirement
+      end
+
       private
 
       def download_cookbook

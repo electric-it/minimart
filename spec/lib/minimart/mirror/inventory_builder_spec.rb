@@ -126,6 +126,22 @@ describe Minimart::Mirror::InventoryBuilder do
             subject.build!
           end
         end
+
+        context 'when a coookbook depends on a non explicit version of a required cookbook' do
+          let(:bad_requirements) do
+            [%w[mysql 5.4], %w[mysql 0.0.1]]
+          end
+
+          before(:each) do
+            allow_any_instance_of(Minimart::Mirror::DependencyGraph).to receive(:resolved_requirements).and_return(bad_requirements)
+          end
+
+          it 'should raise an error' do
+            expect {
+              subject.build!
+            }.to raise_error Minimart::Error::BrokenDependency
+          end
+        end
       end
 
     end

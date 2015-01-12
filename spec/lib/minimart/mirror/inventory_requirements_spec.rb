@@ -42,4 +42,24 @@ describe Minimart::Mirror::InventoryRequirements do
       expect(subject.any? { |c| c.respond_to?(:path) && c.path == 'spec/fixtures/sample_cookbook' }).to eq true
     end
   end
+
+  describe '#version_required?' do
+    context 'when the passed in cookbook was not specified in the local inventory' do
+      it 'should return true' do
+        expect(subject.version_required?('new-book', '0.0.1')).to eq true
+      end
+    end
+
+    context 'when the passed in cookbook solves a requirement specified in the local inventory' do
+      it 'should return true' do
+        expect(subject.version_required?('mysql', '5.6.2')).to eq true
+      end
+    end
+
+    context 'when the passed in cookbook does not solve an explicitly defined requirement in the inventory' do
+      it 'should return false' do
+        expect(subject.version_required?('mysql', '5.5.0')).to eq false
+      end
+    end
+  end
 end

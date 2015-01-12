@@ -5,5 +5,6 @@ module Minimart
     class UniverseNotFoundError < Exception; end
     class DependencyNotMet < Exception; end
     class CookbookNotFound < Exception; end
+    class BrokenDependency < Exception; end
   end
 end
