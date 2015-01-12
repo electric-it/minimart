@@ -13,3 +13,6 @@
 *.a
 *.gem
 mkmf.log
+.ruby-version
+.ruby-gemset
+.rvmrc
