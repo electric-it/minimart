@@ -24,7 +24,7 @@ module Minimart
       private
 
       def build_cookbook(name, version, attrs)
-        attrs = Utils::HashWithIndifferentAccess.new(attrs).merge(name: name, version: version)
+        attrs = attrs.merge(name: name, version: version)
         RemoteCookbook.new(attrs)
       end
 

@@ -29,7 +29,7 @@ module Minimart
 
         file  = File.open(inventory_config_path)
         yaml  = YAML.load(file)
-        Utils::HashWithIndifferentAccess.new(yaml)
+        yaml
       end
 
       def parse_cookbooks
