@@ -32,24 +32,20 @@ describe Minimart::Mirror::InventoryConfiguration do
   end
 
   describe '#requirements' do
-    it 'should build any cookbooks for any listed versions' do
-      expect(subject.requirements.any? { |c| c.version_requirement == '~> 5.6.1' }).to eq true
+    it 'should build requirements' do
+      expect(subject.requirements).to be_a Minimart::Mirror::InventoryRequirements
     end
 
-    it 'should build cookbooks for any git branches' do
-      expect(subject.requirements.any? { |c| c.respond_to?(:branch) && c.branch == 'windows' }).to eq true
-    end
+    context 'when there are no cookbooks defined in the config file' do
+      before(:each) do
+        allow_any_instance_of(File).to receive(:read).and_return "sources: \"https://supermarket.getchef.com\""
+      end
 
-    it 'should build cookbooks for any git tags' do
-      expect(subject.requirements.any? { |c| c.respond_to?(:tag) && c.tag == 'v5.2.0' }).to eq true
-    end
-
-    it 'should build cookbooks for any git refs' do
-      expect(subject.requirements.any? { |c| c.respond_to?(:ref) && c.ref == 'git-ref-sha' }).to eq true
-    end
-
-    it 'should build any cookbooks for local paths' do
-      expect(subject.requirements.any? { |c| c.respond_to?(:path) && c.path == 'spec/fixtures/sample_cookbook' }).to eq true
+      it 'should raise an exception' do
+        expect {
+          subject.requirements
+        }.to raise_error Minimart::Error::InvalidInventoryError, 'Minimart could not find any cookbooks defined in the inventory'
+      end
     end
   end
 
