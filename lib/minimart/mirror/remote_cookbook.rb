@@ -9,11 +9,11 @@ module Minimart
                   :download_url
 
       def initialize(options)
-        @name          = options[:name]
-        @version       = options[:version]
-        @location_path = options[:location_path]
-        @download_url  = options[:download_url]
-        @dependencies  = options[:dependencies] ||= {}
+        @name          = options[:name] || options['name']
+        @version       = options[:version] || options['version']
+        @location_path = options[:location_path] || options['location_path']
+        @download_url  = options[:download_url] || options['download_url']
+        @dependencies  = options[:dependencies] || options['dependencies'] || {}
       end
 
     end

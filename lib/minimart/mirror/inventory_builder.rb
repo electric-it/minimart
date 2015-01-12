@@ -8,7 +8,7 @@ module Minimart
 
       def initialize(inventory_directory, inventory_configuration)
         @inventory_configuration = inventory_configuration
-        @graph = DependencyGraph.new
+        @graph       = DependencyGraph.new
         @local_store = LocalStore.new(inventory_directory)
       end
 

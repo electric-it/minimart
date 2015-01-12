@@ -43,7 +43,7 @@ module Minimart
       end
 
       def git_requirements(name, reqs)
-        GitRequirementsBuilder.new(name, reqs.fetch(:git, {})).build
+        GitRequirementsBuilder.new(name, reqs.fetch('git', {})).build
       end
 
       def local_path_requirements(name, reqs)
@@ -51,11 +51,15 @@ module Minimart
       end
 
       def raw_sources
-        configuration[:sources]
+        configuration['sources'] || []
       end
 
       def raw_cookbooks
-        configuration[:cookbooks]
+        configuration['cookbooks'].tap do |cookbooks|
+          if cookbooks.nil? || cookbooks.empty?
+            raise Error::InvalidInventoryError, 'Minimart could not find any cookbooks defined in the inventory'
+          end
+        end
       end
     end
 
@@ -66,7 +70,7 @@ module Minimart
 
       def initialize(name, reqs)
         @name     = name
-        @versions = reqs.fetch(:versions, [])
+        @versions = reqs.fetch('versions', [])
       end
 
       def build
@@ -87,10 +91,10 @@ module Minimart
 
       def initialize(name, reqs)
         @name     = name
-        @location = reqs[:location]
-        @branches = reqs.fetch(:branches, [])
-        @tags     = reqs.fetch(:tags, [])
-        @refs     = reqs.fetch(:refs, [])
+        @location = reqs['location']
+        @branches = reqs.fetch('branches', [])
+        @tags     = reqs.fetch('tags', [])
+        @refs     = reqs.fetch('refs', [])
       end
 
       def build
@@ -123,7 +127,7 @@ module Minimart
 
       def initialize(name, reqs)
         @name = name
-        @path = reqs[:path]
+        @path = reqs['path']
       end
 
       def build
