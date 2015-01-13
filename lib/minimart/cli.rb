@@ -6,6 +6,10 @@ module Minimart
   class Cli < Thor
     include Thor::Actions
 
+    DEFAULT_INVENTORY_CONFIG    = './inventory.yml'
+    DEFAULT_INVENTORY_DIRECTORY = './inventory'
+    DEFAULT_WEB_DIRECTORY       = './web'
+
     desc 'init', 'Begin a new Minimart.'
     def init
       create_file './inventory.yml' do
@@ -28,10 +32,18 @@ YML
     end
 
     desc 'mirror', 'Mirror a listing of cookbooks.'
-    option :inventory_config, default: Minimart::Configuration::DEFAULT_INVENTORY_CONFIG
-    option :inventory_directory, default: Minimart::Configuration::DEFAULT_INVENTORY_DIRECTORY
+    option :inventory_config, default: DEFAULT_INVENTORY_CONFIG
+    option :inventory_directory, default: DEFAULT_INVENTORY_DIRECTORY
     def mirror
       Minimart::Mirror.new(options).execute!
+    end
+
+    desc 'web', 'Generate a web interface to download mirrored cookbooks'
+    option :inventory_directory, aliases: :id, default: DEFAULT_INVENTORY_DIRECTORY
+    option :web_directory,       aliases: :wd, default: DEFAULT_WEB_DIRECTORY, required: true
+    option :endpoint,            aliases: :e, required: true
+    def web
+      Minimart::Web.new(options).execute!
     end
 
   end

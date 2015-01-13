@@ -38,8 +38,7 @@ module Minimart
       end
 
       def universe_url
-        src_url = base_url[-1, 1] == '/' ? base_url : "#{base_url}/"
-        URI.join("#{base_url}/", 'universe')
+        Utils::Http.build_url(base_url, 'universe')
       end
     end
   end
