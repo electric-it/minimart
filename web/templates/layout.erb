@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Mart</title>
+  <link rel="stylesheet" href="<%= asset_path('stylesheets/main.css') %>" />
+  <link href='//fonts.googleapis.com/css?family=Maven+Pro:400,700' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+  <script src="<%= asset_path('javascripts/jquery.min.js') %>"></script>
+  <script src="<%= asset_path('javascripts/underscore.min.js') %>"></script>
+  <script src="<%= asset_path('javascripts/backbone.min.js') %>"></script>
+  <script src="<%= asset_path('javascripts/jquery.tabslet.min.js') %>"></script>
+  <script src="<%= asset_path('javascripts/app.js') %>"></script>
+</head>
+<body>
+  <a href="/">
+  <header class="header-slim">
+    <div class="header-slim__container">
+      <h1 class="header-slim__title">Welcome to MiniMart</h1>
+      <h2 class="header-slim__subtitle">Always open and always open sourced.</h2>
+    </div>
+  </header>
+  </a>
+
+  <div class="outer-wrapper">
+
+    <form action="/" method="GET" id="cookbook-search-form">
+      <div class="search">
+        <div class="search__td">
+          <input name="query" type="search">
+        </div>
+        <div class="search__td search__td--btn">
+          <button type="submit">Search</button>
+        </div>
+      </div>
+    </form>
+
+    <%= yield %>
+  </div>
+
+  <footer class="footer">
+    <a href="http://www.madglory.com" target="_blank">
+      Powered by
+      <span class="footer__logo">
+        <img src="<%= asset_path('images/mad-glory-logo.png') %>" alt="Mad Glory" />
+      </span>
+    </a>
+  </footer>
+</body>
+</html>

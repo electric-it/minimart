@@ -1,0 +1,35 @@
+<div id="cookbooks">
+</div>
+
+<script type="text/template" id="cookbook-list-template">
+  <div class="results-title">
+    <h3 id="cookbook-count"><%%= total_cookbooks %> <%%= total_cookbooks === 1 ? 'Cookbook' : 'Cookbooks' %></h3>
+  </div>
+
+  <div id="cookbook-listing">
+    <%% _.each(cookbooks, function (cookbook) { %>
+      <div class="cookbook-item">
+        <div class="cookbook-item__titlebar">
+          <h1 class="item-title"><a href="<%%= cookbook.url %>"><%%= cookbook.name %></a></h1>
+          <h2 class="item-title item-title--small item-title--light"><%%= cookbook.recent_version %></h2>
+          <h2 class="item-title item-title--small">Added to MiniMart on TODO</h2>
+          <h2 class="item-title item-title--small item-title--light"><%%= cookbook.maintainer %></h2>
+        </div>
+        <div class="cookbook-item__content">
+          <p><%%= cookbook.description %></p>
+          <code id="install-instructions" class="cookbook-item__code">cookbook '<%%= cookbook.name %>', '~> <%%= cookbook.recent_version %>'</code>
+        </div>
+        <div class="cookbook-item__footer">
+          <dl class="platform-list">
+            <dt>Supported Platforms</dt>
+            <dd><img src="http://placehold.it/18"></dd>
+            <dd><img src="http://placehold.it/18"></dd>
+          </dl>
+          <a href="<%%= cookbook.download_url %>" class="cookbook-item__action button">Download Todo</a>
+        </div>
+      </div>
+    <%% }); %>
+  </div>
+</script>
+
+<script>$(function () { MinimartApp.start(); });</script>

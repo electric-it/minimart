@@ -25,11 +25,16 @@ module Minimart
       def self.build_url(base_url, sub_url=nil)
         result = (base_url =~ /\A[a-z].*:\/\//i) ? base_url : "http://#{base_url}"
         result = URI.parse(result).to_s
-        if sub_url
-          result << '/' unless result[-1] == '/'
-          result << ((sub_url[0] == '/') ? sub_url[1..-1] : sub_url)
-        end
+        result = concat_url_fragment(result, sub_url)
         return result
+      end
+
+      def self.concat_url_fragment(frag_one, frag_two)
+        return frag_one unless frag_two
+        result = frag_one
+        result << '/' unless result[-1] == '/'
+        result << ((frag_two[0] == '/') ? frag_two[1..-1] : frag_two)
+        result
       end
 
     end

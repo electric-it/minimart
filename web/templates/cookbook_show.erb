@@ -1,0 +1,39 @@
+<main class="detail-content">
+  <h1 class="detail-content__title"><%= cookbook.name %><span><strong>(TODO) Versions</strong> <%= cookbook.version %></span></h1>
+
+  <p><%= cookbook.description %></p>
+  <code id="install-instructions" class="cookbook-item__code">cookbook '<%= cookbook.name %>', '~> <%= cookbook.version %>'</code>
+
+  <div class="tab-container">
+    <ul class="detail-content__tabs">
+      <li><a href="#readme-tab">Readme</a></li>
+      <li><a href="#dependencies-tab">Dependencies</a></li>
+      <li><a href="#changelog-tab">Changelog</a></li>
+    </ul>
+
+    <div id="readme-tab" class="markdown">
+      <%= cookbook.readme_content %>
+    </div>
+
+    <div id="dependencies-tab">
+      DEP
+    </div>
+
+    <div id="changelog-tab" class="markdown">
+      <%= cookbook.changelog_content %>
+    </div>
+  </div>
+</main>
+
+
+<div class="detail-sidebar">
+  <h3>Added to MiniMart</h3>
+  <p>TODO</p>
+  <h4>Maintainer</h4>
+  <p><%= cookbook.maintainer %></p>
+  <dl class="platform-list">
+    <dt>Supported Platforms TODO</dt>
+    <dd><img src="http://placehold.it/18"></dd>
+  </dl>
+  <a href="<%= cookbook_download_path(cookbook) %>" class="button detail-sidebar__button">Download</a>
+</div>

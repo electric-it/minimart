@@ -1,9 +1,10 @@
-require 'ridley'
+require 'minimart/web/template_helper'
 
 module Minimart
   class Web
     # This class is responsible for generating the universe.json file.
     class UniverseGenerator
+      include TemplateHelper
 
       attr_reader :web_directory
       attr_reader :endpoint
@@ -32,11 +33,11 @@ module Minimart
       private
 
       def web_cookbook_base_path
-        @web_cookbook_base_path ||= File.join(web_directory, '/cookbooks')
+        @web_cookbook_base_path ||= File.join(web_directory, '/cookbook_files')
       end
 
       def make_cookbook_directory(cookbook)
-        FileUtils.mkdir_p(web_cookbook_path(cookbook.cookbook_name))
+        FileUtils.mkdir_p(web_cookbook_path(cookbook.name))
       end
 
       def web_cookbook_path(cookbook_name)
@@ -49,35 +50,31 @@ module Minimart
       end
 
       def archive_path(cookbook)
-        File.join(web_cookbook_path(cookbook.cookbook_name), friendly_version(cookbook))
+        File.join(web_cookbook_path(cookbook.name), cookbook.web_friendly_version)
       end
 
       def archive_name(cookbook)
-        File.join(archive_path(cookbook), "#{cookbook.name}.tar.gz")
+        File.join(archive_path(cookbook), "#{cookbook}.tar.gz")
       end
 
       def add_cookbook_to_universe(cookbook)
-        universe[cookbook.cookbook_name] ||= {}
-        universe[cookbook.cookbook_name][cookbook.version.to_s] = {
+        universe[cookbook.name] ||= {}
+        universe[cookbook.name][cookbook.version.to_s] = {
           location_type:  :uri,
           location_path:  archive_url(cookbook),
           download_url:   archive_url(cookbook),
-          dependencies:   cookbook.metadata.dependencies
+          dependencies:   cookbook.dependencies
         }
       end
 
       def archive_url(cookbook)
-        Utils::Http.build_url(endpoint, "cookbooks/#{cookbook.cookbook_name}/#{friendly_version(cookbook)}/#{cookbook.name}.tar.gz")
+        Utils::Http.build_url(endpoint, cookbook_download_path(cookbook))
       end
 
       def write_universe_file
         File.open(File.join(web_directory, 'universe'), 'w+') do |f|
           f.write(universe.to_json)
         end
-      end
-
-      def friendly_version(cookbook)
-        cookbook.version.gsub('.', '_')
       end
     end
   end

@@ -1,5 +1,7 @@
-require 'ridley'
 require 'minimart/web/universe_generator'
+require 'minimart/web/html_generator'
+
+require 'minimart/cookbook'
 
 module Minimart
   class Web
@@ -38,13 +40,15 @@ module Minimart
     end
 
     def generate_html
-      # TODO
+      generator = Web::HtmlGenerator.new(
+        web_directory: web_directory,
+        cookbooks:     cookbooks)
+
+      generator.generate
     end
 
     def cookbooks
-      @cookbooks ||= inventory_cookbook_paths.map do |path|
-        Ridley::Chef::Cookbook.from_path(path)
-      end
+      @cookbooks ||= inventory_cookbook_paths.map { |path| Minimart::Cookbook.new(path) }
     end
 
     def inventory_cookbook_paths
