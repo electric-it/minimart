@@ -38,7 +38,7 @@ module Minimart
       def sort_data
         data_structure.values.map! do |versions|
           versions.sort! do |a, b|
-            Gem::Version.new(a.version) <=> Gem::Version.new(b.version)
+            Gem::Version.new(b.version) <=> Gem::Version.new(a.version)
           end
         end
       end
