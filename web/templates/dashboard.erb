@@ -1,13 +1,11 @@
 <div id="cookbooks">
 </div>
 
+<!-- _.js template -->
 <script type="text/template" id="cookbook-list-template">
   <div class="results-title">
     <h3 id="cookbook-count">
       <%%= total_cookbooks %> <%%= total_cookbooks === 1 ? 'Cookbook' : 'Cookbooks' %>
-      <%% if (query) { %>
-        Match "<%%= query %>"
-      <%% } %>
     </h3>
   </div>
 
@@ -22,7 +20,7 @@
         </div>
         <div class="cookbook-item__content">
           <p><%%= cookbook.description %></p>
-          <code class="cookbook-item__code install-instructions">cookbook '<%%= cookbook.name %>', '~> <%%= cookbook.version %>'</code>
+          <code class="install-instructions">cookbook '<%%= cookbook.name %>', '~> <%%= cookbook.version %>'</code>
         </div>
         <div class="cookbook-item__footer">
           <dl class="platform-list">
@@ -36,5 +34,11 @@
     <%% }); %>
   </div>
 </script>
-
-<script>$(function () { MinimartApp.start(); });</script>
+<!-- Start the app to allow for searching, etc.. -->
+<script id="cookbook-data" type="text/json"><%= cookbooks.to_json %></script>
+<script>
+$(function () {
+  var collection = JSON.parse($('#cookbook-data').text());
+  MinimartApp.start({collection: collection});
+});
+</script>

@@ -9,8 +9,8 @@ $(function () {
 
 // simple app for managing pagination & search of cookbooks.
 var MinimartApp = {
-  start: function () {
-    new MinimartApp.Router();
+  start: function (opts) {
+    new MinimartApp.Router(opts);
     Backbone.history.start();
   }
 };
@@ -53,29 +53,22 @@ MinimartApp.Router = Backbone.Router.extend({
     "search/:query": 'search'
   },
 
+  initialize: function (opts) {
+    this.collection = new MinimartApp.CookbookList(opts.collection);
+  },
+
   index: function () {
-    var self = this;
-    self.withCollection({}, function () {
-      new MinimartApp.CookbookListView({ collection: self.collection }).render();
-    });
+    new MinimartApp.CookbookListView({ collection: this.collection }).render();
   },
 
   search: function (query) {
-    var self = this;
-    self.withCollection({}, function () {
-      var collection = self.collection.filter(function (cookbook) {
-        return cookbook.get('name').match(query);
-      });
-      new MinimartApp.CookbookListView({ query: query, collection: new MinimartApp.CookbookList(collection) }).render();
+    var filtered = this.collection.filter(function (c) {
+      return c.get('name').match(query);
     });
-  },
 
-  withCollection: function (opts, callback) {
-    if (!this.collection) {
-      this.collection = new MinimartApp.CookbookList();
-      this.collection.fetch({ url: '/data.json', success: callback });
-    } else {
-      callback();
-    }
+    new MinimartApp.CookbookListView({
+      query: query,
+      collection: new MinimartApp.CookbookList(filtered)
+    }).render();
   }
 });

@@ -164,9 +164,6 @@ form {
   font-size: 18px;
   border-bottom: 1px solid #d9d9d9; }
 
-.cookbook-item__code {
-  margin-bottom: 5px; }
-
 .cookbook-item__footer {
   padding: 10px 20px; }
   .cookbook-item__footer::after {
