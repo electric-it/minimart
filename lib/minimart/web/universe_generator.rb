@@ -21,10 +21,12 @@ module Minimart
       def generate
         FileUtils.mkdir_p web_cookbook_base_path
 
-        cookbooks.each do |cookbook|
-          make_cookbook_directory(cookbook)
-          generate_archive_file(cookbook)
-          add_cookbook_to_universe(cookbook)
+        cookbooks.values.each do |cookbook_versions|
+          cookbook_versions.each do |cookbook|
+            make_cookbook_directory(cookbook)
+            generate_archive_file(cookbook)
+            add_cookbook_to_universe(cookbook)
+          end
         end
 
         write_universe_file

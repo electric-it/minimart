@@ -1,5 +1,3 @@
-require 'minimart/web/template_helper'
-
 module Minimart
   class Web
     class CookbookShowPageGenerator
@@ -14,23 +12,32 @@ module Minimart
       end
 
       def generate
-        FileUtils.mkdir_p(cookbooks_directory)
-
-        cookbooks.each do |cookbook|
-          write_to_file(file(cookbook), template_content(cookbook))
-        end
+        make_web_cookbooks_directory
+        create_html_files
       end
 
       private
+
+      def make_web_cookbooks_directory
+        FileUtils.mkdir_p(cookbooks_directory)
+      end
+
+      def create_html_files
+        cookbooks.each do |cookbook_name, versions|
+          versions.each do |cookbook|
+            write_to_file(file(cookbook), template_content(cookbook, versions))
+          end
+        end
+      end
 
       def file(cookbook)
         FileUtils.mkdir_p(File.join(web_directory, cookbook_dir(cookbook)))
         File.join(web_directory, cookbook_path(cookbook))
       end
 
-      def template_content(cookbook)
+      def template_content(cookbook, versions)
         render_in_base_layout do
-          render_template('cookbook_show.erb', self, {cookbook: cookbook})
+          render_template('cookbook_show.erb', self, {cookbook: cookbook, other_versions: versions})
         end
       end
 

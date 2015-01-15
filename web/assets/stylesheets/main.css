@@ -503,6 +503,15 @@ ul {
   width: 850px;
   margin: 0 auto; }
 
+.cookbook-version-selector {
+    height: 38px;
+    padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
+    background-color: #fff;
+    border: 1px solid #D1D1D1;
+    border-radius: 4px;
+    box-shadow: none;
+    box-sizing: border-box; }
+
 /* Code blocks */
 pre code {
   display: block;
@@ -520,7 +529,7 @@ code {
   padding: 2px;
   margin: 0 3px; }
 
-#install-instructions {
+.install-instructions {
   font-family: "Maven Pro", sans-serif;
   display: block;
   padding: 20px;
@@ -529,7 +538,7 @@ code {
   margin-bottom: 25px;
   font-size: 18px; }
 
-#install-instructions:first-line {
+.install-instructions:first-line {
   line-height: 0; }
 
 /* Forms */

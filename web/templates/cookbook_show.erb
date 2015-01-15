@@ -1,8 +1,23 @@
 <main class="detail-content">
-  <h1 class="detail-content__title"><%= cookbook.name %><span><strong>(TODO) Versions</strong> <%= cookbook.version %></span></h1>
+  <h1 class="detail-content__title">
+    <%= cookbook.name %>
+    <span>
+      (<%= other_versions.size %>) <%= (other_versions.size == 1) ? 'Version' : 'Versions' %>
+      <select class="cookbook-version-selector">
+        <option disabled selected>
+          <small><%= cookbook.version %></small>
+        </option>
+        <% other_versions.each do |c| %>
+          <% if c.version != cookbook.version %>
+            <option value="<%= cookbook_path(c) %>"><%= c.version %></option>
+          <% end %>
+        <% end %>
+      </select>
+    </span>
+  </h1>
 
   <p><%= cookbook.description %></p>
-  <code id="install-instructions" class="cookbook-item__code">cookbook '<%= cookbook.name %>', '~> <%= cookbook.version %>'</code>
+  <code class="cookbook-item__code install-instructions">cookbook '<%= cookbook.name %>', '~> <%= cookbook.version %>'</code>
 
   <div class="tab-container">
     <ul class="detail-content__tabs">
@@ -37,3 +52,10 @@
   </dl>
   <a href="<%= cookbook_download_path(cookbook) %>" class="button detail-sidebar__button">Download</a>
 </div>
+
+<script>
+$('.tab-container').tabslet();
+$('.cookbook-version-selector').change(function () {
+  document.location.href = encodeURI($(this).val());
+});
+</script>

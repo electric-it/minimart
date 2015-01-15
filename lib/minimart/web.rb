@@ -1,5 +1,6 @@
 require 'minimart/web/universe_generator'
 require 'minimart/web/html_generator'
+require 'minimart/web/template_helper'
 
 require 'minimart/cookbook'
 
@@ -26,6 +27,8 @@ module Minimart
 
     private
 
+    attr_reader :cookbooks
+
     def make_web_directory
       FileUtils.mkdir_p web_directory
     end
@@ -48,11 +51,9 @@ module Minimart
     end
 
     def cookbooks
-      @cookbooks ||= inventory_cookbook_paths.map { |path| Minimart::Cookbook.new(path) }
-    end
-
-    def inventory_cookbook_paths
-      Utils::FileHelper.find_cookbooks_in_directory(inventory_directory)
+      @cookbooks ||= Web::WebDataGenerator.new(
+        web_directory: web_directory,
+        inventory_directory: inventory_directory).generate
     end
 
   end

@@ -1,11 +1,9 @@
 // jQuery Listeners
 $(function () {
-  $('.tab-container').tabslet(); // activate any tabs
-
   $('#cookbook-search-form').submit(function (ev) {
     ev.preventDefault();
     var searchValue = $(this).find('input[name="query"]').val();
-    document.location.href = '#/search/' + encodeURI(searchValue);
+    document.location.href = '/#/search/' + encodeURI(searchValue);
   });
 });
 

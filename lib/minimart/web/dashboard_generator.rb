@@ -1,5 +1,3 @@
-require 'minimart/web/template_helper'
-
 module Minimart
   class Web
     class DashboardGenerator
