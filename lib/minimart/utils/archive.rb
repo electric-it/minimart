@@ -11,10 +11,9 @@ module Minimart
       end
 
       def self.pack_archive(parent_directory, source_directory, destination)
-
-        Dir.chdir(File.join(parent_directory, source_directory)) do |directory|
+        Dir.chdir(parent_directory) do |directory|
           tgz = Zlib::GzipWriter.new(File.open(destination, 'wb'))
-          ::Archive::Tar::Minitar.pack(directory, tgz)
+          ::Archive::Tar::Minitar.pack(source_directory, tgz)
         end
       end
 
