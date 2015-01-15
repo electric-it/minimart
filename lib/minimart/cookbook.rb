@@ -74,6 +74,10 @@ module Minimart
       to_hash.to_json
     end
 
+    def satisfies_requirement?(version_requirement)
+      Gem::Requirement.new(version_requirement).satisfied_by?(Gem::Version.new(version))
+    end
+
     private
 
     attr_reader :raw_cookbook

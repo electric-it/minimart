@@ -31,7 +31,16 @@
     </div>
 
     <div id="dependencies-tab">
-      DEP
+      <% if (!cookbook.dependencies.nil?) && (!cookbook.dependencies.empty?) %>
+        <ul class="dependency-list">
+          <% cookbook.dependencies.each do |name, requirements| %>
+            <% d = cookbook_for_requirement(name, requirements) %>
+            <li><a href="<%= cookbook_path(d) %>"><%= name %> <%= requirements %></a></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>This cookbook has no dependencies.</p>
+      <% end %>
     </div>
 
     <div id="changelog-tab" class="markdown">

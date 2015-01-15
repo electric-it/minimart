@@ -49,6 +49,12 @@ module Minimart
         File.join(web_directory, 'cookbooks')
       end
 
+      def cookbook_for_requirement(name, version_requirement)
+        (cookbooks[name] || []).find do |c|
+          c.satisfies_requirement?(version_requirement)
+        end
+      end
+
       def level
         2
       end
