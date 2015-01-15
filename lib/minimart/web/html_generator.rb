@@ -28,7 +28,9 @@ module Minimart
       end
 
       def generate_index
-        DashboardGenerator.new(web_directory: web_directory).generate
+        DashboardGenerator.new(
+          web_directory: web_directory,
+          cookbooks:     cookbooks).generate
       end
 
       def generate_cookbook_show_pages

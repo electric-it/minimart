@@ -4,9 +4,11 @@ module Minimart
       include TemplateHelper
 
       attr_reader :web_directory
+      attr_reader :cookbooks
 
       def initialize(opts = {})
         @web_directory = opts[:web_directory]
+        @cookbooks     = opts[:cookbooks]
       end
 
       def generate

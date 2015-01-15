@@ -53,7 +53,7 @@ module Minimart
     def cookbooks
       @cookbooks ||= Web::WebDataGenerator.new(
         web_directory: web_directory,
-        inventory_directory: inventory_directory).generate
+        inventory_directory: inventory_directory)
     end
 
   end
