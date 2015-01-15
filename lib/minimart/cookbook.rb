@@ -1,8 +1,10 @@
 require 'ridley'
 require 'minimart/web/markdown_parser'
+require 'minimart/web/template_helper'
 
 module Minimart
   class Cookbook
+    include Web::TemplateHelper
 
     def initialize(path_to_cookbook)
       @raw_cookbook = Ridley::Chef::Cookbook.from_path(path_to_cookbook)
@@ -55,6 +57,21 @@ module Minimart
 
     def changelog_content
       @changelog_content ||= Web::MarkdownParser.parse(changelog_file) if changelog_file
+    end
+
+    def to_hash
+      {
+        name:           name,
+        version:        version,
+        description:    description,
+        maintainer:     maintainer,
+        download_url:   cookbook_download_path(self),
+        url:            cookbook_path(self)
+      }
+    end
+
+    def to_json(opts = {})
+      to_hash.to_json
     end
 
     private
