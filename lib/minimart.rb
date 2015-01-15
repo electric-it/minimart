@@ -5,7 +5,6 @@ module Minimart
 
   require 'minimart/configuration'
   require 'minimart/error'
-  require 'minimart/mirror'
   require 'minimart/web'
 
   require 'minimart/utils/archive'

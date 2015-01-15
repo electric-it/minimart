@@ -1,7 +1,7 @@
 require 'minimart/download/supermarket'
 
 module Minimart
-  class Mirror
+  module Mirror
     class InventoryBuilder
 
       attr_reader :inventory_configuration,

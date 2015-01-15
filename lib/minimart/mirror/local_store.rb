@@ -1,5 +1,5 @@
 module Minimart
-  class Mirror
+  module Mirror
     class LocalStore
 
       attr_reader :directory_path,

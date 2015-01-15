@@ -12,22 +12,20 @@ describe Minimart::Web::WebDataGenerator do
       web_directory: directory)
   end
 
-  describe '#generate' do
-    it 'should return the data structure' do
-      result = subject.generate
-      expect(result['sample_cookbook']).to include an_instance_of(Minimart::Cookbook)
-    end
+  describe '::new' do
+    pending
+  end
 
-    it 'should generate a data.json file in the directory' do
-      subject.generate
-      expect(File.exists?(data_path)).to eq true
-    end
+  describe '::to_json' do
+    pending
+  end
 
-    it 'should include data about any cookbooks in the json file' do
-      subject.generate
-      json = JSON.parse(File.open(data_path).read)
-      expect(json['sample_cookbook'].first).to include('version' => '1.2.3')
-    end
+  describe '::values' do
+    pending
+  end
+
+  describe '::[]' do
+    pending
   end
 
 end

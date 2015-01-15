@@ -2,7 +2,7 @@ require 'yaml'
 require 'minimart/mirror/inventory_requirements'
 
 module Minimart
-  class Mirror
+  module Mirror
 
     # This class is responsible for parsing a user defined Minimart configuration file.
     class InventoryConfiguration

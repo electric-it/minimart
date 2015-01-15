@@ -1,7 +1,7 @@
 require 'minimart/inventory_requirement/git_requirement'
 
 module Minimart
-  class Mirror
+  module Mirror
     class GitRequirementsBuilder
 
       attr_reader :name

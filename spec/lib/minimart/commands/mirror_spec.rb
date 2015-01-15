@@ -1,12 +1,13 @@
 require 'spec_helper'
+require 'minimart/commands/mirror'
 
-describe Minimart::Mirror do
+describe Minimart::Commands::Mirror do
 
   let(:inventory_directory) { './inventory' }
   let(:inventory_config_path) { 'spec/fixtures/sample_inventory.yml' }
 
   subject do
-    Minimart::Mirror.new(
+    Minimart::Commands::Mirror.new(
     inventory_directory: inventory_directory,
     inventory_config: inventory_config_path)
   end

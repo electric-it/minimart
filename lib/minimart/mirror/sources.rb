@@ -1,5 +1,5 @@
 module Minimart
-  class Mirror
+  module Mirror
     class Sources < Array
 
       def initialize(source_urls = [])

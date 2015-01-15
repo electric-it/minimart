@@ -1,5 +1,5 @@
 module Minimart
-  class Mirror
+  module Mirror
     class RemoteCookbook
 
       attr_reader :name,

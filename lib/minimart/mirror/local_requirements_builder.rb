@@ -1,7 +1,7 @@
 require 'minimart/inventory_requirement/local_path_requirement'
 
 module Minimart
-  class Mirror
+  module Mirror
     class LocalRequirementsBuilder
 
       attr_reader :name

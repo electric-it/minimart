@@ -3,7 +3,7 @@ require 'minimart/mirror/git_requirements_builder'
 require 'minimart/mirror/local_requirements_builder'
 
 module Minimart
-  class Mirror
+  module Mirror
     class InventoryRequirements
       include Enumerable
 

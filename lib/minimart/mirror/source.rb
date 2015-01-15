@@ -1,5 +1,5 @@
 module Minimart
-  class Mirror
+  module Mirror
     class Source
 
       attr_accessor :base_url

@@ -1,7 +1,7 @@
 require 'minimart/inventory_requirement/base_requirement'
 
 module Minimart
-  class Mirror
+  module Mirror
     class SupermarketRequirementsBuilder
 
       attr_reader :name

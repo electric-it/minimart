@@ -1,5 +1,7 @@
-require 'minimart'
 require 'thor'
+
+require 'minimart'
+require 'minimart/commands/mirror'
 
 module Minimart
   # The command line interface for Minimart.
@@ -35,7 +37,7 @@ YML
     option :inventory_config, default: DEFAULT_INVENTORY_CONFIG
     option :inventory_directory, default: DEFAULT_INVENTORY_DIRECTORY
     def mirror
-      Minimart::Mirror.new(options).execute!
+      Minimart::Commands::Mirror.new(options).execute!
     end
 
     desc 'web', 'Generate a web interface to download mirrored cookbooks'

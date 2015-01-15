@@ -5,7 +5,7 @@ require 'solve'
 # This can be used to resolve any requirements found in the inventory file.
 ##
 module Minimart
-  class Mirror
+  module Mirror
     class DependencyGraph
 
       attr_reader :graph,
