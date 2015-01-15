@@ -1,7 +1,7 @@
 require 'minimart/web/template_helper'
 
 module Minimart
-  class Web
+  module Web
     # This class is responsible for generating the universe.json file.
     class UniverseGenerator
       include TemplateHelper

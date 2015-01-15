@@ -3,7 +3,7 @@ require 'minimart/web/cookbook_show_page_generator'
 require 'minimart/web/web_data_generator'
 
 module Minimart
-  class Web
+  module Web
     class HtmlGenerator
       include TemplateHelper
 

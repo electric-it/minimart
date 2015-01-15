@@ -1,7 +1,7 @@
 require 'redcarpet'
 
 module Minimart
-  class Web
+  module Web
     # MarkdownParser takes a String of Markdown input, and outputs HTML
     class MarkdownParser
 

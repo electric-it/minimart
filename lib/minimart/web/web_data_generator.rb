@@ -1,10 +1,11 @@
+require 'minimart/web/template_helper'
+
 module Minimart
-  class Web
+  module Web
     # Given a path to the inventory directory, this class will generate the necessary
     # JSON output to power the main dashboard, and return cookbooks in a format
     # that can be used to build the various web pages.
     class WebDataGenerator
-      include TemplateHelper
       include Enumerable
 
       FILE_NAME = 'data.json'

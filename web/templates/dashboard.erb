@@ -38,7 +38,8 @@
 <script id="cookbook-data" type="text/json"><%= cookbooks.to_json %></script>
 <script>
 $(function () {
-  var collection = JSON.parse($('#cookbook-data').text());
-  MinimartApp.start({collection: collection});
+  var raw = $('<div>');
+  raw.text($('#cookbook-data').text());
+  MinimartApp.start({ collection: JSON.parse(raw.text()) });
 });
 </script>

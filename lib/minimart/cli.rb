@@ -13,13 +13,14 @@ module Minimart
     DEFAULT_WEB_DIRECTORY       = './web'
 
     desc 'init', 'Begin a new Minimart.'
+    option :inventory_config, default: DEFAULT_INVENTORY_CONFIG
     def init
-      create_file './inventory.yml' do
+      create_file options[:inventory_config] do
 <<-YML
 # sources:
 #   - "https://supermarket.getchef.com"
 # cookbooks:
-#   mysql:
+#   cookbook-name:
 #     versions:
 #       - "~> 4.0.2"
 #       - "> 5.0.0"
@@ -29,6 +30,7 @@ module Minimart
 #         - a_branch_name
 #       refs:
 #         - SHA
+
 YML
       end
     end
@@ -45,7 +47,7 @@ YML
     option :web_directory,       aliases: :wd, default: DEFAULT_WEB_DIRECTORY, required: true
     option :endpoint,            aliases: :e, required: true
     def web
-      Minimart::Web.new(options).execute!
+      Minimart::Commands::Web.new(options).execute!
     end
 
   end

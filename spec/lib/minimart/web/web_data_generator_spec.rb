@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'minimart/web/web_data_generator'
+require 'minimart/web/template_helper'
 
 describe Minimart::Web::WebDataGenerator do
 

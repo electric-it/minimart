@@ -2,7 +2,7 @@ require 'erb'
 require 'tilt/erb'
 
 module Minimart
-  class Web
+  module Web
     module TemplateHelper
 
       def render_template(template_name, context = self, locals = {})

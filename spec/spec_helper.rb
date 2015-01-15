@@ -7,9 +7,10 @@ rescue LoadError
 end
 
 require 'rspec'
+require 'fakefs/safe'
 require 'pry'
-require 'webmock/rspec'
 require 'vcr'
+require 'webmock/rspec'
 
 require 'minimart'
 

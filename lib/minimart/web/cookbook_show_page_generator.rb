@@ -1,5 +1,5 @@
 module Minimart
-  class Web
+  module Web
     class CookbookShowPageGenerator
       include TemplateHelper
 
