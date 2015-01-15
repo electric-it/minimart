@@ -3,7 +3,12 @@
 
 <script type="text/template" id="cookbook-list-template">
   <div class="results-title">
-    <h3 id="cookbook-count"><%%= total_cookbooks %> <%%= total_cookbooks === 1 ? 'Cookbook' : 'Cookbooks' %></h3>
+    <h3 id="cookbook-count">
+      <%%= total_cookbooks %> <%%= total_cookbooks === 1 ? 'Cookbook' : 'Cookbooks' %>
+      <%% if (query) { %>
+        Match "<%%= query %>"
+      <%% } %>
+    </h3>
   </div>
 
   <div id="cookbook-listing">
@@ -11,13 +16,13 @@
       <div class="cookbook-item">
         <div class="cookbook-item__titlebar">
           <h1 class="item-title"><a href="<%%= cookbook.url %>"><%%= cookbook.name %></a></h1>
-          <h2 class="item-title item-title--small item-title--light"><%%= cookbook.recent_version %></h2>
+          <h2 class="item-title item-title--small item-title--light"><%%= cookbook.version %></h2>
           <h2 class="item-title item-title--small">Added to MiniMart on TODO</h2>
           <h2 class="item-title item-title--small item-title--light"><%%= cookbook.maintainer %></h2>
         </div>
         <div class="cookbook-item__content">
           <p><%%= cookbook.description %></p>
-          <code class="cookbook-item__code install-instructions">cookbook '<%%= cookbook.name %>', '~> <%%= cookbook.recent_version %>'</code>
+          <code class="cookbook-item__code install-instructions">cookbook '<%%= cookbook.name %>', '~> <%%= cookbook.version %>'</code>
         </div>
         <div class="cookbook-item__footer">
           <dl class="platform-list">

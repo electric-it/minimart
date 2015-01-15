@@ -27,6 +27,10 @@ MinimartApp.CookbookListView = Backbone.View.extend({
     "click #previous-page-button": 'previousPage'
   },
 
+  initialize: function (opts) {
+    this.query = opts.query;
+  },
+
   template: function () {
     if (!this.cachedTemplate) {
       this.cachedTemplate = _.template($('#cookbook-list-template').html());
@@ -36,8 +40,9 @@ MinimartApp.CookbookListView = Backbone.View.extend({
 
   render: function () {
     this.$el.html(this.template()({
-      total_cookbooks: this.collection.size(),
-      cookbooks: this.collection.toJSON()
+      query:            this.query,
+      total_cookbooks:  this.collection.size(),
+      cookbooks:        this.collection.toJSON()
     }));
   },
 });
@@ -58,10 +63,10 @@ MinimartApp.Router = Backbone.Router.extend({
   search: function (query) {
     var self = this;
     self.withCollection({}, function () {
-      collection = self.collection.filter(function (cookbook) {
+      var collection = self.collection.filter(function (cookbook) {
         return cookbook.get('name').match(query);
       });
-      new MinimartApp.CookbookListView({ collection: new MinimartApp.CookbookList(collection) }).render();
+      new MinimartApp.CookbookListView({ query: query, collection: new MinimartApp.CookbookList(collection) }).render();
     });
   },
 
