@@ -17,7 +17,7 @@
   <script src="<%= asset_path('javascripts/app.js') %>"></script>
 </head>
 <body>
-  <a href="/">
+  <a href="<%= home_path %>">
   <header class="header-slim">
     <div class="header-slim__container">
       <h1 class="header-slim__title">Welcome to MiniMart</h1>
@@ -27,8 +27,7 @@
   </a>
 
   <div class="outer-wrapper">
-
-    <form action="/" method="GET" id="cookbook-search-form">
+    <form action="<%= search_path %>" method="GET" id="cookbook-search-form">
       <div class="search">
         <div class="search__td">
           <input name="query" type="search">

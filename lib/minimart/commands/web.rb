@@ -1,8 +1,5 @@
 require 'minimart/web/universe_generator'
 require 'minimart/web/html_generator'
-require 'minimart/web/template_helper'
-
-require 'minimart/cookbook'
 
 module Minimart
   module Commands
@@ -11,13 +8,11 @@ module Minimart
       attr_reader :inventory_directory
       attr_reader :web_directory
       attr_reader :endpoint
-      attr_reader :universe
 
       def initialize(opts = {})
         @inventory_directory = File.expand_path(opts[:inventory_directory])
         @web_directory       = File.expand_path(opts[:web_directory])
         @endpoint            = opts[:endpoint]
-        @universe            = {}
       end
 
       def execute!
@@ -52,9 +47,7 @@ module Minimart
       end
 
       def cookbooks
-        @cookbooks ||= Minimart::Web::WebDataGenerator.new(
-          web_directory:       web_directory,
-          inventory_directory: inventory_directory)
+        @cookbooks ||= Minimart::Web::Cookbooks.new(inventory_directory: inventory_directory)
       end
 
     end

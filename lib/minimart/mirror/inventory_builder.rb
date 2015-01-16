@@ -71,8 +71,10 @@ module Minimart
         end
 
         verify_dependency_can_be_installed(name, version)
-        cookbook_path = download_cookbook(name, version)
-        add_cookbook_to_local_store(cookbook_path)
+
+        Download::Supermarket.download(find_cookbook(name, version)) do |cookbook_path|
+          add_cookbook_to_local_store(cookbook_path)
+        end
       end
 
       def cookbook_already_installed?(name, version)
@@ -97,7 +99,7 @@ module Minimart
       end
 
       def download_cookbook(name, version)
-        Download::Supermarket.download(find_cookbook(name, version))
+
       end
 
       def find_cookbook(name, version)

@@ -2,6 +2,7 @@ require 'thor'
 
 require 'minimart'
 require 'minimart/commands/mirror'
+require 'minimart/commands/web'
 
 module Minimart
   # The command line interface for Minimart.

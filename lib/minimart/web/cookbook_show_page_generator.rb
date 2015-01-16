@@ -32,7 +32,7 @@ module Minimart
 
       def file(cookbook)
         FileUtils.mkdir_p(File.join(web_directory, cookbook_dir(cookbook)))
-        File.join(web_directory, cookbook_path(cookbook))
+        File.join(web_directory, cookbook_file(cookbook))
       end
 
       def template_content(cookbook, versions)

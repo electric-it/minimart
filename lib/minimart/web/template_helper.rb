@@ -22,7 +22,7 @@ module Minimart
       end
 
       def minimart_web_directory
-        File.join(File.dirname(__FILE__), '..', '..', '..', 'web')
+        File.join(Minimart.root_path, '..', 'web')
       end
 
       def asset_path(resource)
@@ -41,15 +41,27 @@ module Minimart
       end
 
       def cookbook_path(cookbook)
+        base_path_to(cookbook_file(cookbook))
+      end
+
+      def cookbook_file(cookbook)
         "#{cookbook_dir(cookbook)}/#{cookbook.version}.html"
       end
 
       def cookbook_dir(cookbook)
-        "/cookbooks/#{cookbook.name}"
+        "cookbooks/#{cookbook.name}"
+      end
+
+      def home_path
+        base_path_to 'index.html'
       end
 
       def level
         0
+      end
+
+      def search_path
+        "#{home_path}#search/"
       end
 
     end

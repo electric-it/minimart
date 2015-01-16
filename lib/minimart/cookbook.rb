@@ -1,6 +1,5 @@
 require 'ridley'
 require 'minimart/web/markdown_parser'
-require 'minimart/web/template_helper'
 
 module Minimart
   class Cookbook

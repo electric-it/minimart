@@ -1,10 +1,11 @@
 module Minimart
   module Web
     class DashboardGenerator
-      include TemplateHelper
+      include Minimart::Web::TemplateHelper
 
       attr_reader :web_directory
       attr_reader :cookbooks
+      attr_reader :template_content
 
       def initialize(opts = {})
         @web_directory = opts[:web_directory]
@@ -17,8 +18,6 @@ module Minimart
       end
 
       private
-
-      attr_reader :template_content
 
       def generate_template_content
         @template_content = render_in_base_layout { render_template('dashboard.erb') }

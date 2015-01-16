@@ -1,11 +1,10 @@
 require 'minimart/web/dashboard_generator'
 require 'minimart/web/cookbook_show_page_generator'
-require 'minimart/web/web_data_generator'
 
 module Minimart
   module Web
     class HtmlGenerator
-      include TemplateHelper
+      include Minimart::Web::TemplateHelper
 
       attr_reader :web_directory
       attr_reader :cookbooks

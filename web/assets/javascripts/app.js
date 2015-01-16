@@ -2,8 +2,10 @@
 $(function () {
   $('#cookbook-search-form').submit(function (ev) {
     ev.preventDefault();
-    var searchValue = $(this).find('input[name="query"]').val();
-    document.location.href = '/#/search/' + encodeURI(searchValue);
+    var searchValue, searchPath;
+    searchValue = $(this).find('input[name="query"]').val();
+    searchPath  = $(this).attr('action');
+    document.location.href = encodeURI(searchPath + searchValue);
   });
 });
 

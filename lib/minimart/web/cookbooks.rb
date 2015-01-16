@@ -1,26 +1,23 @@
-require 'minimart/web/template_helper'
+require 'minimart/cookbook'
+require 'forwardable'
 
 module Minimart
   module Web
     # Given a path to the inventory directory, this class will generate the necessary
     # JSON output to power the main dashboard, and return cookbooks in a format
     # that can be used to build the various web pages.
-    class WebDataGenerator
+    class Cookbooks
+      extend Forwardable
+
       include Enumerable
 
       FILE_NAME = 'data.json'
 
-      attr_reader :web_directory
       attr_reader :inventory_directory
 
       def initialize(opts)
-        @web_directory       = opts[:web_directory]
         @inventory_directory = opts[:inventory_directory]
         generate
-      end
-
-      def each(&block)
-        data_structure.each &block
       end
 
       def to_json
@@ -29,12 +26,10 @@ module Minimart
         end.to_json
       end
 
-      def values
-        data_structure.values
-      end
+      def_delegators :data_structure, :each, :keys, :values, :[]
 
-      def [](c)
-        data_structure[c]
+      def individual_cookbooks
+        values.flatten
       end
 
       private
@@ -42,7 +37,6 @@ module Minimart
       def generate
         build_data_structure
         sort_data
-        # write_data_file
       end
 
       attr_reader :data_structure
@@ -61,14 +55,6 @@ module Minimart
             Gem::Version.new(b.version) <=> Gem::Version.new(a.version)
           end
         end
-      end
-
-      # def write_data_file
-      #   File.open(file_path, 'w+') { |f| f.write(json_data_structure) }
-      # end
-
-      def file_path
-        @file_path ||= File.join(web_directory, FILE_NAME)
       end
 
       def cookbooks

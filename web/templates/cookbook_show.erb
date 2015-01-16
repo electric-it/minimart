@@ -35,7 +35,11 @@
         <ul class="dependency-list">
           <% cookbook.dependencies.each do |name, requirements| %>
             <% d = cookbook_for_requirement(name, requirements) %>
-            <li><a href="<%= cookbook_path(d) %>"><%= name %> <%= requirements %></a></li>
+            <% if d %>
+              <li><a href="<%= cookbook_path(d) %>"><%= name %> <%= requirements %></a></li>
+            <% else %>
+              <li><%= name %> <%= requirements %></li>
+            <% end %>
           <% end %>
         </ul>
       <% else %>
