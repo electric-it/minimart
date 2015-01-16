@@ -63,6 +63,24 @@ describe Minimart::Web::CookbookShowPageGenerator do
       subject.generate
       expect(view_content).to match 'yum > 3.0.0'
     end
+
+    context 'when minimart has the dependent cookbook' do
+      let(:yum) do
+        res = cookbooks.individual_cookbooks.first.dup
+        allow(res).to receive(:name).and_return('yum')
+        allow(res).to receive(:version).and_return('3.2.0')
+        res
+      end
+
+      before(:each) do
+        cookbooks.add(yum)
+      end
+
+      it 'should build a link for the dependent cookbook' do
+        subject.generate
+        expect(view_content).to match %{href="../../cookbooks/yum/3.2.0.html"}
+      end
+    end
   end
 
 end

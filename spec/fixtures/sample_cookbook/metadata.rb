@@ -1,5 +1,5 @@
 name             'sample_cookbook'
-maintainer       'YOUR_NAME'
+maintainer       'MadGlory'
 maintainer_email 'YOUR_EMAIL'
 license          'All rights reserved'
 description      'Installs/Configures sample_cookbook'

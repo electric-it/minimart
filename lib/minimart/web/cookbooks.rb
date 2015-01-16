@@ -17,6 +17,7 @@ module Minimart
 
       def initialize(opts)
         @inventory_directory = opts[:inventory_directory]
+        @data_structure = {}
         generate
       end
 
@@ -32,23 +33,25 @@ module Minimart
         values.flatten
       end
 
+      def add(cookbook)
+        data_structure[cookbook.name] ||= []
+        data_structure[cookbook.name] << cookbook
+      end
+
       private
+
+      attr_reader :data_structure
 
       def generate
         build_data_structure
         sort_data
       end
 
-      attr_reader :data_structure
-
       def build_data_structure
-        @data_structure = cookbooks.inject({}) do |memo, cookbook|
-          memo[cookbook.name] ||= []
-          memo[cookbook.name] << cookbook
-          memo
-        end
+        cookbooks.each { |cookbook| add(cookbook) }
       end
 
+      # Sort cookbooks in version desc order
       def sort_data
         data_structure.values.map! do |versions|
           versions.sort! do |a, b|

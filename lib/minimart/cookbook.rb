@@ -90,9 +90,5 @@ module Minimart
         File.basename(file, File.extname(file)) =~ /\A#{name}\z/i
       end
     end
-
-    def path_to_file(file)
-      File.join(self.path, file)
-    end
   end
 end
