@@ -22,16 +22,18 @@ module Minimart
       end
 
       def requirements
-        cookbook_info.dependencies
+        cookbook.dependencies
       end
 
       private
 
-      def download_cookbook
+      def download_cookbook(&block)
         Configuration.output.puts "-- Fetching '#{name}[#{commitish}]' from '#{location}'"
 
-        path = Download::GitRepository.new(location).fetch(commitish)
-        Ridley::Chef::Cookbook.from_path(path)
+        downloader = Download::GitRepository.new(location)
+        downloader.fetch(commitish) do |path_to_cookbook|
+          block.call(Minimart::Cookbook.new(path_to_cookbook))
+        end
       end
 
       def commitish

@@ -4,7 +4,6 @@ module Minimart
 
       attr_reader :name,
                   :version_requirement,
-                  :cached_cookbook,
                   :cookbook
 
       def initialize(name, opts)
@@ -20,16 +19,11 @@ module Minimart
         {name => version_requirement}
       end
 
-      def cookbook_info
-        return cookbook.metadata if cookbook
-      end
-
-      def cookbook_path
-        return cookbook.path if cookbook
-      end
-
-      def fetch_cookbook
-        @cookbook ||= download_cookbook
+      def fetch_cookbook(&block)
+        download_cookbook do |cookbook|
+          @cookbook = cookbook
+          block.call(cookbook) if block
+        end
       end
 
       def to_demand
@@ -42,7 +36,7 @@ module Minimart
 
       private
 
-      def download_cookbook
+      def download_cookbook(&block)
         nil
       end
 

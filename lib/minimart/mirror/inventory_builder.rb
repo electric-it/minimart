@@ -22,6 +22,8 @@ module Minimart
         add_remote_cookbooks_to_graph
         add_requirements_to_graph
         fetch_inventory
+      ensure
+        clear_cache
       end
 
       private
@@ -30,12 +32,13 @@ module Minimart
       # These cookbooks and their associated metadata (any dependencies they have) take
       # precedence over information found elsewhere.
       def install_cookbooks_with_location_dependency
-        inventory_requirements.each do |requirement|
-          next unless requirement.location_specification?
+        inventory_requirements.each do |req|
+          next unless req.location_specification?
 
-          requirement.fetch_cookbook
-          add_artifact_to_graph(requirement.cookbook_info)
-          add_cookbook_to_local_store(requirement.cookbook_path)
+          req.fetch_cookbook do |cookbook|
+            add_artifact_to_graph(cookbook)
+            add_cookbook_to_local_store(cookbook.path)
+          end
         end
       end
 
@@ -121,6 +124,11 @@ module Minimart
       def sources
         inventory_configuration.sources
       end
+
+      def clear_cache
+        Minimart::Download::GitCache.instance.clear
+      end
+
     end
   end
 end

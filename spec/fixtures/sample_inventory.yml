@@ -7,7 +7,7 @@ cookbooks:
     versions:
       - ~> 5.6.1
     git:
-      url: https://github.com/opscode-cookbooks/mysql
+      location: https://github.com/opscode-cookbooks/mysql
       branches:
         - windows
       refs:

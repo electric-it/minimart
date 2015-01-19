@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'minimart/inventory_requirement/base_requirement'
+require 'minimart/inventory_requirement/git_requirement'
 
 describe Minimart::InventoryRequirement::GitRequirement do
 
@@ -11,7 +13,7 @@ describe Minimart::InventoryRequirement::GitRequirement do
   before(:each) do
     allow_any_instance_of(Minimart::Download::GitRepository).to receive(:fetch).
       with('new-feature-branch').
-      and_return('spec/fixtures/sample_cookbook')
+      and_yield('spec/fixtures/sample_cookbook')
   end
 
   describe '::new' do
@@ -51,25 +53,6 @@ describe Minimart::InventoryRequirement::GitRequirement do
 
     it 'should return the requirements specified in the cookbook metadata' do
       expect(subject.requirements).to eq 'yum' => '> 3.0.0'
-    end
-  end
-
-  describe '#cookbook_info' do
-    before(:each) { subject.fetch_cookbook }
-
-    it 'should return relevant information' do
-      info = subject.cookbook_info
-      expect(info.name).to eq 'sample_cookbook'
-      expect(info.version).to eq '1.2.3'
-      expect(info.dependencies).to eq 'yum' => '> 3.0.0'
-    end
-  end
-
-  describe '#cookbook_path' do
-    before(:each) { subject.fetch_cookbook }
-
-    it 'should return the path to the cookbook' do
-      expect(subject.cookbook_path.to_s).to match 'spec/fixtures/sample_cookbook'
     end
   end
 end

@@ -13,6 +13,8 @@ require 'vcr'
 require 'webmock/rspec'
 
 require 'minimart'
+require 'minimart/commands/mirror'
+require 'minimart/commands/web'
 
 Dir['spec/support/*.rb'].each { |f| require File.expand_path(f) }
 

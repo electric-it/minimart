@@ -14,7 +14,7 @@ describe Minimart::Mirror::InventoryBuilder do
 
       before(:each) do
         # stub out actually cloning the repo
-        allow_any_instance_of(Minimart::Download::GitRepository).to receive(:fetch).and_return 'spec/fixtures/sample_cookbook'
+        allow_any_instance_of(Minimart::Download::GitRepository).to receive(:fetch).and_yield 'spec/fixtures/sample_cookbook'
       end
 
       around(:each) do |e|
@@ -34,6 +34,11 @@ describe Minimart::Mirror::InventoryBuilder do
       it 'should add any dependencies of the cookbook to the local store' do
         subject.build!
         expect(subject.local_store.installed?('yum', '3.5.1')).to eq true
+      end
+
+      it 'should clear the git cache' do
+        expect_any_instance_of(Minimart::Download::GitCache).to receive :clear
+        subject.build!
       end
     end
 

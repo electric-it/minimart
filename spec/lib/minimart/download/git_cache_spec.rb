@@ -34,4 +34,24 @@ describe Minimart::Download::GitCache do
     end
   end
 
+  describe '#clear' do
+    let(:path) { Dir.mktmpdir }
+    let(:repo) { double('base', repo: double('repo', 'path' => path)) }
+
+    before(:each) do
+      allow(Git).to receive(:clone).and_return(repo)
+      subject.get_repository('git-url')
+    end
+
+    it 'should remove empty the cache' do
+      subject.clear
+      expect(subject.has_location?('git-url')).to eq false
+    end
+
+    it 'should actually remove any tmp directories' do
+      subject.clear
+      expect(Dir.exists?(path)).to eq false
+    end
+  end
+
 end

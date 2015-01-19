@@ -3,6 +3,6 @@ sources:
 cookbooks:
   mysql:
     git:
-      url: sample_git_repo
+      location: spec/fixtures/sample_cookbook
       tags:
         - v1.2.3
