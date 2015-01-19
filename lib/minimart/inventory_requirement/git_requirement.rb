@@ -25,6 +25,16 @@ module Minimart
         cookbook.dependencies
       end
 
+      def requirement_data
+        super.tap do |data|
+          data[:source]   = :git
+          data[:location] = location
+          data[:branch]   = branch if branch
+          data[:ref]      = ref if ref
+          data[:tag]      = tag if tag
+        end
+      end
+
       private
 
       def download_cookbook(&block)

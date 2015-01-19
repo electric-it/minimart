@@ -22,6 +22,7 @@ module Minimart
         add_remote_cookbooks_to_graph
         add_requirements_to_graph
         fetch_inventory
+
       ensure
         clear_cache
       end
@@ -37,7 +38,7 @@ module Minimart
 
           req.fetch_cookbook do |cookbook|
             add_artifact_to_graph(cookbook)
-            add_cookbook_to_local_store(cookbook.path)
+            add_cookbook_to_local_store(cookbook.path, req.requirement_data)
           end
         end
       end
@@ -75,8 +76,9 @@ module Minimart
 
         verify_dependency_can_be_installed(name, version)
 
-        Download::Supermarket.download(find_cookbook(name, version)) do |cookbook_path|
-          add_cookbook_to_local_store(cookbook_path)
+        remote_cookbook = find_cookbook(name, version)
+        Download::Supermarket.download(remote_cookbook) do |cookbook_path|
+          add_cookbook_to_local_store(cookbook_path, source: remote_cookbook.location_path)
         end
       end
 
@@ -97,8 +99,8 @@ module Minimart
         !inventory_requirements.version_required?(name, version)
       end
 
-      def add_cookbook_to_local_store(cookbook_path)
-        local_store.add_cookbook_from_path(cookbook_path)
+      def add_cookbook_to_local_store(cookbook_path, data = {})
+        local_store.add_cookbook_from_path(cookbook_path, data)
       end
 
       def find_cookbook(name, version)

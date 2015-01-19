@@ -21,6 +21,10 @@ module Minimart
         end
       end
 
+      def to_s
+        base_url
+      end
+
       private
 
       def build_cookbook(name, version, attrs)

@@ -65,7 +65,9 @@ module Minimart
         description:    description,
         maintainer:     maintainer,
         download_url:   cookbook_download_path(self),
-        url:            cookbook_path(self)
+        url:            cookbook_path(self),
+        downloaded_at:  downloaded_at,
+        download_date:  download_date
       }
     end
 
@@ -75,6 +77,15 @@ module Minimart
 
     def satisfies_requirement?(version_requirement)
       Gem::Requirement.new(version_requirement).satisfied_by?(Gem::Version.new(version))
+    end
+
+    def downloaded_at
+      download_metadata.downloaded_at
+    end
+
+    def download_date
+      return unless downloaded_at
+      downloaded_at.strftime('%B %d, %Y')
     end
 
     private
@@ -89,6 +100,10 @@ module Minimart
       Dir.glob(File.join(path, '*')).find do |file|
         File.basename(file, File.extname(file)) =~ /\A#{name}\z/i
       end
+    end
+
+    def download_metadata
+      @download_metadata ||= Minimart::Mirror::DownloadMetadata.new(self.path)
     end
   end
 end

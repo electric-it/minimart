@@ -34,6 +34,10 @@ module Minimart
         !!version_requirement
       end
 
+      def requirement_data
+        {}
+      end
+
       private
 
       def download_cookbook(&block)

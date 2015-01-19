@@ -17,6 +17,12 @@ module Minimart
         cookbook.dependencies
       end
 
+      def requirement_data
+        super.tap do |data|
+          data[:source]   = :local_path
+        end
+      end
+
       private
 
       def download_cookbook(&block)

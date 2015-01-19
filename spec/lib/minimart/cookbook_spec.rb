@@ -96,4 +96,32 @@ describe Minimart::Cookbook do
     end
   end
 
+  describe '#downloaded_at' do
+    let!(:metadata) { Minimart::Mirror::DownloadMetadata.new(cookbook.path) }
+
+    before(:each) do
+      activate_fake_fs
+      metadata.write
+    end
+
+    after(:each) { deactivate_fake_fs }
+
+    subject { cookbook.downloaded_at }
+
+    it { is_expected.to eq metadata.downloaded_at }
+    it { is_expected.to be_a Time }
+  end
+
+  describe '#download_date' do
+    let(:date) { Time.new(2001, 06, 01) }
+
+    before(:each) do
+      allow_any_instance_of(Minimart::Mirror::DownloadMetadata).to receive(:downloaded_at).and_return date
+    end
+
+    subject { cookbook.download_date }
+
+    it { is_expected.to eq 'June 01, 2001' }
+  end
+
 end
