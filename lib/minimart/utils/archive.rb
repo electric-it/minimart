@@ -1,9 +1,12 @@
 require 'archive/tar/minitar'
 require 'zlib'
+require 'minimart/mirror/download_metadata'
 
 module Minimart
   module Utils
     module Archive
+
+      FILES_TO_IGNORE = [Minimart::Mirror::DownloadMetadata::FILE_NAME]
 
       def self.extract_archive(archive_file, destination)
         tar = Zlib::GzipReader.new(File.open(archive_file, 'rb'))
@@ -13,7 +16,13 @@ module Minimart
       def self.pack_archive(parent_directory, source_directory, destination)
         Dir.chdir(parent_directory) do |directory|
           tgz = Zlib::GzipWriter.new(File.open(destination, 'wb'))
-          ::Archive::Tar::Minitar.pack(source_directory, tgz)
+          ::Archive::Tar::Minitar.pack(files_to_archive(source_directory), tgz)
+        end
+      end
+
+      def self.files_to_archive(dir)
+        Dir.glob(File.join(dir, '**/{*,.*}')).delete_if do |f|
+          FILES_TO_IGNORE.include?(File.basename(f))
         end
       end
 
