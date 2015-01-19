@@ -259,13 +259,13 @@ form {
   border-radius: 3px;
   background: #f5f5f5;
   margin-top: 70px;
-  font-size: 14px; }
+  font-size: 14px;
+  font-weight: 600;  }
   .detail-sidebar h3, .detail-sidebar h4, .detail-sidebar dt {
     font-size: 14px;
     font-weight: 700;
-    margin-bottom: 5px; }
-  .detail-sidebar h4 {
-    text-transform: uppercase; }
+    margin-bottom: 5px;
+    color: #677987; }
 
 .detail-sidebar__button {
   width: 100%;
