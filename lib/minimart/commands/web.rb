@@ -7,12 +7,14 @@ module Minimart
 
       attr_reader :inventory_directory
       attr_reader :web_directory
-      attr_reader :endpoint
+      attr_reader :web_endpoint
+      attr_reader :can_generate_html
 
       def initialize(opts = {})
         @inventory_directory = File.expand_path(opts[:inventory_directory])
         @web_directory       = File.expand_path(opts[:web_directory])
-        @endpoint            = opts[:endpoint]
+        @web_endpoint        = opts[:web_endpoint]
+        @can_generate_html   = opts.fetch(:html, true)
       end
 
       def execute!
@@ -32,13 +34,15 @@ module Minimart
       def generate_universe
         generator = Minimart::Web::UniverseGenerator.new(
           web_directory: web_directory,
-          endpoint:      endpoint,
+          endpoint:      web_endpoint,
           cookbooks:     cookbooks)
 
         generator.generate
       end
 
       def generate_html
+        return unless generate_html?
+
         generator = Minimart::Web::HtmlGenerator.new(
           web_directory: web_directory,
           cookbooks:     cookbooks)
@@ -48,6 +52,10 @@ module Minimart
 
       def cookbooks
         @cookbooks ||= Minimart::Web::Cookbooks.new(inventory_directory: inventory_directory)
+      end
+
+      def generate_html?
+        can_generate_html
       end
 
     end

@@ -13,6 +13,9 @@ module Minimart
     DEFAULT_INVENTORY_DIRECTORY = './inventory'
     DEFAULT_WEB_DIRECTORY       = './web'
 
+    ##
+    # Init
+    ##
     desc 'init', 'Begin a new Minimart.'
     option :inventory_config, default: DEFAULT_INVENTORY_CONFIG
     def init
@@ -36,17 +39,41 @@ YML
       end
     end
 
-    desc 'mirror', 'Mirror a listing of cookbooks.'
-    option :inventory_config, default: DEFAULT_INVENTORY_CONFIG
-    option :inventory_directory, default: DEFAULT_INVENTORY_DIRECTORY
+    ##
+    # Mirror
+    ##
+    desc 'mirror', 'Mirror cookbooks specified in an inventory file.'
+    option :inventory_config,
+      default: DEFAULT_INVENTORY_CONFIG,
+      desc:    'The path to the Minimart config file. Minimart will create the file if it does not exist.'
+
+    option :inventory_directory,
+      default: DEFAULT_INVENTORY_DIRECTORY,
+      desc:    'The path to store any cookbooks downloaded by the mirroring tool.'
     def mirror
       Minimart::Commands::Mirror.new(options).execute!
     end
 
-    desc 'web', 'Generate a web interface to download mirrored cookbooks'
-    option :inventory_directory, aliases: :id, default: DEFAULT_INVENTORY_DIRECTORY
-    option :web_directory,       aliases: :wd, default: DEFAULT_WEB_DIRECTORY, required: true
-    option :endpoint,            aliases: :e, required: true
+    ##
+    # Web
+    ##
+    desc 'web', 'Generate a web interface to download any mirrored cookbooks.'
+    option :inventory_directory,
+      default: DEFAULT_INVENTORY_DIRECTORY,
+      desc:   'Path to the cookbooks downloaded by the mirroring tool.'
+
+    option :web_directory,
+      default: DEFAULT_WEB_DIRECTORY,
+      desc:    'Path to output the web endpoint of Minimart.'
+
+    option :web_endpoint,
+      required: true,
+      desc:     'The web endpoint where Minimart will be hosted. This is required to properly generate the index file to be used by Berkshelf.'
+
+    option :html,
+      type:    :boolean,
+      default: true,
+      desc:    'Flag to determine whether or not to generate HTML output along with the universe endpoint.'
     def web
       Minimart::Commands::Web.new(options).execute!
     end

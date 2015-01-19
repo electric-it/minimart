@@ -11,7 +11,7 @@ describe Minimart::Commands::Web do
     Minimart::Commands::Web.new(
       inventory_directory: inventory_directory,
       web_directory:       web_directory,
-      endpoint:            endpoint)
+      web_endpoint:        endpoint)
   end
 
   describe '::new' do
@@ -23,8 +23,8 @@ describe Minimart::Commands::Web do
       expect(subject.web_directory).to eq File.expand_path(web_directory)
     end
 
-    it 'should set the endpoint' do
-      expect(subject.endpoint).to eq endpoint
+    it 'should set the web endpoint' do
+      expect(subject.web_endpoint).to eq endpoint
     end
   end
 
@@ -46,7 +46,7 @@ describe Minimart::Commands::Web do
     it 'should generate the universe.json file' do
       expect(Minimart::Web::UniverseGenerator).to receive(:new).with(
         web_directory: subject.web_directory,
-        endpoint: subject.endpoint,
+        endpoint: subject.web_endpoint,
         cookbooks: an_instance_of(Minimart::Web::Cookbooks)).and_return generator_double
 
       subject.execute!
@@ -58,6 +58,21 @@ describe Minimart::Commands::Web do
         cookbooks: an_instance_of(Minimart::Web::Cookbooks)).and_return generator_double
 
       subject.execute!
+    end
+
+    context 'when the user disable html generation' do
+      subject do
+        Minimart::Commands::Web.new(
+          html:                false,
+          inventory_directory: inventory_directory,
+          web_directory:       web_directory,
+          web_endpoint:            endpoint)
+      end
+
+      it 'should not execute the html generator' do
+        expect(Minimart::Web::HtmlGenerator).to_not receive(:new)
+        subject.execute!
+      end
     end
   end
 end
