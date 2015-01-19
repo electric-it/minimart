@@ -101,10 +101,6 @@ module Minimart
         local_store.add_cookbook_from_path(cookbook_path)
       end
 
-      def download_cookbook(name, version)
-
-      end
-
       def find_cookbook(name, version)
         sources.find_cookbook(name, version)
       end

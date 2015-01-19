@@ -19,8 +19,8 @@ module Minimart
 
       def add_cookbook_from_path(path)
         cookbook = cookbook_from_path(path)
-        add_cookbook_to_store(cookbook.metadata.name, cookbook.metadata.version)
-        copy_cookbook(cookbook.path, File.join(directory, "/#{cookbook.name}"))
+        add_cookbook_to_store(cookbook.name, cookbook.version)
+        copy_cookbook(cookbook.path, File.join(directory, "/#{cookbook}"))
       end
 
       def installed?(cookbook_name, cookbook_version)
@@ -41,14 +41,13 @@ module Minimart
 
       def load_local_inventory
         Utils::FileHelper.find_cookbooks_in_directory(directory).each do |path|
-          cookbook = cookbook_from_path(path).metadata
+          cookbook = cookbook_from_path(path)
           add_cookbook_to_store(cookbook.name, cookbook.version)
         end
       end
 
       def cookbook_from_path(path)
-        path = Utils::FileHelper.cookbook_path_in_directory(path)
-        Ridley::Chef::Cookbook.from_path(path)
+        Minimart::Cookbook.new(Utils::FileHelper.cookbook_path_in_directory(path))
       end
 
       def directory
