@@ -16,7 +16,7 @@ module Minimart
       end
 
       def requirements
-        {name => version_requirement}
+        location_specification? ? cookbook.dependencies : {name => version_requirement}
       end
 
       def fetch_cookbook(&block)
@@ -34,7 +34,7 @@ module Minimart
         !!version_requirement
       end
 
-      def requirement_data
+      def to_hash
         {}
       end
 

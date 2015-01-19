@@ -21,18 +21,13 @@ module Minimart
         true
       end
 
-      def requirements
-        cookbook.dependencies
-      end
-
-      def requirement_data
-        super.tap do |data|
-          data[:source]   = :git
-          data[:location] = location
-          data[:branch]   = branch if branch
-          data[:ref]      = ref if ref
-          data[:tag]      = tag if tag
-        end
+      def to_hash
+        result = super
+        result[:source_type]    = :git
+        result[:location]       = location
+        result[:commitish_type] = commitish_type
+        result[:commitish]      = commitish
+        result
       end
 
       private
@@ -48,6 +43,12 @@ module Minimart
 
       def commitish
         ref || branch || tag
+      end
+
+      def commitish_type
+        return :ref if ref
+        return :branch if branch
+        return :tag if tag
       end
 
     end

@@ -40,6 +40,16 @@ describe Minimart::Mirror::InventoryBuilder do
         expect_any_instance_of(Minimart::Download::GitCache).to receive :clear
         subject.build!
       end
+
+      it 'should store metadata about downloading the cookbook' do
+        subject.build!
+        metadata = JSON.parse(File.open(File.join(test_directory, 'sample_cookbook-1.2.3', '.minimart.json')).read)
+        expect(metadata).to include(
+          'source_type'    => 'git',
+          'location'       => 'spec/fixtures/sample_cookbook',
+          'commitish_type' => 'tag',
+          'commitish'      => 'v1.2.3')
+      end
     end
 
     describe 'when a cookbook with a local path is present' do
@@ -64,6 +74,12 @@ describe Minimart::Mirror::InventoryBuilder do
       it 'should add any dependencies of the cookbook to the local store' do
         subject.build!
         expect(subject.local_store.installed?('yum', '3.5.1')).to eq true
+      end
+
+      it 'should store metadata about downloading the cookbook' do
+        subject.build!
+        metadata = JSON.parse(File.open(File.join(test_directory, 'sample_cookbook-1.2.3', '.minimart.json')).read)
+        expect(metadata).to include('source_type' => 'local_path')
       end
     end
 
@@ -119,6 +135,14 @@ describe Minimart::Mirror::InventoryBuilder do
           subject.build!
           expect(Dir.exists?(File.join(test_directory, 'yum-3.5.1'))).to eq true
           expect(Dir.exists?(File.join(test_directory, 'yum-mysql-community-0.1.10'))).to eq true
+        end
+
+        it 'should store metadata about downloading the cookbook' do
+          subject.build!
+          metadata = JSON.parse(File.open(File.join(test_directory, 'mysql-5.5.4', '.minimart.json')).read)
+          expect(metadata).to include(
+            'source_type'    => 'opscode',
+            'location'       => 'supermarket.chef.io')
         end
 
         context 'when a cookbook has already been installed' do

@@ -33,12 +33,12 @@ module Minimart
       # These cookbooks and their associated metadata (any dependencies they have) take
       # precedence over information found elsewhere.
       def install_cookbooks_with_location_dependency
-        inventory_requirements.each do |req|
-          next unless req.location_specification?
+        inventory_requirements.each do |requirement|
+          next unless requirement.location_specification?
 
-          req.fetch_cookbook do |cookbook|
+          requirement.fetch_cookbook do |cookbook|
             add_artifact_to_graph(cookbook)
-            add_cookbook_to_local_store(cookbook.path, req.requirement_data)
+            add_cookbook_to_local_store(cookbook.path, requirement.to_hash)
           end
         end
       end
@@ -46,15 +46,13 @@ module Minimart
       # Fetch the universe from any of the defined sources, and add them as artifacts
       #  to the dependency resolution graph.
       def add_remote_cookbooks_to_graph
-        sources.each_cookbook do |cookbook|
-          add_artifact_to_graph(cookbook)
-        end
+        sources.each_cookbook { |cookbook| add_artifact_to_graph(cookbook) }
       end
 
       # Add any cookbooks defined in the inventory file as requirements to the graph
       def add_requirements_to_graph
-        inventory_requirements.each do |cookbook_requirement|
-          add_requirement_to_graph(cookbook_requirement.requirements)
+        inventory_requirements.each do |requirement|
+          graph.add_requirement(requirement.requirements)
         end
       end
 
@@ -76,9 +74,9 @@ module Minimart
 
         verify_dependency_can_be_installed(name, version)
 
-        remote_cookbook = find_cookbook(name, version)
-        Download::Supermarket.download(remote_cookbook) do |cookbook_path|
-          add_cookbook_to_local_store(cookbook_path, source: remote_cookbook.location_path)
+        remote_cookbook = find_remote_cookbook(name, version)
+        remote_cookbook.fetch do |path_to_cookbook|
+          add_cookbook_to_local_store(path_to_cookbook, remote_cookbook.to_hash)
         end
       end
 
@@ -103,16 +101,12 @@ module Minimart
         local_store.add_cookbook_from_path(cookbook_path, data)
       end
 
-      def find_cookbook(name, version)
+      def find_remote_cookbook(name, version)
         sources.find_cookbook(name, version)
       end
 
       def add_artifact_to_graph(cookbook)
         graph.add_artifact(cookbook)
-      end
-
-      def add_requirement_to_graph(requirements)
-        graph.add_requirement(requirements)
       end
 
       def inventory_requirements

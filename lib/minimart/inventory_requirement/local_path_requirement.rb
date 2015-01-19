@@ -13,14 +13,10 @@ module Minimart
         true
       end
 
-      def requirements
-        cookbook.dependencies
-      end
-
-      def requirement_data
-        super.tap do |data|
-          data[:source]   = :local_path
-        end
+      def to_hash
+        result = super
+        result[:source_type] = :local_path
+        result
       end
 
       private
