@@ -25,11 +25,6 @@ describe Minimart::Web::DashboardGenerator do
       expect(subject.template_content).to match(%{href="index.html"})
     end
 
-    it 'should have a form for the search action with the proper path' do
-      subject.generate
-      expect(subject.template_content).to match(%{action="index.html#search/"})
-    end
-
     it 'should have the proper relative path to any loaded assets' do
       subject.generate
       expect(subject.template_content).to match %{href="assets/}
