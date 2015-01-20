@@ -21,6 +21,7 @@ module Minimart
         make_web_directory
         generate_universe
         generate_html
+        print_success_message
       end
 
       private
@@ -32,6 +33,8 @@ module Minimart
       end
 
       def generate_universe
+        Configuration.output.puts "Building the cookbook index."
+
         generator = Minimart::Web::UniverseGenerator.new(
           web_directory: web_directory,
           endpoint:      web_endpoint,
@@ -42,6 +45,8 @@ module Minimart
 
       def generate_html
         return unless generate_html?
+
+        Configuration.output.puts "Generating Minimart HTML."
 
         generator = Minimart::Web::HtmlGenerator.new(
           web_directory: web_directory,
@@ -56,6 +61,15 @@ module Minimart
 
       def generate_html?
         can_generate_html
+      end
+
+      def print_success_message
+        Configuration.output.puts_green('Minimart successfully built the static web files!')
+        Configuration.output.puts_green("The static web files can be found in #{relative_web_path}")
+      end
+
+      def relative_web_path
+        File.join('.', Pathname.new(web_directory).relative_path_from(Pathname.pwd))
       end
 
     end

@@ -22,7 +22,7 @@ module Minimart
         add_remote_cookbooks_to_graph
         add_requirements_to_graph
         fetch_inventory
-
+        display_success_message
       ensure
         clear_cache
       end
@@ -68,7 +68,7 @@ module Minimart
 
       def install_cookbook(name, version)
         if cookbook_already_installed?(name, version)
-          Configuration.output.puts("cookbook already installed: #{name}-#{version}.")
+          Configuration.output.puts_yellow("cookbook already installed: #{name}-#{version}.")
           return
         end
 
@@ -115,6 +115,11 @@ module Minimart
 
       def sources
         inventory_configuration.sources
+      end
+
+      def display_success_message
+        Configuration.output.puts_green %{Minimart is done building your inventory!}
+        Configuration.output.puts_green %{The inventory can be found in #{local_store.directory_path}}
       end
 
       def clear_cache
