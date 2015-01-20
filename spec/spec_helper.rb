@@ -6,8 +6,9 @@ begin
 rescue LoadError
 end
 
+begin; require 'pry'; rescue LoadError; end
+
 require 'rspec'
-require 'pry'
 require 'vcr'
 require 'webmock/rspec'
 

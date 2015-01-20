@@ -45,4 +45,10 @@ describe Minimart::Mirror::Source do
       end
     end
   end
+
+  describe '#to_s' do
+    it 'should return the base url' do
+      expect(subject.to_s).to eq base_url
+    end
+  end
 end
