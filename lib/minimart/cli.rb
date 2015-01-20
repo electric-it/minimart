@@ -52,6 +52,8 @@ YML
       desc:    'The path to store any cookbooks downloaded by the mirroring tool.'
     def mirror
       Minimart::Commands::Mirror.new(options).execute!
+    rescue => e
+      Minimart::Error.handle_exception(e)
     end
 
     ##
@@ -76,6 +78,8 @@ YML
       desc:    'Flag to determine whether or not to generate HTML output along with the universe endpoint.'
     def web
       Minimart::Commands::Web.new(options).execute!
+    rescue => e
+      Minimart::Error.handle_exception(e)
     end
 
   end
