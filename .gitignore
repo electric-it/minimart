@@ -3,6 +3,7 @@ _gh_pages
 _site
 _import
 Gemfile.lock
+.sass-cache
 
 # Numerous always-ignore extensions
 *.diff
