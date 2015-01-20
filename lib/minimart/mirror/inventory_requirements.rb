@@ -60,7 +60,7 @@ module Minimart
 
       def parse_cookbooks
         raw_cookbooks.each do |name, reqs|
-          @requirements[name] = build_requirements_for(name, reqs)
+          @requirements[name] = build_requirements_for(name, (reqs || {}))
         end
       end
 
