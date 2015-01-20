@@ -50,9 +50,11 @@ YML
     option :inventory_directory,
       default: DEFAULT_INVENTORY_DIRECTORY,
       desc:    'The path to store any cookbooks downloaded by the mirroring tool.'
+
     def mirror
       Minimart::Commands::Mirror.new(options).execute!
-    rescue => e
+
+    rescue Minimart::Error::BaseError => e
       Minimart::Error.handle_exception(e)
     end
 
@@ -76,9 +78,11 @@ YML
       type:    :boolean,
       default: true,
       desc:    'Flag to determine whether or not to generate HTML output along with the universe endpoint.'
+
     def web
       Minimart::Commands::Web.new(options).execute!
-    rescue => e
+
+    rescue Minimart::Error::BaseError => e
       Minimart::Error.handle_exception(e)
     end
 
