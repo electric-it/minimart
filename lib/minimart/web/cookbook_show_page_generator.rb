@@ -12,11 +12,17 @@ module Minimart
       end
 
       def generate
+        clean_web_cookbooks_directory
         make_web_cookbooks_directory
         create_html_files
       end
 
       private
+
+      def clean_web_cookbooks_directory
+        return unless Dir.exists?(cookbooks_directory)
+        FileUtils.remove_entry(cookbooks_directory)
+      end
 
       def make_web_cookbooks_directory
         FileUtils.mkdir_p(cookbooks_directory)

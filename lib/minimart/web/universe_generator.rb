@@ -18,12 +18,18 @@ module Minimart
       end
 
       def generate
+        clean_existing_cookbook_files
         make_cookbook_files_directory
         create_universe
         write_universe_file
       end
 
       private
+
+      def clean_existing_cookbook_files
+        return unless Dir.exists?(cookbook_files_directory)
+        FileUtils.remove_entry(cookbook_files_directory)
+      end
 
       def make_cookbook_files_directory
         FileUtils.mkdir_p(cookbook_files_directory)

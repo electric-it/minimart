@@ -15,13 +15,28 @@ describe Minimart::Web::CookbookShowPageGenerator do
   end
 
   describe '#generate' do
-    let(:cookbook_directory) { File.join(web_directory, 'cookbooks', 'sample_cookbook') }
+    let(:cookbooks_directory) { File.join(web_directory, 'cookbooks') }
+    let(:cookbook_directory) { File.join(cookbooks_directory, 'sample_cookbook') }
     let(:cookbook_file) { File.join(cookbook_directory, '1.2.3.html') }
     let(:view_content) { File.open(cookbook_file).read }
 
     it 'should generate a directory for the cookbook provided' do
       subject.generate
       expect(Dir.exists?(cookbook_directory)).to eq true
+    end
+
+    context 'when the web command was previously run' do
+      let(:cookbook_directory) { File.join(cookbooks_directory, 'existing-cookbook') }
+
+      before(:each) do
+        FileUtils.mkdir_p(cookbooks_directory)
+        FileUtils.mkdir_p(cookbook_directory)
+      end
+
+      it 'should remove any existing files' do
+        subject.generate
+        expect(Dir.exists?(cookbook_directory)).to eq false
+      end
     end
 
     it 'should generate an html file for the cookbook version' do

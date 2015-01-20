@@ -5,10 +5,7 @@ require 'minimart/cookbook'
 
 describe Minimart::Web::UniverseGenerator do
 
-  before(:each) { activate_fake_fs }
-  after(:each) { deactivate_fake_fs }
-
-  let(:web_directory) { '/web' }
+  let(:web_directory) { test_directory }
   let(:endpoint) { 'example.com' }
 
   let(:cookbook) do
@@ -51,41 +48,59 @@ describe Minimart::Web::UniverseGenerator do
   end
 
   describe '#generate' do
+    let(:cookbook_files_dir) { File.join(web_directory, 'cookbook_files') }
+    let(:cookbook_dir) { File.join(cookbook_files_dir, 'sample_cookbook') }
+    let(:universe_file) { File.join(web_directory, 'universe.json') }
+
     before(:each) do
       allow(Minimart::Utils::Archive).to receive(:pack_archive)
     end
 
     it 'should make a cookbook_files directory in the web directory' do
       subject.generate
-      expect(Dir.exists?('/web/cookbook_files')).to eq true
+      expect(Dir.exists?(cookbook_files_dir)).to eq true
+    end
+
+    context 'when a cookbook files directory already exists' do
+      let(:cookbook_dir) { File.join(cookbook_files_dir, 'existing-cookbook') }
+
+      before(:each) do
+        FileUtils.mkdir_p(cookbook_files_dir)
+        FileUtils.mkdir_p(cookbook_dir)
+      end
+
+      it 'should remove the contents' do
+        subject.generate
+        expect(Dir.exists?(cookbook_dir)).to eq false
+      end
     end
 
     it 'should make a sub-directory for any cookbooks provided' do
       subject.generate
-      expect(Dir.exists?('/web/cookbook_files/sample_cookbook')).to eq true
+      expect(Dir.exists?(cookbook_dir)).to eq true
     end
 
     it 'should make a sub-directory for any versions of cookbooks provided' do
       subject.generate
-      expect(Dir.exists?('/web/cookbook_files/sample_cookbook/1_2_3')).to eq true
+      expect(Dir.exists?(File.join(cookbook_dir, '1_2_3'))).to eq true
     end
 
     it 'should generate an archive for the cookbook in the correct path' do
       expect(Minimart::Utils::Archive).to receive(:pack_archive).with(
         '/spec/fixtures',
         'sample_cookbook',
-        '/web/cookbook_files/sample_cookbook/1_2_3/sample_cookbook-1.2.3.tar.gz')
+        File.join(cookbook_dir, '1_2_3/sample_cookbook-1.2.3.tar.gz'))
 
       subject.generate
     end
 
     it 'should write a universe file in the proper directory' do
       subject.generate
-      expect(File.exists?('/web/universe.json')).to eq true
+      expect(File.exists?(universe_file)).to eq true
     end
 
     describe 'universe contents' do
-      let(:universe_contents) { JSON.parse(File.open('/web/universe.json').read) }
+      let(:universe_contents) { JSON.parse(File.open(universe_file).read) }
       let(:cookbook_info) { universe_contents['sample_cookbook']['1.2.3'] }
 
       before(:each) { subject.generate }
