@@ -1,0 +1,15 @@
+/* Buttons */
+
+.button {
+  font-size: 18px;
+  font-weight: 400;
+  background-color: $action;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: $radius;
+  text-align: center;
+  display: inline-block;
+  &:hover {
+    background-color: $action-hover;
+  }
+}

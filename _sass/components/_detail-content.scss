@@ -1,0 +1,64 @@
+/* Detail main content */
+
+.detail-content {
+  width: 780px;
+  float: left;
+  padding-top: 70px;
+  padding-bottom: 60px;
+  code {
+    margin-left: 20px;
+  }
+}
+
+  .detail-content__title {
+    font-weight: 700;
+    font-size: 30px;
+    color: $font-standard;
+    border-bottom: 1px solid $base-mid;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    span {
+      font-size: 14px;
+      font-weight: 600;
+      padding-left: 30px;
+    }
+  }
+  .detail-content__title-cookbook {
+    font-weight: 700;
+    font-size: 36px;
+    color: $font-dark;
+    margin-bottom: 25px;
+  }
+  .detail-content__title-content {
+    margin-bottom: 25px;
+    font-size: 30px;
+    color: $font-dark;
+  }
+  .detail-content__title-contentsmall {
+    margin-bottom: 20px;
+    color: $font-dark;
+  }
+
+  .detail-content__tabs {
+    border-top: 1px solid $base-mid;
+    padding-top: 30px;
+    margin-bottom: 20px;
+    margin-left: 0;
+    @include clearfix;
+    li {
+      float: left;
+      margin-right: 20px;
+    }
+    li:before {
+      content: "";
+      padding-right: 0;
+    }
+    a {
+      color: $action;
+      text-transform: uppercase;
+      font-size: 14px;
+      &.active, &:hover {
+        border-bottom: 3px solid $action;
+      }
+    }
+  }

@@ -1,0 +1,39 @@
+/* Fixed top bar */
+
+$top-bar-height: 65px;
+
+.top-bar {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  height: $top-bar-height;
+  width: 100%;
+  background: rgba($bar-bg, 0.8);
+}
+
+.top-bar__inner {
+  display: table;
+  table-layout: fixed;
+  height: 100%;
+}
+
+.top-bar__cell {
+  display: table-cell;
+  vertical-align: middle;
+  width: 50%;
+}
+
+.top-bar__actions {
+  text-align: right;
+}
+
+.top-bar__logo {
+  width: 242px;
+  height: auto;
+  display: block;
+}
+
+.after-top-bar {
+  padding-top: $top-bar-height;
+}

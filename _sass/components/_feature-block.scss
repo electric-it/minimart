@@ -1,0 +1,38 @@
+/* Feature blocks */
+
+.feature-block {
+  padding-top: 90px;
+  padding-left: 310px;
+  color: $font-lightest;
+  &+& {
+    padding-top: 100px;
+  }
+  &:nth-child(even) {
+    padding-left: 0;
+    padding-right: 310px;
+  }
+}
+  .feature-block__title {
+    font-size: 36px;
+  }
+
+  .feature-block__media {
+    float: left;
+    width: 250px;
+    margin-left: -310px;
+  }
+
+  .feature-block:nth-child(even) .feature-block__media {
+    float: right;
+    margin-left: 0;
+    margin-right: -310px;
+  }
+
+  .feature-block__body {
+    font-family: $ff-maven;
+    font-weight: 400;
+    padding-top: 25px;
+    p {
+      line-height: 1.2;
+    }
+  }

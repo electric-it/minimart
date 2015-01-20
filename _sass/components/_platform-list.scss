@@ -1,0 +1,16 @@
+/* Supported platform list */
+
+.platform-list {
+  float: left;
+  dt {
+  font-size: 12px;
+  text-transform: uppercase;
+  padding-bottom: 5px;
+  }
+  dd {
+    float: left;
+    display: inline;
+    margin-left: 0;
+    margin-right: 5px;
+  }
+}

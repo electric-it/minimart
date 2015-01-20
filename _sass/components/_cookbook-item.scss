@@ -1,0 +1,50 @@
+/* Cookbook items */
+
+.cookbook-item {
+  width: 100%;
+  border: 1px solid $base-mid;
+  border-radius: $radius;
+  background: $base-lightest;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+  .cookbook-item__titlebar {
+    border-bottom: 1px solid $base-mid;
+    padding: 15px 20px;
+    .item-title {
+      display: inline-block;
+      margin-right: 30px;
+      font-size: 18px;
+      font-weight: 700;
+      color: $font-dark;
+    }
+    .item-title:last-child {
+      float: right;
+      margin-right: 0;
+    }
+    .item-title--small {
+      font-size: 14px;
+      font-weight: 600;
+      color: $font-standard;
+    }
+    .item-title--light {
+      color: $font-lighter;
+    }
+  }
+
+  .cookbook-item__content {
+    padding: 15px 20px;
+    font-size: 18px;
+    border-bottom: 1px solid $base-mid;
+  }
+  .cookbook-item__code {
+    margin-bottom: 5px;
+  }
+  .cookbook-item__footer {
+    padding: 10px 20px;
+    @include clearfix;
+  }
+  .cookbook-item__action {
+    float: right;
+  }
