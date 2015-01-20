@@ -210,8 +210,7 @@ form {
 
 .markdown code {
   word-wrap: normal;
-  overflow-x: scroll;
-}
+  overflow-x: scroll; }
 
 .markdown h1 {
   font-weight: 700;
@@ -237,9 +236,22 @@ form {
 .markdown li p {
   white-space: pre-wrap; }
 
+.markdown table {
+  margin-bottom: 20px;
+  width: 100%;  }
+
+.markdown table tr {
+  border-bottom: 1px solid #cecece; }
+
+.markdown table tr:last-child {
+  border-bottom: none; }
+
+.markdown th, td {
+  padding: 10px 15px;
+  text-align: left; }
+
 .dependency-list a:hover {
-  color: #d14e4e;
-}
+  color: #d14e4e; }
 
 .detail-content__tabs {
   border-top: 1px solid #d9d9d9;
