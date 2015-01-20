@@ -1,13 +1,3 @@
-// jQuery Listeners
-$(function () {
-  $('#cookbook-search-form').submit(function (ev) {
-    ev.preventDefault();
-    var searchValue, searchPath;
-    searchValue = $(this).find('input[name="query"]').val();
-    searchPath  = $(this).attr('action');
-    document.location.href = encodeURI(searchPath + searchValue);
-  });
-});
 
 // simple app for managing pagination & search of cookbooks.
 var MinimartApp = {
@@ -22,15 +12,15 @@ MinimartApp.Cookbook = Backbone.Model.extend({});
 MinimartApp.CookbookList = Backbone.Collection.extend({ model: MinimartApp.Cookbook });
 
 MinimartApp.CookbookListView = Backbone.View.extend({
-  el: '#cookbooks',
 
   events: {
-    "click #next-page-button": 'nextPage',
-    "click #previous-page-button": 'previousPage'
+    "click #paginator a": 'goToPage',
+    "submit #cookbook-search-form": 'search'
   },
 
   initialize: function (opts) {
-    this.query = opts.query;
+    this.query     = opts.query;
+    this.paginator = opts.paginator;
   },
 
   template: function () {
@@ -43,34 +33,132 @@ MinimartApp.CookbookListView = Backbone.View.extend({
   render: function () {
     this.$el.html(this.template()({
       query:            this.query,
-      total_cookbooks:  this.collection.size(),
+      paginator:        this.paginator,
+      total_cookbooks:  (_.isUndefined(this.paginator) ? this.collection.size() : this.paginator.size()),
       cookbooks:        this.collection.toJSON()
     }));
+
+    $('#cookbooks').
+      empty().
+      append(this.$el);
   },
+
+  search: function (ev) {
+    ev.preventDefault();
+    var query = $(ev.target).find('input[name="query"]').val();
+    this.navigate('#search/' + encodeURI(query));
+  },
+
+  goToPage: function (ev) {
+    var self, pageNumber;
+    ev.preventDefault();
+    self = this;
+    pageNumber = parseInt($(ev.target).data('page'));
+    $('body').animate({ scrollTop: 0 }, "fast", function () {
+      self.navigate('#page/' + pageNumber);
+    });
+  },
+
+  navigate: function (route) {
+    this.remove();
+    Backbone.history.navigate(route, {trigger: true});
+  }
 });
 
 MinimartApp.Router = Backbone.Router.extend({
   routes: {
     "": 'index',
-    "search/:query": 'search'
+    "search/:query": 'search',
+    "page/:pageNumber": 'paginated'
   },
 
   initialize: function (opts) {
-    this.collection = new MinimartApp.CookbookList(opts.collection);
+    this.collection = opts.collection;
   },
 
   index: function () {
-    new MinimartApp.CookbookListView({ collection: this.collection }).render();
+    this.buildView(0).render();
+  },
+
+  paginated: function (pageNumber) {
+    this.buildView(parseInt(pageNumber)).render();
   },
 
   search: function (query) {
-    var filtered = this.collection.filter(function (c) {
-      return c.get('name').match(query);
+    query = decodeURI(query);
+
+    var filtered = _.filter(this.collection, function (c) {
+      return c.name.match(query);
     });
 
     new MinimartApp.CookbookListView({
       query: query,
       collection: new MinimartApp.CookbookList(filtered)
     }).render();
+  },
+
+  buildView: function (pageNumber) {
+    var paginator, filtered;
+
+    paginator = new MinimartApp.Paginator({ collection: this.collection, page: pageNumber });
+    filtered  = new MinimartApp.CookbookList(paginator.collectionForPage());
+
+    return new MinimartApp.CookbookListView({ collection: filtered, paginator:  paginator });
   }
 });
+
+MinimartApp.Paginator = function (opts) {
+  this.pageSize    = opts.pageSize || 10;
+  this.currentPage = opts.page || 0;
+  this.collection  = opts.collection;
+};
+
+MinimartApp.Paginator.prototype.canShow = function () {
+  return this.size() > this.pageSize;
+};
+
+MinimartApp.Paginator.prototype.collectionForPage = function () {
+  var lower, upper;
+  lower = this.currentPage * this.pageSize;
+  upper = (lower + this.pageSize);
+  return this.collection.slice(lower, upper);
+};
+
+MinimartApp.Paginator.prototype.canShowNext = function () {
+  return this.isPageInRange(this.nextPage());
+};
+
+MinimartApp.Paginator.prototype.nextPage = function () {
+  return this.currentPage + 1;
+};
+
+MinimartApp.Paginator.prototype.isPageInRange = function (pageNumber) {
+  return (pageNumber * this.pageSize) < this.size();
+};
+
+MinimartApp.Paginator.prototype.canShowPrevious = function () {
+  return this.previousPage() >= 0;
+};
+
+MinimartApp.Paginator.prototype.previousPage = function () {
+  return this.currentPage - 1;
+};
+
+MinimartApp.Paginator.prototype.size = function () {
+  return this.collection.length;
+};
+
+MinimartApp.Paginator.prototype.lastPage = function () {
+  return Math.floor(this.collection.length / this.pageSize);
+};
+
+MinimartApp.Paginator.prototype.surroundingPages = function () {
+  var startPage, endPage;
+  startPage = this.currentPage - 2 > 0 ? this.currentPage - 2 : 0;
+  endPage   = this.currentPage + 2 < this.lastPage() ? this.currentPage + 2 : this.lastPage();
+  return _.range(startPage, endPage + 1);
+};
+
+MinimartApp.Paginator.prototype.isCurrentPage = function (page) {
+  return page === this.currentPage;
+};

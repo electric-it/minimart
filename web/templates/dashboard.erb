@@ -3,6 +3,17 @@
 
 <!-- _.js template -->
 <script type="text/template" id="cookbook-list-template">
+  <form action="#" method="GET" id="cookbook-search-form">
+    <div class="search">
+      <div class="search__td">
+        <input name="query" type="search" value="<%%= query %>">
+      </div>
+      <div class="search__td search__td--btn">
+        <button type="submit">Search</button>
+      </div>
+    </div>
+  </form>
+
   <div class="results-title">
     <h3 id="cookbook-count">
       <%%= total_cookbooks %> <%%= total_cookbooks === 1 ? 'Cookbook' : 'Cookbooks' %>
@@ -33,6 +44,29 @@
       </div>
     <%% }); %>
   </div>
+
+  <%% if (paginator && paginator.canShow()) { %>
+    <nav id="paginator">
+      <%% if (paginator.canShowPrevious()) { %>
+        <a class="button" href="#" data-page="0">« First</a>
+        <a class="button" href="#" data-page="<%%= paginator.previousPage() %>">‹ Prev</a>
+      <%% } %>
+
+
+      <%% _.each(paginator.surroundingPages(), function (pageNumber) { %>
+        <%% if (paginator.isCurrentPage(pageNumber)) { %>
+          <a class="button disabled" href="#" data-page="<%%= pageNumber %>"><%%= pageNumber + 1 %></a>
+        <%% } else { %>
+          <a class="button" href="#" data-page="<%%= pageNumber %>"><%%= pageNumber + 1 %></a>
+        <%% } %>
+      <%% }); %>
+
+      <%% if (paginator.canShowNext()) { %>
+        <a class="button" href="#" data-page="<%%= paginator.nextPage() %>">Next ›</a>
+        <a class="button" href="#" data-page="<%%= paginator.lastPage() %>">Last »</a>
+      <%% } %>
+    </nav>
+  <%% } %>
 </script>
 
 <!-- Start the app to allow for searching, etc.. -->

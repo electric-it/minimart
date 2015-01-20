@@ -128,6 +128,16 @@ form {
   .button:hover {
     background-color: #bb3131; }
 
+#paginator .button {
+  background-color: #e6e6e6;
+  font-size: 14px;
+  color: #1D252A;  }
+
+#paginator .button.disabled {
+  pointer-events: none;
+  background-color: #d14e4e;
+  color: #fff;  }
+
 /* Cookbook items */
 .cookbook-item {
   width: 100%;

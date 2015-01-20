@@ -1,3 +1,14 @@
+<form action="<%= search_path %>" method="GET" id="cookbook-search-form">
+  <div class="search">
+    <div class="search__td">
+      <input name="query" type="search">
+    </div>
+    <div class="search__td search__td--btn">
+      <button type="submit">Search</button>
+    </div>
+  </div>
+</form>
+
 <main class="detail-content">
   <h1 class="detail-content__title">
     <%= cookbook.name %>
@@ -67,8 +78,17 @@
 </div>
 
 <script>
-$('.tab-container').tabslet();
-$('.cookbook-version-selector').change(function () {
-  document.location.href = encodeURI($(this).val());
+$(function () {
+  $('.tab-container').tabslet();
+  $('.cookbook-version-selector').change(function () {
+    document.location.href = encodeURI($(this).val());
+  });
+  $('#cookbook-search-form').submit(function (ev) {
+    ev.preventDefault();
+    var searchValue, searchPath;
+    searchValue = $(this).find('input[name="query"]').val();
+    searchPath  = $(this).attr('action');
+    document.location.href = encodeURI(searchPath + searchValue);
+  });
 });
 </script>
