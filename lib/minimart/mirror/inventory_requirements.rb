@@ -65,9 +65,21 @@ module Minimart
       end
 
       def build_requirements_for(name, reqs)
+        get_requirements_for(name, reqs).tap do |parsed_requirements|
+          validate_requirements(name, parsed_requirements)
+        end
+      end
+
+      def get_requirements_for(name, reqs)
         (market_requirements(name, reqs) +
           git_requirements(name, reqs) +
           local_path_requirements(name, reqs)).flatten.compact
+      end
+
+      def validate_requirements(name, reqs)
+        return unless reqs.nil? || reqs.empty?
+        raise Minimart::Error::InvalidInventoryError,
+          "Minimart could not find any requirements for '#{name}'"
       end
 
       def market_requirements(name, reqs)

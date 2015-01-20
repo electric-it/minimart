@@ -8,7 +8,7 @@ describe Minimart::Mirror::InventoryRequirements do
       'mysql' => {
         'versions' => ['~> 5.6.1'],
         'git'      => {
-          'url'      => 'https://github.com/opscode-cookbooks/mysql',
+          'location' => 'https://github.com/opscode-cookbooks/mysql',
           'branches' => ['windows'],
           'refs'     => ['git-ref-sha'],
           'tags'     => ['v5.2.0']
@@ -40,6 +40,19 @@ describe Minimart::Mirror::InventoryRequirements do
 
     it 'should build any cookbooks for local paths' do
       expect(subject.any? { |c| c.respond_to?(:path) && c.path == 'spec/fixtures/sample_cookbook' }).to eq true
+    end
+
+    context 'when no requirements can be found for a given cookbook' do
+      before(:each) do
+        raw_requirements['mysql'] = {'not-a-real-setting' => '~> 5.6.1'}
+      end
+
+      it 'should raise an error' do
+        expect {
+          subject
+        }.to raise_error Minimart::Error::InvalidInventoryError,
+          "Minimart could not find any requirements for 'mysql'"
+      end
     end
   end
 

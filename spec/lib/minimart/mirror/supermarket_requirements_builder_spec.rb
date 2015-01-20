@@ -54,6 +54,16 @@ describe Minimart::Mirror::SupermarketRequirementsBuilder do
         expect(subject.build.first.name).to eq 'mysql'
       end
     end
+
+    context 'when the string "version" is used as the key' do
+      subject do
+        described_class.new('mysql', 'version' => '~> 0.1')
+      end
+
+      it 'should give the requirement the proper version' do
+        expect(subject.build.first.version_requirement).to eq '~> 0.1'
+      end
+    end
   end
 
 end

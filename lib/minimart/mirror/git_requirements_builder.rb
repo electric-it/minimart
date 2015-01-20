@@ -15,9 +15,11 @@ module Minimart
         git_reqs  = reqs.fetch('git', {})
 
         @location = git_reqs['location']
-        @branches = raw_location_type_requirement(git_reqs, 'branches')
-        @tags     = raw_location_type_requirement(git_reqs, 'tags')
-        @refs     = raw_location_type_requirement(git_reqs, 'refs')
+        @branches = raw_location_type_requirement(%w[branches branch], git_reqs)
+        @tags     = raw_location_type_requirement(%w[tags tag], git_reqs)
+        @refs     = raw_location_type_requirement(%w[refs ref], git_reqs)
+
+        validate_requirements(git_reqs)
       end
 
       def build
@@ -42,11 +44,36 @@ module Minimart
         InventoryRequirement::GitRequirement.new(name, {type => value}.merge(location: location))
       end
 
-      def raw_location_type_requirement(requirements, location_type)
-        result = requirements.fetch(location_type, [])
-        result = [result] if result.is_a? String
-        result
+      def raw_location_type_requirement(location_types, requirements)
+        location_types.inject([]) do |memo, type|
+          if requirements[type]
+            req = requirements[type]
+            req = [req] if req.is_a?(String)
+            memo.concat(req)
+          end
+          memo
+        end
       end
+
+      def validate_requirements(reqs)
+        return if reqs.nil? || reqs.empty?
+
+        validate_location
+        validate_commitish
+      end
+
+      def validate_location
+        return unless location.nil? || location.empty?
+        raise Minimart::Error::InvalidInventoryError,
+          "'#{name}' specifies Git requirements, but does not have a location."
+      end
+
+      def validate_commitish
+        return unless branches.empty? && tags.empty? && refs.empty?
+        raise Minimart::Error::InvalidInventoryError,
+          "'#{name}' specified Git requirements, but does not provide a branch|tag|ref"
+      end
+
     end
   end
 end

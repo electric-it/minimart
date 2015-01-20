@@ -9,7 +9,7 @@ module Minimart
 
       def initialize(name, reqs)
         @name     = name
-        @versions = reqs.fetch('versions', [])
+        @versions = reqs['versions'] || reqs['version'] || []
         @versions = [@versions] if @versions.is_a? String
       end
 
