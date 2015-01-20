@@ -7,7 +7,6 @@ rescue LoadError
 end
 
 require 'rspec'
-require 'fakefs/safe'
 require 'pry'
 require 'vcr'
 require 'webmock/rspec'

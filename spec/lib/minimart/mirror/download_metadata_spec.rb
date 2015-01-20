@@ -2,23 +2,24 @@ require 'spec_helper'
 
 describe Minimart::Mirror::DownloadMetadata do
 
+  let(:path) {  File.join(test_directory, 'sample_cookbook') }
+
   subject do
-    Minimart::Mirror::DownloadMetadata.new('spec/fixtures/sample_cookbook')
+    Minimart::Mirror::DownloadMetadata.new(path)
   end
 
-  before(:each) { activate_fake_fs }
-  after(:each) { deactivate_fake_fs }
+  before(:each) { FileUtils.cp_r('spec/fixtures/sample_cookbook', path) }
 
   describe '::new' do
     it 'should assign #path_to_cookbook' do
-      expect(subject.path_to_cookbook).to eq 'spec/fixtures/sample_cookbook'
+      expect(subject.path_to_cookbook).to eq path
     end
 
     context 'when metadata for that file has already been written' do
       let(:metadata) { { 'fake_data' => 'info' } }
 
       before(:each) do
-        File.open('spec/fixtures/sample_cookbook/.minimart.json', 'w+') do |f|
+        File.open(File.join(path, '.minimart.json'), 'w+') do |f|
           f.write(metadata.to_json)
         end
       end
@@ -31,7 +32,7 @@ describe Minimart::Mirror::DownloadMetadata do
 
   describe '#write' do
     let(:file_contents) do
-      JSON.parse(File.open('spec/fixtures/sample_cookbook/.minimart.json').read)
+      JSON.parse(File.open(File.join(path, '.minimart.json')).read)
     end
 
     before(:each) { subject.write({'source' => 'example.com'}) }

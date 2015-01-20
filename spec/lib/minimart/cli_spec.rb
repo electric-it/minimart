@@ -4,11 +4,11 @@ require 'minimart/cli'
 describe Minimart::Cli do
 
   before(:each) do
-    FakeFS.activate!
-    FakeFS::FileSystem.clone('spec/fixtures/', '/spec/fixtures/')
+    @pwd = Dir.pwd
+    Dir.chdir(test_directory)
   end
 
-  after(:each) { FakeFS.deactivate! }
+  after(:each) { Dir.chdir(@pwd) }
 
   describe '#init' do
     context 'when a config file option is provided' do

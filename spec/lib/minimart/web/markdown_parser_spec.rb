@@ -2,15 +2,12 @@ require 'spec_helper'
 
 describe Minimart::Web::MarkdownParser do
 
-  before(:each) { activate_fake_fs }
-  after(:each) { deactivate_fake_fs }
-
   describe '::parse' do
     context 'when the file does not have a markdown extension' do
       let(:contents) { 'file contents here' }
 
       let(:file) do
-        '/readme.rdoc'.tap do |file_name|
+        File.join(test_directory, 'readme.rdoc').tap do |file_name|
           File.open(file_name, 'w+') { |f| f.write(contents) }
         end
       end
@@ -29,7 +26,7 @@ describe Minimart::Web::MarkdownParser do
       let(:contents) { '# Title' }
 
       let(:file) do
-        '/readme.md'.tap do |file_name|
+        File.join(test_directory, 'readme.md').tap do |file_name|
           File.open(file_name, 'w+') { |f| f.write(contents) }
         end
       end
@@ -43,7 +40,7 @@ describe Minimart::Web::MarkdownParser do
       let(:contents) { '# Title' }
 
       let(:file) do
-        '/readme.markdown'.tap do |file_name|
+        File.join(test_directory, 'readme.markdown').tap do |file_name|
           File.open(file_name, 'w+') { |f| f.write(contents) }
         end
       end

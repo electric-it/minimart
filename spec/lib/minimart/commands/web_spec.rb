@@ -3,8 +3,8 @@ require 'minimart/commands/web'
 
 describe Minimart::Commands::Web do
 
-  let(:inventory_directory) { './my-inventory' }
-  let(:web_directory) { './my-site' }
+  let(:inventory_directory)  { File.join(test_directory, 'my-inventory') }
+  let(:web_directory) { File.join(test_directory, 'my-site') }
   let(:endpoint) { 'http://example.com' }
 
   subject do
@@ -32,12 +32,9 @@ describe Minimart::Commands::Web do
     let(:generator_double) { double('generator', generate: true) }
 
     before(:each) do
-      activate_fake_fs
       allow_any_instance_of(Minimart::Web::UniverseGenerator).to receive(:generate)
       allow_any_instance_of(Minimart::Web::HtmlGenerator).to receive(:generate)
     end
-
-    after(:each) { deactivate_fake_fs }
 
     it 'should make the web directory' do
       subject.execute!

@@ -97,14 +97,14 @@ describe Minimart::Cookbook do
   end
 
   describe '#downloaded_at' do
-    let!(:metadata) { Minimart::Mirror::DownloadMetadata.new(cookbook.path) }
+    let(:path) { File.join(test_directory, 'sample_cookbook') }
+    let(:cookbook) { Minimart::Cookbook.new(path) }
+    let(:metadata) { Minimart::Mirror::DownloadMetadata.new(cookbook.path) }
 
     before(:each) do
-      activate_fake_fs
+      FileUtils.cp_r('spec/fixtures/sample_cookbook', path)
       metadata.write
     end
-
-    after(:each) { deactivate_fake_fs }
 
     subject { cookbook.downloaded_at }
 
