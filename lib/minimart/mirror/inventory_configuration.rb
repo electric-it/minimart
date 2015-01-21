@@ -10,6 +10,7 @@ module Minimart
       # The path to the inventory configuration file
       attr_reader :inventory_config_path
 
+      # @param [String] inventory_config_path The path to the inventory configuration file
       def initialize(inventory_config_path)
         @inventory_config_path = inventory_config_path
         @configuration         = parse_config_file

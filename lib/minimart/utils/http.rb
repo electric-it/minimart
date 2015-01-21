@@ -3,29 +3,45 @@ require 'uri'
 
 module Minimart
   module Utils
+    # A collection of methods to help issue HTTP requests
     module Http
 
-      def self.get_json(url, sub_url=nil)
-        JSON.parse(get(url, sub_url))
+      # Issue a GET request to a URL, and return parsed JSON.
+      # @param [String] url The base URL to hit
+      # @param [String] path The path to the RESTful resource to fetch
+      # @return [Hash] The parsed JSON response
+      def self.get_json(url, path=nil)
+        JSON.parse(get(url, path))
       end
 
-      def self.get(base_url, sub_url=nil)
+      # Issue a GET request to a URL
+      # @param [String] base_url The base URL to hit
+      # @param [String] path The path to the RESTful resource to fetch
+      def self.get(base_url, path=nil)
         site = RestClient::Resource.new(base_url.to_s)
-        sub_url ? site[sub_url].get : site.get
+        path ? site[path].get : site.get
       end
 
-      def self.get_binary(base_name, url, sub_url=nil)
+      # GET a binary file
+      # @param [String] base_name A base name to give the returned file
+      # @param [String] url The base URL to hit
+      # @param [String] path The path to the RESTful resource to fetch
+      # @return [Tempfile]
+      def self.get_binary(base_name, url, path=nil)
         result = Tempfile.new(base_name)
         result.binmode
-        result.write(get(url, sub_url))
+        result.write(get(url, path))
         result.close(false)
         result
       end
 
-      def self.build_url(base_url, sub_url=nil)
+      # Build a URL from a base URL, and a path
+      # @param [String] base_url The base URL to hit
+      # @param [String] path
+      def self.build_url(base_url, path=nil)
         result = (base_url =~ /\A[a-z].*:\/\//i) ? base_url : "http://#{base_url}"
         result = URI.parse(result).to_s
-        result = concat_url_fragment(result, sub_url)
+        result = concat_url_fragment(result, path)
         return result
       end
 

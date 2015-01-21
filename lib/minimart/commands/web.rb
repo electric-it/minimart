@@ -3,13 +3,29 @@ require 'minimart/web/html_generator'
 
 module Minimart
   module Commands
+    # Web is the main entrance point for building the web interface for Minimart.
+    # This class will generate the index file to be used by Berkshelf, archived
+    # cookbooks, and HTML used to browse the available inventory.
     class Web
 
+      # @return [String] The directory that the inventory is stored in.
       attr_reader :inventory_directory
+
+      # @return [String] The directory to store the web output.
       attr_reader :web_directory
+
+      # @return [String] The web endpoint where Minimart will be hosted.
       attr_reader :web_endpoint
+
+      # @return [Boolean] Determine whether or not to generate HTML output
       attr_reader :can_generate_html
 
+
+      # @param [Hash] opts
+      # @option opts [String] :inventory_directory The directory that the inventory is stored in.
+      # @option opts [String] :web_directory The directory to store the web output.
+      # @option opts [String] :web_endpoint The web endpoint where Minimart will be hosted.
+      # @option opts [Boolean] :can_generate_html Determine whether or not to generate HTML output
       def initialize(opts = {})
         @inventory_directory = File.expand_path(opts[:inventory_directory])
         @web_directory       = File.expand_path(opts[:web_directory])
@@ -17,6 +33,7 @@ module Minimart
         @can_generate_html   = opts.fetch(:html, true)
       end
 
+      # Generate the web output.
       def execute!
         make_web_directory
         generate_universe

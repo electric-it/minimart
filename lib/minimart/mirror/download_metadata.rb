@@ -1,19 +1,26 @@
 module Minimart
   module Mirror
     # This class can be used to parse, and create `.minimart.json` files to
-    # store information about when, and how Minimart downloaded a given cookbook
+    # store information about when, and how Minimart downloaded a given cookbook.
     class DownloadMetadata
 
       FILE_NAME = '.minimart.json'
 
+      # @return [String] the path to the directory containing the cookbook.
       attr_reader :path_to_cookbook
+
+      # @return [Hash] the contents of the metadata file.
       attr_reader :metadata
 
+      # @param [String] path_to_cookbook The path to the directory containing the cookbook.
       def initialize(path_to_cookbook)
         @path_to_cookbook = path_to_cookbook
         parse_file
       end
 
+      # Write the given contents to the metadata file. This will overwrite any
+      # existing contents.
+      # @param [Hash] contents The hash of data to write to the file.
       def write(contents = {})
         File.open(file_path, 'w+') do |file|
           @metadata = contents
@@ -23,6 +30,7 @@ module Minimart
         end
       end
 
+      # @return [Time] The downloaded_at time found in the metadata file.
       def downloaded_at
         return unless metadata && metadata['downloaded_at']
         Time.iso8601(metadata['downloaded_at']).utc

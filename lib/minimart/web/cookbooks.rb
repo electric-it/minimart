@@ -13,14 +13,21 @@ module Minimart
 
       FILE_NAME = 'data.json'
 
+      # @return [String] The path to the cookbook inventory
       attr_reader :inventory_directory
 
+      # @param [Hash] opts
+      # @option opts [String] :inventory_directory The path to the cookbook inventory
       def initialize(opts)
         @inventory_directory = opts[:inventory_directory]
         @data_structure = {}
+
         generate
       end
 
+      # Get a JSON representation of the most recent version of each cookbook
+      # found in the inventory_directory.
+      # @return [Hash]
       def to_json
         map do |cookbook_name, cookbook_versions|
           cookbook_versions.first.to_hash.merge(available_versions: cookbook_versions.size)
@@ -29,10 +36,13 @@ module Minimart
 
       def_delegators :data_structure, :each, :keys, :values, :[]
 
+      # Get a non-nested version of the cookbooks structure
       def individual_cookbooks
         values.flatten
       end
 
+      # Add a cookbook to the data structure.
+      # @param [Minimart::Cookbook] cookbook The cookbook to add
       def add(cookbook)
         data_structure[cookbook.name] ||= []
         data_structure[cookbook.name] << cookbook

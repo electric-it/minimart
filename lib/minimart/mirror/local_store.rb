@@ -2,11 +2,16 @@ require 'minimart/mirror/download_metadata'
 
 module Minimart
   module Mirror
+
+    # The LocalStore manages what is stored in the local inventory, and adding
+    # cookbook directories to the local inventory. The LocalStore will automatically
+    # load anything that has been stored in the inventory upon initialization.
     class LocalStore
 
+      # @return [String] the path to the local inventory
       attr_reader :directory_path
-      attr_reader :cookbooks
 
+      # @param [String] directory_path The path to the local inventory
       def initialize(directory_path)
         @directory_path = directory_path
         @cookbooks      = {}
@@ -14,11 +19,16 @@ module Minimart
         load_local_inventory
       end
 
+      # :nodoc:
       def add_cookbook_to_store(name, version)
         cookbooks[name] ||= []
         cookbooks[name] << version
       end
 
+      # Copy a given cookbook to the local store, and record any metadata
+      # about how the cookbook was downloaded.
+      # @param [String] path The path to the cookbook to add to the store
+      # @param [Hash] download_data Any data to record about the cookbook in a Minimart metadata file.
       def add_cookbook_from_path(path, download_data = {})
         cookbook_from_path(path).tap do |cookbook|
           add_cookbook_to_store(cookbook.name, cookbook.version)
@@ -27,12 +37,16 @@ module Minimart
         end
       end
 
+      # Determine whether or not a cookbook has been added to the LocalStore
+      # @return [Boolean]
       def installed?(cookbook_name, cookbook_version)
         !!(cookbooks[cookbook_name] &&
           cookbooks[cookbook_name].include?(cookbook_version))
       end
 
       private
+
+      attr_reader :cookbooks
 
       def copy_cookbook(source, destination)
         FileUtils.rm_rf(destination) if Dir.exists?(destination)

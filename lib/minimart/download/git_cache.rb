@@ -1,8 +1,11 @@
 module Minimart
   module Download
+    # GitCache manages cloning repositories, and storing them for later access.
     class GitCache
 
       class << self
+        # Get the GitCache singleton instance
+        # @return [Minimart::Download::GitCache]
         def instance
           @instance ||= GitCache.new
         end
@@ -12,10 +15,15 @@ module Minimart
         self.cache = {}
       end
 
+      # Get a repository from the GitCache. This repository will be cloned, if
+      # it hasn't been already.
+      # @param [String] repo_location Any location that can be cloned by Git (Path, URL).
+      # @return [Git::Base]
       def get_repository(repo_location)
         cache[repo_location] ||= clone_bare_repo(repo_location)
       end
 
+      # This method will empty the GitCache.
       def clear
         cache.values.each do |git|
           FileUtils.remove_entry(git.repo.path)
@@ -23,6 +31,9 @@ module Minimart
         self.cache = {}
       end
 
+      # See if the GitCache has any reference to a repository location.
+      # @param [String] repo_location Any location that can be cloned by Git (Path, URL).
+      # @return [Boolean]
       def has_location?(repo_location)
         cache.has_key? repo_location
       end

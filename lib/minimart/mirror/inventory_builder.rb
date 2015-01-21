@@ -2,14 +2,21 @@ require 'minimart/download/supermarket'
 
 module Minimart
   module Mirror
+
+    # InventoryBuilder coordinates downloading any cookbooks, and their dependencies.
     class InventoryBuilder
 
-      attr_reader :inventory_configuration,
-                  :graph,
-                  :local_store
+      # @return [Minimart::Mirror::InventoryConfiguration] The user specified inventory config.
+      attr_reader :inventory_configuration
+
+      # @return [Minimart::Mirror::DependencyGraph]
+      attr_reader :graph
+
+      # @return [Minimart::Mirror::LocalStore] the local store manages the inventory directory contents
+      attr_reader :local_store
 
       # @param [String] inventory_directory The directory to store the inventory.
-      # @param [Minimart::Mirror::InventoryConfiguration] The inventory as defined by a user of Minimart.
+      # @param [Minimart::Mirror::InventoryConfiguration] inventory_configuration The inventory as defined by a user of Minimart.
       def initialize(inventory_directory, inventory_configuration)
         @graph                   = DependencyGraph.new
         @local_store             = LocalStore.new(inventory_directory)
@@ -23,6 +30,7 @@ module Minimart
         add_requirements_to_graph
         fetch_inventory
         display_success_message
+
       ensure
         clear_cache
       end
@@ -49,7 +57,7 @@ module Minimart
         sources.each_cookbook { |cookbook| add_artifact_to_graph(cookbook) }
       end
 
-      # Add any cookbooks defined in the inventory file as requirements to the graph
+      # Add any cookbooks defined in the inventory file as a requirement to the graph
       def add_requirements_to_graph
         inventory_requirements.each do |requirement|
           graph.add_requirement(requirement.requirements)
@@ -74,7 +82,7 @@ module Minimart
 
         verify_dependency_can_be_installed(name, version)
 
-        remote_cookbook = find_remote_cookbook(name, version)
+        remote_cookbook = cookbook_from_source(name, version)
         remote_cookbook.fetch do |path_to_cookbook|
           add_cookbook_to_local_store(path_to_cookbook, remote_cookbook.to_hash)
         end
@@ -101,7 +109,7 @@ module Minimart
         local_store.add_cookbook_from_path(cookbook_path, data)
       end
 
-      def find_remote_cookbook(name, version)
+      def cookbook_from_source(name, version)
         sources.find_cookbook(name, version)
       end
 

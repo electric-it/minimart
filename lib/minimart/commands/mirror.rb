@@ -13,8 +13,11 @@ module Minimart
     # will generate an inventory.
     class Mirror
 
-      attr_reader :inventory_config,
-                  :inventory_directory
+      # @return [String] The path to the inventory configuration file.
+      attr_reader :inventory_config
+
+      # @return [String] The directory to store the inventory.
+      attr_reader :inventory_directory
 
 
       # @param [Hash] opts

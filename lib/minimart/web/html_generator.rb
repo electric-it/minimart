@@ -3,17 +3,26 @@ require 'minimart/web/cookbook_show_page_generator'
 
 module Minimart
   module Web
+
+    # HTML generator coordinated building the various HTML pages (dashboard, show pages).
     class HtmlGenerator
       include Minimart::Web::TemplateHelper
 
+      # @return [String] the directory to put any generated HTML in
       attr_reader :web_directory
+
+      # @return [Minimart::Web::Cookbooks] the set of cookbooks to generate HTML for
       attr_reader :cookbooks
 
+      # @params [Hash] opts
+      # @option opts [String] :web_directory The directory to put any generated HTML in
+      # @option opts [String] :cookbooks The cookbooks to generate HTML for
       def initialize(opts = {})
         @web_directory = opts[:web_directory]
         @cookbooks     = opts[:cookbooks]
       end
 
+      # Generate any HTML!
       def generate
         copy_assets
         generate_index

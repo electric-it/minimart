@@ -4,13 +4,15 @@ require 'minimart/mirror/local_requirements_builder'
 
 module Minimart
   module Mirror
+
+    # The collection of requirements as defined in the inventory file.
     class InventoryRequirements
       include Enumerable
 
+      # @return [Hash<String, Hash>] The cookbooks listed in the inventory file
       attr_reader :raw_cookbooks
 
-      attr_reader :requirements
-
+      # @param [Hash<String, Hash>] raw_cookbooks The cookbooks listed in the inventory file
       def initialize(raw_cookbooks)
         @raw_cookbooks = raw_cookbooks
         @requirements  = {}
@@ -18,6 +20,8 @@ module Minimart
         parse_cookbooks
       end
 
+      # Iterate over the requirements
+      # @yield [Minimart::Inventory::BaseRequirement]
       def each(&block)
         requirements.values.flatten.each &block
       end
@@ -39,25 +43,21 @@ module Minimart
 
       private
 
+      attr_reader :requirements
+
       def has_cookbook?(name)
         requirements.has_key?(name)
       end
 
       def solves_explicit_requirement?(name, version)
-        graph = Solve::Graph.new.tap { |g| g.artifact(name, version) }
-
         requirements[name].each do |req|
           next unless req.version_requirement?
-
-          begin
-            return true if Solve.it!(graph, [req.to_demand])
-          rescue Solve::Errors::NoSolutionError
-          end
+          return true if Semverse::Constraint.new(req.version_requirement).satisfies?(version)
         end
-
         return false
       end
 
+      # Build Minimart::Inventory requirements from the inventory.
       def parse_cookbooks
         raw_cookbooks.each do |name, reqs|
           @requirements[name] = build_requirements_for(name, (reqs || {}))

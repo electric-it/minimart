@@ -1,16 +1,24 @@
 module Minimart
   module Web
+    # Generate "show" pages for a set of cookbooks
     class CookbookShowPageGenerator
       include TemplateHelper
 
+      # @return [String] the directory to put any generated HTML in
       attr_reader :web_directory
+
+      # @return [Minimart::Web::Cookbooks] the cookbooks to generate show pages for
       attr_reader :cookbooks
 
+      # @params [Hash] opts
+      # @option opts [String] :web_directory The directory to put any generated HTML in
+      # @option opts [String] :cookbooks The cookbooks to generate show pages for
       def initialize(opts = {})
         @web_directory = opts[:web_directory]
         @cookbooks     = opts[:cookbooks]
       end
 
+      # Generate the HTML!
       def generate
         clean_web_cookbooks_directory
         make_web_cookbooks_directory
