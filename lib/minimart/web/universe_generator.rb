@@ -14,6 +14,8 @@ module Minimart
       # @return [Minimart::Web::Cookbooks] The cookbooks to build a universe for
       attr_reader :cookbooks
 
+      attr_reader :universe
+
       # @param [Hash] opts
       # @option opts [String] web_directory The directory to put the universe.json file in
       # @option opts [String] endpoint The base URL to use to build paths for cookbook files.
@@ -34,8 +36,6 @@ module Minimart
       end
 
       private
-
-      attr_reader :universe
 
       def clean_existing_cookbook_files
         return unless Dir.exists?(cookbook_files_directory)
