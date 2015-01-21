@@ -24,8 +24,20 @@ describe Minimart::Web::Cookbooks do
     end
 
     context 'when there are multiple versions of the same cookbook' do
-      let(:cookbook_one) { instance_double(Minimart::Cookbook, name: 'test-book', version: '1.9.0') }
-      let(:cookbook_two) { instance_double(Minimart::Cookbook, name: 'test-book', version: '1.19.0') }
+      let(:cookbook_one) do
+        c = Minimart::Cookbook.new(nil)
+        allow(c).to receive(:name).and_return 'test-book'
+        allow(c).to receive(:version).and_return '1.9.0'
+        c
+      end
+
+      let(:cookbook_two) do
+        c = Minimart::Cookbook.new(nil)
+        allow(c).to receive(:name).and_return 'test-book'
+        allow(c).to receive(:version).and_return '1.19.0'
+        c
+      end
+
       let(:cookbooks) { [cookbook_one, cookbook_two] }
 
       before(:each) do

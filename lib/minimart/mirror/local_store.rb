@@ -51,7 +51,7 @@ module Minimart
       end
 
       def cookbook_from_path(path)
-        Minimart::Cookbook.new(Utils::FileHelper.cookbook_path_in_directory(path))
+        Minimart::Cookbook.from_path(Utils::FileHelper.cookbook_path_in_directory(path))
       end
 
       def directory

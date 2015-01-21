@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'redcarpet', '~> 3.2'
   spec.add_dependency 'rest-client', '~> 1.7'
   spec.add_dependency 'ridley', '~> 4.1'
-  spec.add_dependency 'solve', '~> 1.2'
+  spec.add_dependency 'solve', '~> 1.2.1'
   spec.add_dependency 'thor', '~> 0.19'
   spec.add_dependency 'tilt', '~> 2.0'
 

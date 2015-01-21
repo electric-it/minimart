@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Minimart::Cookbook do
 
   let(:cookbook) do
-    Minimart::Cookbook.new('spec/fixtures/sample_cookbook')
+    Minimart::Cookbook.from_path('spec/fixtures/sample_cookbook')
   end
 
   describe '#name' do
@@ -98,7 +98,7 @@ describe Minimart::Cookbook do
 
   describe '#downloaded_at' do
     let(:path) { File.join(test_directory, 'sample_cookbook') }
-    let(:cookbook) { Minimart::Cookbook.new(path) }
+    let(:cookbook) { Minimart::Cookbook.from_path(path) }
     let(:metadata) { Minimart::Mirror::DownloadMetadata.new(cookbook.path) }
 
     before(:each) do

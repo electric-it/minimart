@@ -37,7 +37,7 @@ module Minimart
 
         downloader = Download::GitRepository.new(location)
         downloader.fetch(commitish) do |path_to_cookbook|
-          block.call(Minimart::Cookbook.new(path_to_cookbook))
+          block.call(Minimart::Cookbook.from_path(path_to_cookbook))
         end
       end
 

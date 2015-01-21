@@ -54,14 +54,12 @@ module Minimart
       # Sort cookbooks in version desc order
       def sort_data
         data_structure.values.map! do |versions|
-          versions.sort! do |a, b|
-            Gem::Version.new(b.version) <=> Gem::Version.new(a.version)
-          end
+          versions.sort!.reverse!
         end
       end
 
       def cookbooks
-        inventory_cookbook_paths.map { |path| Minimart::Cookbook.new(path) }
+        inventory_cookbook_paths.map { |path| Minimart::Cookbook.from_path(path) }
       end
 
       def inventory_cookbook_paths

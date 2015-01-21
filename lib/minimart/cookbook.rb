@@ -1,12 +1,18 @@
 require 'ridley'
+require 'semverse'
+
 require 'minimart/web/markdown_parser'
 
 module Minimart
   class Cookbook
     include Web::TemplateHelper
 
-    def initialize(path_to_cookbook)
-      @raw_cookbook = Ridley::Chef::Cookbook.from_path(path_to_cookbook)
+    def self.from_path(path)
+      new (Ridley::Chef::Cookbook.from_path(path))
+    end
+
+    def initialize(raw_cookbook)
+      @raw_cookbook = raw_cookbook
     end
 
     def name
@@ -75,10 +81,6 @@ module Minimart
       to_hash.to_json
     end
 
-    def satisfies_requirement?(version_requirement)
-      Gem::Requirement.new(version_requirement).satisfied_by?(Gem::Version.new(version))
-    end
-
     def downloaded_at
       download_metadata.downloaded_at
     end
@@ -88,7 +90,15 @@ module Minimart
       downloaded_at.strftime('%B %d, %Y')
     end
 
-    private
+    def <=>(other)
+      Semverse::Version.new(version) <=> Semverse::Version.new(other.version)
+    end
+
+    def satisfies_requirement?(constraint)
+      Semverse::Constraint.new(constraint).satisfies?(version)
+    end
+
+    protected
 
     attr_reader :raw_cookbook
 

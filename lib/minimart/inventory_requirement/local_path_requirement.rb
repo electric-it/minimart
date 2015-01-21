@@ -23,7 +23,7 @@ module Minimart
 
       def download_cookbook(&block)
         Configuration.output.puts "-- Fetching '#{name}' from path '#{path}'"
-        block.call(Minimart::Cookbook.new(path))
+        block.call(Minimart::Cookbook.from_path(path))
       end
 
     end
