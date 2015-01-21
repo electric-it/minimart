@@ -64,6 +64,27 @@ module Minimart
         "#{home_path}#search/"
       end
 
+      def platform_icon(platform)
+        case platform.downcase
+        when /amazon/i     then 'aws'
+        when /centos/i     then 'centos'
+        when /debian/i     then 'debian'
+        when /fedora/i     then 'fedora'
+        when /freebsd/i    then 'freebsd'
+        when /linuxmint/i  then 'linux-mint'
+        when /mac_os_x/i   then 'apple'
+        when /oracle/i     then 'oracle'
+        when /raspbian/i   then 'raspberrypi'
+        when /redhat/i     then 'redhat'
+        when /solaris/i    then 'solaris'
+        when /suse/i       then 'suse'
+        when /ubuntu/i     then 'ubuntu'
+        when /windows/i    then 'windows'
+        else
+          'laptop'
+        end
+      end
+
     end
   end
 end

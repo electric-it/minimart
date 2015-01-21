@@ -36,8 +36,9 @@
         <div class="cookbook-item__footer">
           <dl class="platform-list">
             <dt>Supported Platforms</dt>
-            <dd><img src="http://placehold.it/18"></dd>
-            <dd><img src="http://placehold.it/18"></dd>
+            <%% _.each(cookbook.platforms, function (description, key) { %>
+              <dd><i class="icon-<%%= key %>" title="<%%= description %>"></i></dd>
+            <%% }) %>
           </dl>
           <a href="<%%= cookbook.download_url %>" class="cookbook-item__action button">Download</a>
         </div>

@@ -131,7 +131,11 @@ form {
 #paginator .button {
   background-color: #e6e6e6;
   font-size: 14px;
-  color: #1D252A;  }
+  color: #1D252A;
+  margin: 0 0;
+  display: inline-block;
+  float: left;
+  padding: 10px 8px;  }
 
 #paginator .button.disabled {
   pointer-events: none;
@@ -697,3 +701,20 @@ form {
 
 .after-top-bar {
   padding-top: 65px; }
+
+/** Normalizing Icon Names **/
+.icon-apple,
+.icon-laptop,
+.icon-question,
+.icon-windows  {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+.icon-apple:before { content: "\f179"; }
+.icon-laptop:before { content: "\f109"; }
+.icon-question:before { content: "\f128" }
+.icon-windows:before { content: "\f17a"; }

@@ -2,6 +2,7 @@ require 'ridley'
 require 'semverse'
 
 require 'minimart/web/markdown_parser'
+require 'minimart/web/template_helper'
 
 module Minimart
   class Cookbook
@@ -48,6 +49,10 @@ module Minimart
       metadata.dependencies
     end
 
+    def platforms
+      metadata.platforms.keys
+    end
+
     def readme_file
       @readme_file ||= find_file('readme')
     end
@@ -73,7 +78,8 @@ module Minimart
         download_url:   cookbook_download_path(self),
         url:            cookbook_path(self),
         downloaded_at:  downloaded_at,
-        download_date:  download_date
+        download_date:  download_date,
+        platforms:      normalized_platforms
       }
     end
 
@@ -96,6 +102,15 @@ module Minimart
 
     def satisfies_requirement?(constraint)
       Semverse::Constraint.new(constraint).satisfies?(version)
+    end
+
+    def normalized_platforms
+      return {'question' => 'Not Specified'} if platforms.nil? || platforms.empty?
+
+      platforms.inject({}) do |memo, platform|
+        memo[platform_icon(platform)] = platform.capitalize
+        memo
+      end
     end
 
     protected
