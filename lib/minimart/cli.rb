@@ -18,6 +18,7 @@ module Minimart
     ##
     desc 'init', 'Begin a new Minimart.'
     option :inventory_config, default: DEFAULT_INVENTORY_CONFIG
+    # Begin a new Minimart
     def init
       create_file options[:inventory_config] do
 <<-YML
@@ -50,7 +51,7 @@ YML
     option :inventory_directory,
       default: DEFAULT_INVENTORY_DIRECTORY,
       desc:    'The path to store any cookbooks downloaded by the mirroring tool.'
-
+    # Mirror cookbooks specified in an inventory file.
     def mirror
       Minimart::Commands::Mirror.new(options).execute!
 
@@ -79,6 +80,7 @@ YML
       default: true,
       desc:    'Flag to determine whether or not to generate HTML output along with the universe endpoint.'
 
+    # Generate a web interface to download any mirrored cookbooks.
     def web
       Minimart::Commands::Web.new(options).execute!
 

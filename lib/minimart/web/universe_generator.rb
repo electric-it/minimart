@@ -5,11 +5,19 @@ module Minimart
     class UniverseGenerator
       include TemplateHelper
 
+      # @return [String] the directory to put the universe.json file in
       attr_reader :web_directory
+
+      # @return [String] the base URL to use to build paths for cookbook files.
       attr_reader :endpoint
-      attr_reader :universe
+
+      # @return [Minimart::Web::Cookbooks] The cookbooks to build a universe for
       attr_reader :cookbooks
 
+      # @param [Hash] opts
+      # @option opts [String] web_directory The directory to put the universe.json file in
+      # @option opts [String] endpoint The base URL to use to build paths for cookbook files.
+      # @option opts [Minimart::Web::Cookbooks] cookbooks The cookbooks to build a universe for
       def initialize(opts = {})
         @web_directory = opts[:web_directory]
         @endpoint      = opts[:endpoint]
@@ -17,6 +25,7 @@ module Minimart
         @universe      = {}
       end
 
+      # Generate the universe file!
       def generate
         clean_existing_cookbook_files
         make_cookbook_files_directory
@@ -25,6 +34,8 @@ module Minimart
       end
 
       private
+
+      attr_reader :universe
 
       def clean_existing_cookbook_files
         return unless Dir.exists?(cookbook_files_directory)

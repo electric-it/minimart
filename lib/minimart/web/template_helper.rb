@@ -58,28 +58,28 @@ module Minimart
       end
 
       # The relative path to download an archived cookbook file.
-      # @param [Minimart::Cookbook] The cookbook to get a download path for
+      # @param [Minimart::Cookbook] cookbook The cookbook to get a download path for
       # @return [String] The path to the archive file
       def cookbook_download_path(cookbook)
         base_path_to "cookbook_files/#{cookbook.name}/#{cookbook.web_friendly_version}/#{cookbook}.tar.gz"
       end
 
       # The relative path to a cookbook show page
-      # @param [Minimart::Cookbook] The cookbook to get a path for
+      # @param [Minimart::Cookbook] cookbook The cookbook to get a path for
       # @return [String] The path to the show page
       def cookbook_path(cookbook)
         base_path_to(cookbook_file(cookbook))
       end
 
       # The path to a cookbook show page from the root of the web directory
-      # @param [Minimart::Cookbook] The cookbook to get a path for
+      # @param [Minimart::Cookbook] cookbook The cookbook to get a path for
       # @return [String] The path to the cookbook show page
       def cookbook_file(cookbook)
         "#{cookbook_dir(cookbook)}/#{cookbook.version}.html"
       end
 
       # The path to a cookbook's HTML files
-      # @param [Minimart::Cookbook] The cookbook to get a path for
+      # @param [Minimart::Cookbook] cookbook The cookbook to get a path for
       # @return [String] The path to the cookbook directory
       def cookbook_dir(cookbook)
         "cookbooks/#{cookbook.name}"
@@ -102,7 +102,7 @@ module Minimart
       end
 
       # Get an icon name for a given platform (amazon, centos, etc...)
-      # @param [String] The platform to get an icon for
+      # @param [String] platform The platform to get an icon for
       # @return [String] The icon name
       def platform_icon(platform)
         case platform.downcase

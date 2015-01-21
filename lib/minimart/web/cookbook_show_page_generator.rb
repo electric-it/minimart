@@ -10,7 +10,7 @@ module Minimart
       # @return [Minimart::Web::Cookbooks] the cookbooks to generate show pages for
       attr_reader :cookbooks
 
-      # @params [Hash] opts
+      # @param [Hash] opts
       # @option opts [String] :web_directory The directory to put any generated HTML in
       # @option opts [String] :cookbooks The cookbooks to generate show pages for
       def initialize(opts = {})

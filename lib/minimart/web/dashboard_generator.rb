@@ -13,7 +13,7 @@ module Minimart
       # @return [String] The generated HTML content
       attr_reader :template_content
 
-      # @params [Hash] opts
+      # @param [Hash] opts
       # @option opts [String] :web_directory The directory to put any generated HTML in
       # @option opts [String] :cookbooks The cookbooks to generate HTML for
       def initialize(opts = {})
