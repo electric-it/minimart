@@ -7,9 +7,6 @@ describe Minimart::Mirror::InventoryConfiguration do
   subject { Minimart::Mirror::InventoryConfiguration.new(config_file_path) }
 
   describe '::new' do
-    it 'should parse the provided yml file' do
-    end
-
     context 'when the inventory config file does not exist' do
       it 'should raise the proper exception' do
         expect {
@@ -17,6 +14,43 @@ describe Minimart::Mirror::InventoryConfiguration do
         }.to raise_error(
           Minimart::Error::InvalidInventoryError,
           'The inventory configuration file could not be found')
+      end
+    end
+
+    describe 'global configuration' do
+      let(:conf) do
+        {
+          'configuration' => {
+            'verify_ssl' => false,
+            'github'     => {'github' => 'config'},
+            'chef'       => {'chef' => 'config'}
+          }
+        }
+      end
+
+      before(:each) do
+        allow(YAML).to receive(:load).and_return(conf)
+      end
+
+      after(:each) do
+        Minimart::Configuration.verify_ssl = nil
+        Minimart::Configuration.github_config = nil
+        Minimart::Configuration.chef_server_config = nil
+      end
+
+      it 'should set ssl verify to the proper value' do
+        subject
+        expect(Minimart::Configuration.verify_ssl).to eq false
+      end
+
+      it 'should set the github config to the proper value' do
+        subject
+        expect(Minimart::Configuration.github_config).to eq('github' => 'config')
+      end
+
+      it 'should set the chef config to the proper value' do
+        subject
+        expect(Minimart::Configuration.chef_server_config).to eq('chef' => 'config')
       end
     end
   end

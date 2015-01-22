@@ -18,8 +18,10 @@ module Minimart
       # @param [String] base_url The base URL to hit
       # @param [String] path The path to the RESTful resource to fetch
       def self.get(base_url, path=nil, headers={})
-        site = RestClient::Resource.new(base_url.to_s)
-        path ? site[path].get(headers) : site.get(headers)
+        headers = headers.merge(verify_ssl: Minimart::Configuration.verify_ssl)
+
+        resource = RestClient::Resource.new(base_url.to_s)
+        path ? resource[path].get(headers) : resource.get(headers)
       end
 
       # GET a binary file

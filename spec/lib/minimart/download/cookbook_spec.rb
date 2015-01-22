@@ -92,7 +92,7 @@ describe Minimart::Download::Cookbook do
 
       it 'should download the cookbook using Ridley' do
         expect(Ridley).to receive(:open).
-          with(conf.merge(server_url: 'http://supermarket.chef.io')).
+          with(conf.merge(server_url: 'http://supermarket.chef.io', ssl: {verify: true})).
           and_return chef_connection
 
         subject.fetch
@@ -116,6 +116,12 @@ describe Minimart::Download::Cookbook do
 
 
       after(:each) { Minimart::Configuration.github_config = nil }
+
+      it 'should build the client with the proper options' do
+        expect(Octokit::Client).to receive(:new).with(conf.merge(connection_options: {ssl: {verify: true}})).and_call_original
+        allow_any_instance_of(Octokit::Client).to receive(:archive_link).and_return archive_url
+        subject.fetch
+      end
 
       it 'should download the cookbook using octokit' do
         expect_any_instance_of(Octokit::Client).to receive(:archive_link).

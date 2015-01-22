@@ -34,4 +34,21 @@ describe Minimart::Configuration do
       it { is_expected.to eq conf }
     end
   end
+
+  describe '#verify_ssl' do
+    after(:each) { Minimart::Configuration.verify_ssl = nil }
+
+    subject { Minimart::Configuration.verify_ssl }
+    it { is_expected.to eq true }
+
+    context 'when set to false' do
+      subject { Minimart::Configuration.verify_ssl = false }
+      it { is_expected.to eq false }
+    end
+
+    context 'when set to true' do
+      subject { Minimart::Configuration.verify_ssl = true }
+      it { is_expected.to eq true }
+    end
+  end
 end

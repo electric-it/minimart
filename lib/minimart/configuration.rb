@@ -32,6 +32,14 @@ module Minimart
       def github_config
         (@github_config || {})
       end
+
+      def verify_ssl
+        @verify_ssl.nil? ? true : @verify_ssl
+      end
+
+      def verify_ssl=(val)
+        @verify_ssl = val
+      end
     end
 
   end

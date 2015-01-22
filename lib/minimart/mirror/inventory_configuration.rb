@@ -44,8 +44,12 @@ module Minimart
 
       def parse_global_configuration
         return unless (conf = configuration['configuration']) && conf.is_a?(Hash)
-        Minimart::Configuration.chef_server_config = conf.fetch('chef', {})
-        Minimart::Configuration.github_config = conf.fetch('github', [])
+
+        Minimart::Configuration.tap do |c|
+          c.chef_server_config = conf.fetch('chef', {})
+          c.github_config      = conf.fetch('github', [])
+          c.verify_ssl         = conf['verify_ssl']
+        end
       end
 
       def raw_sources
