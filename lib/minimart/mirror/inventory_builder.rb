@@ -1,5 +1,3 @@
-require 'minimart/download/supermarket'
-
 module Minimart
   module Mirror
 
@@ -25,7 +23,7 @@ module Minimart
 
       # Build the inventory!
       def build!
-        install_cookbooks_with_location_dependency
+        install_cookbooks_with_explicit_location
         add_remote_cookbooks_to_graph
         add_requirements_to_graph
         fetch_inventory
@@ -40,9 +38,9 @@ module Minimart
       # First we must install any cookbooks with a location specification (git, local path, etc..).
       # These cookbooks and their associated metadata (any dependencies they have) take
       # precedence over information found elsewhere.
-      def install_cookbooks_with_location_dependency
+      def install_cookbooks_with_explicit_location
         inventory_requirements.each do |requirement|
-          next unless requirement.location_specification?
+          next unless requirement.explicit_location?
 
           requirement.fetch_cookbook do |cookbook|
             add_artifact_to_graph(cookbook)

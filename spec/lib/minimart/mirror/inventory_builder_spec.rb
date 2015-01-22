@@ -142,7 +142,7 @@ describe Minimart::Mirror::InventoryBuilder do
           metadata = JSON.parse(File.open(File.join(test_directory, 'mysql-5.5.4', '.minimart.json')).read)
           expect(metadata).to include(
             'source_type'    => 'opscode',
-            'location'       => 'supermarket.chef.io')
+            'location'       => 'https://supermarket.chef.io/api/v1')
         end
 
         context 'when a cookbook has already been installed' do
@@ -151,7 +151,7 @@ describe Minimart::Mirror::InventoryBuilder do
           end
 
           it 'should not download the cookbooks a second time' do
-            expect(Minimart::Download::Supermarket).to_not receive(:download)
+            expect(Minimart::Download::Cookbook).to_not receive(:download)
             subject.build!
           end
         end

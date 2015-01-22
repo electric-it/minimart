@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'git', '~> 1.2'
   spec.add_dependency 'minitar', '~> 0.5'
+  spec.add_dependency 'octokit', '~> 3.7.0'
   spec.add_dependency 'redcarpet', '~> 3.2'
   spec.add_dependency 'rest-client', '~> 1.7'
   spec.add_dependency 'ridley', '~> 4.1'

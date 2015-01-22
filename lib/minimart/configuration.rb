@@ -16,6 +16,23 @@ module Minimart
       def output=(io)
         @output = Minimart::Output.new(io)
       end
+
+      def chef_server_config=(config)
+        @chef_server = config
+      end
+
+      def chef_server_config
+        (@chef_server || {})
+      end
+
+      def github_config=(config)
+        @github_config = config
+      end
+
+      def github_config
+        (@github_config || {})
+      end
     end
+
   end
 end

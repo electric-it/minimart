@@ -18,6 +18,9 @@ module Minimart
     # Raised when there is a conflict between differet versions of the same cookbook.
     class BrokenDependency < BaseError; end
 
+    # Raised when Minimart encounters a cookbook with a location type that it can't handle
+    class UnknownLocationType < BaseError; end
+
     # Gracefully handle any errors raised by Minimart, and exit with a failure
     # status code.
     # @param [Minimart::Error::BaseError] ex

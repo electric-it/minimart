@@ -1,3 +1,5 @@
+require 'minimart/download/cookbook'
+
 module Minimart
   module Mirror
 
@@ -6,22 +8,22 @@ module Minimart
     class RemoteCookbook
 
       # @return [String] the name of the cookbook
-      attr_reader :name
+      attr_accessor :name
 
       # @return [String] the version of the cookbook
-      attr_reader :version
+      attr_accessor :version
 
       # @return [Hash<String,String>] any dependencies the cookbook has
-      attr_reader :dependencies
+      attr_accessor :dependencies
 
       # @return [String] the path to the cookbook
-      attr_reader :location_path
+      attr_accessor :location_path
 
       # @return [String] the type of location the cookbook is stored in (supermarket, etc.)
-      attr_reader :location_type
+      attr_accessor :location_type
 
       # @return [String] URL to download the cookbook
-      attr_reader :download_url
+      attr_accessor :download_url
 
       # @param [Hash] opts
       # @option opts [String] name The name of the cookbook
@@ -42,9 +44,7 @@ module Minimart
       # Download this remote cookbook
       # @yield [Dir] The path to the downloaded cookbook. This directory will be removed when the block exits.
       def fetch(&block)
-        Download::Supermarket.download(self) do |path_to_cookbook|
-          block.call(path_to_cookbook)
-        end
+        Download::Cookbook.new(self).fetch(&block)
       end
 
       # Convert this remote cookbook to a Hash
@@ -52,8 +52,18 @@ module Minimart
       def to_hash
         {
           source_type: location_type,
-          location:    URI.parse(location_path).host
+          location:    location_path
         }
+      end
+
+      # Get the location_path as a URI
+      # @return [URI]
+      def location_path_uri
+        URI.parse(location_path)
+      end
+
+      def web_friendly_version
+        version.gsub('.', '_')
       end
 
       private

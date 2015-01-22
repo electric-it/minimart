@@ -43,16 +43,12 @@ module Minimart
       end
 
       def fetch_universe_data
-        Configuration.output.puts "Fetching the universe for #{universe_url} ..."
+        Configuration.output.puts "Fetching the universe for #{base_url} ..."
 
-        Utils::Http.get_json(universe_url)
+        Utils::Http.get_json(base_url, 'universe')
 
       rescue RestClient::ResourceNotFound
         raise Error::UniverseNotFoundError.new "no universe found for #{base_url}"
-      end
-
-      def universe_url
-        Utils::Http.build_url(base_url, 'universe')
       end
     end
   end

@@ -14,6 +14,7 @@ module Minimart
       def initialize(inventory_config_path)
         @inventory_config_path = inventory_config_path
         @configuration         = parse_config_file
+        parse_global_configuration
       end
 
       # The collection of files defined in the inventory file
@@ -39,6 +40,12 @@ module Minimart
         end
 
         YAML.load(File.open(inventory_config_path).read)
+      end
+
+      def parse_global_configuration
+        return unless (conf = configuration['configuration']) && conf.is_a?(Hash)
+        Minimart::Configuration.chef_server_config = conf.fetch('chef', {})
+        Minimart::Configuration.github_config = conf.fetch('github', [])
       end
 
       def raw_sources

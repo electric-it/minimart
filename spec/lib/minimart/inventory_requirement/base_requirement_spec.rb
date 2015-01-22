@@ -18,9 +18,9 @@ describe Minimart::InventoryRequirement::BaseRequirement do
     end
   end
 
-  describe '#location_specification?' do
+  describe '#explicit_location?' do
     it 'should return false' do
-      expect(subject.location_specification?).to eq false
+      expect(subject.explicit_location?).to eq false
     end
   end
 

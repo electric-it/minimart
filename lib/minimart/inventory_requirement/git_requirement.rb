@@ -34,7 +34,7 @@ module Minimart
 
       # Git requirements explicitly define their location, so this method will return true.
       # @return [Boolean] TRUE
-      def location_specification?
+      def explicit_location?
         true
       end
 

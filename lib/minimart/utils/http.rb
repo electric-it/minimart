@@ -11,15 +11,15 @@ module Minimart
       # @param [String] path The path to the RESTful resource to fetch
       # @return [Hash] The parsed JSON response
       def self.get_json(url, path=nil)
-        JSON.parse(get(url, path))
+        JSON.parse(get(url, path, accept: 'application/json'))
       end
 
       # Issue a GET request to a URL
       # @param [String] base_url The base URL to hit
       # @param [String] path The path to the RESTful resource to fetch
-      def self.get(base_url, path=nil)
+      def self.get(base_url, path=nil, headers={})
         site = RestClient::Resource.new(base_url.to_s)
-        path ? site[path].get : site.get
+        path ? site[path].get(headers) : site.get(headers)
       end
 
       # GET a binary file

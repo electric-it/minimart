@@ -42,9 +42,9 @@ describe Minimart::InventoryRequirement::GitRequirement do
     end
   end
 
-  describe '#location_specification?' do
+  describe '#explicit_location?' do
     it 'should return true' do
-      expect(subject.location_specification?).to eq true
+      expect(subject.explicit_location?).to eq true
     end
   end
 

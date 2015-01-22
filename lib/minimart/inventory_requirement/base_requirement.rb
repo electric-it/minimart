@@ -25,7 +25,7 @@ module Minimart
       # Determine whether or not this is a requirement which explicitly defines
       # it's location (e.g. Git repo). Defaults to FALSE.
       # @return [Boolean]
-      def location_specification?
+      def explicit_location?
         false
       end
 
@@ -34,13 +34,13 @@ module Minimart
       def requirements
         # if this cookbook has it's location specified, we instead return it's
         # dependencies as we don't need to resolve them elsewhere
-        location_specification? ? cookbook.dependencies : {name => version_requirement}
+        explicit_location? ? cookbook.dependencies : {name => version_requirement}
       end
 
-      # Download a cookbook that has it's location explicitly defined (see #location_specification?)
+      # Download a cookbook that has it's location explicitly defined (see #explicit_location?)
       # @yield [Minimart::Cookbook]
       def fetch_cookbook(&block)
-        return unless location_specification?
+        return unless explicit_location?
 
         download_cookbook do |cookbook|
           @cookbook = cookbook
