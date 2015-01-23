@@ -23,7 +23,7 @@ describe Minimart::Mirror::InventoryBuilder do
 
       it 'should add the cookbook to the graph' do
         subject.build!
-        expect(subject.graph.remote_cookbook_added?('sample_cookbook', '1.2.3')).to eq true
+        expect(subject.graph.source_cookbook_added?('sample_cookbook', '1.2.3')).to eq true
       end
 
       it 'should add the cookbook to the local store' do
@@ -63,7 +63,7 @@ describe Minimart::Mirror::InventoryBuilder do
 
       it 'should add the cookbook to the graph' do
         subject.build!
-        expect(subject.graph.remote_cookbook_added?('sample_cookbook', '1.2.3')).to eq true
+        expect(subject.graph.source_cookbook_added?('sample_cookbook', '1.2.3')).to eq true
       end
 
       it 'should add the cookbook to the local store' do
@@ -105,7 +105,7 @@ describe Minimart::Mirror::InventoryBuilder do
         it 'should populate the dependency graph with anything returned by the universe' do
           subject.build!
           expected_universe.each do |name, version|
-            expect(subject.graph.remote_cookbook_added?(name, version)).to eq true
+            expect(subject.graph.source_cookbook_added?(name, version)).to eq true
           end
         end
       end

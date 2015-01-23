@@ -17,9 +17,9 @@ module Minimart
       end
 
       # Add an artifact (cookbook), and its dependencies to the graph.
-      # @param [Minimart::Mirror::RemoteCookbook] cookbook
+      # @param [Minimart::Mirror::SourceCookbook] cookbook
       def add_artifact(cookbook)
-        return if remote_cookbook_added?(cookbook.name, cookbook.version)
+        return if source_cookbook_added?(cookbook.name, cookbook.version)
 
         graph.artifact(cookbook.name, cookbook.version)
 
@@ -33,12 +33,12 @@ module Minimart
       # @param [String]  name The name of the cookbook
       # @param [String]  version The version of the cookbook
       # @return [Boolean]
-      def remote_cookbook_added?(name, version)
+      def source_cookbook_added?(name, version)
         graph.artifact?(name, version)
       end
 
       # Get a cookbook out of the graph.
-      # @param [Minimart::Mirror::RemoteCookbook] cookbook The cookbook to fetch.
+      # @param [Minimart::Mirror::SourceCookbook] cookbook The cookbook to fetch.
       # @return [Solve::Artifact]
       def find_graph_artifact(cookbook)
         graph.find(cookbook.name, cookbook.version)

@@ -5,7 +5,7 @@ describe Minimart::Download::Cookbook do
   let(:archive) { File.open('spec/fixtures/sample_cookbook.tar.gz') }
 
   let(:cookbook) do
-    Minimart::Mirror::RemoteCookbook.new(
+    Minimart::Mirror::SourceCookbook.new(
       location_type:        'opscode',
       location_path:        'http://supermarket.chef.io',
       name:                 'sample',
@@ -20,7 +20,7 @@ describe Minimart::Download::Cookbook do
   describe '::fetch' do
     context 'when the location type provided is not recognized' do
       let(:cookbook) do
-        Minimart::Mirror::RemoteCookbook.new('location_type' => 'not-real')
+        Minimart::Mirror::SourceCookbook.new('location_type' => 'not-real')
       end
 
       it 'should raise an error' do

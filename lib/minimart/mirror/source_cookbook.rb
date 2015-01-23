@@ -5,7 +5,7 @@ module Minimart
 
     # A wrapper around a cookbook as found in the universe.json file from an
     # external source (Chef Supermarket, etc...).
-    class RemoteCookbook
+    class SourceCookbook
 
       # @return [String] the name of the cookbook
       attr_accessor :name

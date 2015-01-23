@@ -24,7 +24,7 @@ module Minimart
       # Build the inventory!
       def build!
         install_cookbooks_with_explicit_location
-        add_remote_cookbooks_to_graph
+        add_source_cookbooks_to_graph
         add_requirements_to_graph
         fetch_inventory
         display_success_message
@@ -51,7 +51,7 @@ module Minimart
 
       # Fetch the universe from any of the defined sources, and add them as artifacts
       #  to the dependency resolution graph.
-      def add_remote_cookbooks_to_graph
+      def add_source_cookbooks_to_graph
         sources.each_cookbook { |cookbook| add_artifact_to_graph(cookbook) }
       end
 
@@ -80,9 +80,9 @@ module Minimart
 
         verify_dependency_can_be_installed(name, version)
 
-        remote_cookbook = cookbook_from_source(name, version)
-        remote_cookbook.fetch do |path_to_cookbook|
-          add_cookbook_to_local_store(path_to_cookbook, remote_cookbook.to_hash)
+        source_cookbook = cookbook_from_source(name, version)
+        source_cookbook.fetch do |path_to_cookbook|
+          add_cookbook_to_local_store(path_to_cookbook, source_cookbook.to_hash)
         end
       end
 

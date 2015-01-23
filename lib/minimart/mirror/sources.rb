@@ -9,7 +9,7 @@ module Minimart
       end
 
       # Iterate over each cookbook defined in each source
-      # @yield [Minimart::Mirror::RemoteCookbook]
+      # @yield [Minimart::Mirror::SourceCookbook]
       def each_cookbook(&block)
         each { |source| source.cookbooks.each(&block) }
       end

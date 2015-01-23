@@ -7,7 +7,7 @@ describe Minimart::Mirror::DependencyGraph do
   end
 
   let(:cookbook) do
-    Minimart::Mirror::RemoteCookbook.new(
+    Minimart::Mirror::SourceCookbook.new(
       name: 'mysql',
       version: '1.0.0',
       dependencies: { 'yum' => '> 1.0.0' })
@@ -23,7 +23,7 @@ describe Minimart::Mirror::DependencyGraph do
     end
 
     it 'should add the cookbook to the graph' do
-      expect(subject.remote_cookbook_added?(cookbook.name, cookbook.version)).to eq true
+      expect(subject.source_cookbook_added?(cookbook.name, cookbook.version)).to eq true
     end
 
     it 'should add any possible dependencies to the graph' do
@@ -32,7 +32,7 @@ describe Minimart::Mirror::DependencyGraph do
 
     context 'when the cookbook has already been added' do
       let(:modified_cookbook) do
-        Minimart::Mirror::RemoteCookbook.new(
+        Minimart::Mirror::SourceCookbook.new(
           name: 'mysql',
           version: '1.0.0',
           dependencies: { 'apt' => '> 1.0.0' })
@@ -52,18 +52,18 @@ describe Minimart::Mirror::DependencyGraph do
     end
   end
 
-  describe '#remote_cookbook_added?' do
+  describe '#source_cookbook_added?' do
     context 'when the cookbook has been added' do
       before(:each) { subject.add_artifact(cookbook) }
 
       it 'should return true' do
-        expect(subject.remote_cookbook_added?(cookbook.name, cookbook.version)).to eq true
+        expect(subject.source_cookbook_added?(cookbook.name, cookbook.version)).to eq true
       end
     end
 
     context 'when the cookbook has not been added' do
       it 'should return false' do
-        expect(subject.remote_cookbook_added?(cookbook.name, cookbook.version)).to eq false
+        expect(subject.source_cookbook_added?(cookbook.name, cookbook.version)).to eq false
       end
     end
   end
@@ -77,11 +77,11 @@ describe Minimart::Mirror::DependencyGraph do
 
   describe '#resolved_requirements' do
     let(:apt_cookbook) do
-      Minimart::Mirror::RemoteCookbook.new(name: 'apt', version: '2.0.0')
+      Minimart::Mirror::SourceCookbook.new(name: 'apt', version: '2.0.0')
     end
 
     let(:yum_cookbook) do
-      Minimart::Mirror::RemoteCookbook.new(name: 'yum', version: '5.0.0')
+      Minimart::Mirror::SourceCookbook.new(name: 'yum', version: '5.0.0')
     end
 
     context 'when all dependencies are met' do

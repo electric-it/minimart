@@ -5,10 +5,10 @@ module Minimart
     # This class will download a cookbook from one of the inventory specified sources.
     class Cookbook
 
-      # @return [Minimart::Mirror::RemoteCookbook] The cookbook to download
+      # @return [Minimart::Mirror::SourceCookbook] The cookbook to download
       attr_reader :cookbook
 
-      # @param [Minimart::Mirror::RemoteCookbook] cookbook The cookbook to download
+      # @param [Minimart::Mirror::SourceCookbook] cookbook The cookbook to download
       def initialize(cookbook)
         @cookbook = cookbook
       end
