@@ -4,9 +4,9 @@ MiniMart is a lightweight alternative to the Chef Supermarket that uses only sta
 
 Minimart is made up of two main components:
 
-* A mirroring tool that will download any cookbooks listed in an inventory file from a Berkshelf source (Supermarket), a Git Repository, or a local path.
+* A mirroring tool that will download any cookbooks described in an inventory file.
 
-* A tool that will generate a Berkshelf compatible index of the cookbooks in your inventory, and a user friendly web interface for browsing cookbooks.
+* A web tool that will generate a Berkshelf compatible index of the cookbooks in your inventory, and a user friendly web interface for browsing cookbooks.
 
 ## Installing Minimart
 
