@@ -1,4 +1,5 @@
 require 'yaml'
+require 'erb'
 require 'minimart/mirror/inventory_requirements'
 
 module Minimart
@@ -39,7 +40,9 @@ module Minimart
           raise Error::InvalidInventoryError, 'The inventory configuration file could not be found'
         end
 
-        YAML.load(File.open(inventory_config_path).read)
+        file = File.open(inventory_config_path).read
+        erb  = ERB.new(file).result(binding)
+        YAML.load(erb)
       end
 
       def parse_global_configuration
