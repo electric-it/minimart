@@ -24,12 +24,12 @@ module Minimart
       # @param [Hash] opts
       # @option opts [String] :inventory_directory The directory that the inventory is stored in.
       # @option opts [String] :web_directory The directory to store the web output.
-      # @option opts [String] :web_endpoint The web endpoint where Minimart will be hosted.
+      # @option opts [String] :host The web endpoint where Minimart will be hosted.
       # @option opts [Boolean] :can_generate_html Determine whether or not to generate HTML output
       def initialize(opts = {})
         @inventory_directory = File.expand_path(opts[:inventory_directory])
         @web_directory       = File.expand_path(opts[:web_directory])
-        @web_endpoint        = opts[:web_endpoint]
+        @web_endpoint        = opts[:host]
         @can_generate_html   = opts.fetch(:html, true)
       end
 

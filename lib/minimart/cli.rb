@@ -71,7 +71,8 @@ YML
       default: DEFAULT_WEB_DIRECTORY,
       desc:    'Path to output the web endpoint of Minimart.'
 
-    option :web_endpoint,
+    option :host,
+      aliases: :h,
       required: true,
       desc:     'The web endpoint where Minimart will be hosted. This is required to properly generate the index file to be used by Berkshelf.'
 

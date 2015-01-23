@@ -11,7 +11,7 @@ describe Minimart::Commands::Web do
     Minimart::Commands::Web.new(
       inventory_directory: inventory_directory,
       web_directory:       web_directory,
-      web_endpoint:        endpoint)
+      host:                endpoint)
   end
 
   describe '::new' do

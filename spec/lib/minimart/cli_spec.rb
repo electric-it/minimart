@@ -51,22 +51,22 @@ describe Minimart::Cli do
       expect(Minimart::Commands::Web).to receive(:new).with(
         'web_directory'       => './web',
         'inventory_directory' => './inventory',
-        'web_endpoint'        => 'http://example.com',
+        'host'                => 'http://example.com',
         'html'                => true).and_return command_double
 
-      Minimart::Cli.start %w[web --web-endpoint=http://example.com]
+      Minimart::Cli.start %w[web --host=http://example.com]
     end
 
     it 'should allow users to override defaults' do
       expect(Minimart::Commands::Web).to receive(:new).with(
         'web_directory'       => './my-web',
         'inventory_directory' => './my-inventory',
-        'web_endpoint'        => 'http://example.com',
+        'host'                => 'http://example.com',
         'html'                => false).and_return command_double
 
       Minimart::Cli.start %w[
         web
-        --web-endpoint=http://example.com
+        --host=http://example.com
         --web-directory=./my-web
         --inventory-directory=./my-inventory
         --no-html]
