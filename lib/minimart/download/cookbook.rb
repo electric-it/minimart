@@ -14,7 +14,7 @@ module Minimart
       end
 
       # Download the cookbook
-      # @yield [Dir] A temporary directory containing the cookbook
+      # @yield Minimart::Cookbook]
       def fetch(&block)
         Configuration.output.puts "-- Downloading #{cookbook.name} #{cookbook.version}"
 
@@ -25,7 +25,7 @@ module Minimart
 
         Dir.mktmpdir do |dir|
           send("download_#{cookbook.location_type}", dir)
-          block.call(dir) if block
+          block.call(Minimart::Cookbook.from_path(dir)) if block
         end
       end
 

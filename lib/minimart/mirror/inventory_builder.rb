@@ -81,8 +81,8 @@ module Minimart
         verify_dependency_can_be_installed(name, version)
 
         source_cookbook = cookbook_from_source(name, version)
-        source_cookbook.fetch do |path_to_cookbook|
-          add_cookbook_to_local_store(path_to_cookbook, source_cookbook.to_hash)
+        source_cookbook.fetch do |cookbook|
+          add_cookbook_to_local_store(cookbook.path, source_cookbook.to_hash)
         end
       end
 

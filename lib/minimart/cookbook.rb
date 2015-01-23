@@ -14,6 +14,7 @@ module Minimart
     # @param [String] path The path to the cookbook directory
     # @return [Minimart::Cookbook]
     def self.from_path(path)
+      path = Minimart::Utils::FileHelper.cookbook_path_in_directory(path)
       new (Ridley::Chef::Cookbook.from_path(path))
     end
 
