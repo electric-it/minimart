@@ -50,7 +50,7 @@ describe Minimart::Web::UniverseGenerator do
   describe '#generate' do
     let(:cookbook_files_dir) { File.join(web_directory, 'cookbook_files') }
     let(:cookbook_dir) { File.join(cookbook_files_dir, 'sample_cookbook') }
-    let(:universe_file) { File.join(web_directory, 'universe.json') }
+    let(:universe_file) { File.join(web_directory, 'universe') }
 
     before(:each) do
       allow(Minimart::Utils::Archive).to receive(:pack_archive)

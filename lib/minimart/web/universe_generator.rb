@@ -96,7 +96,7 @@ module Minimart
       end
 
       def write_universe_file
-        File.open(File.join(web_directory, 'universe.json'), 'w+') do |f|
+        File.open(File.join(web_directory, 'universe'), 'w+') do |f|
           f.write(universe.to_json)
         end
       end
