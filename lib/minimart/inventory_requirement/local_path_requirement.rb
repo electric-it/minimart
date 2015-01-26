@@ -29,6 +29,10 @@ module Minimart
         result
       end
 
+      def matching_source?(metadata)
+        metadata['source_type'] == 'local_path'
+      end
+
       private
 
       def download_cookbook(&block)

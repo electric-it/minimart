@@ -15,7 +15,7 @@ module Minimart
     # Raised when none of the available sources have a given cookbook.
     class CookbookNotFound < BaseError; end
 
-    # Raised when there is a conflict between differet versions of the same cookbook.
+    # Raised when there is a conflict between different versions of the same cookbook.
     class BrokenDependency < BaseError; end
 
     # Raised when Minimart encounters a cookbook with a location type that it can't handle

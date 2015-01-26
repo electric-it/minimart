@@ -44,6 +44,22 @@ module Minimart
           cookbooks[cookbook_name].include?(cookbook_version))
       end
 
+      # Validate that a new resolved requirement is not in the local store
+      # with different requirements. If we download two different branches
+      # of the same cookbook and they both resolve to the same version, then we
+      # raise an exception.
+      # @param [Minimart::Cookbook] new_cookbook
+      # @param [Minimart::InventoryRequirement::BaseRequirement] requirement
+      # @raise [Minimart::Error::BrokenDependency]
+      def validate_resolved_requirement(new_cookbook, requirement)
+        return unless installed?(new_cookbook.name, new_cookbook.version)
+
+        existing_cookbook = load_cookbook(new_cookbook)
+        unless requirement.matching_source?(existing_cookbook.download_metadata)
+          raise Minimart::Error::BrokenDependency, "A version of #{new_cookbook} already exists in the inventory from a different source."
+        end
+      end
+
       private
 
       attr_reader :cookbooks
@@ -62,6 +78,10 @@ module Minimart
           cookbook = cookbook_from_path(path)
           add_cookbook_to_store(cookbook.name, cookbook.version)
         end
+      end
+
+      def load_cookbook(cookbook)
+        cookbook_from_path(local_path_for(cookbook))
       end
 
       def cookbook_from_path(path)

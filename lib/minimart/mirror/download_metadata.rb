@@ -32,8 +32,12 @@ module Minimart
 
       # @return [Time] The downloaded_at time found in the metadata file.
       def downloaded_at
-        return unless metadata && metadata['downloaded_at']
+        return unless self['downloaded_at']
         Time.iso8601(metadata['downloaded_at']).utc
+      end
+
+      def [](key)
+        metadata[key] if metadata
       end
 
       private

@@ -50,6 +50,23 @@ describe Minimart::Mirror::InventoryBuilder do
           'commitish_type' => 'tag',
           'commitish'      => 'v1.2.3')
       end
+
+      context 'when the same cookbook is present in the local store with a different source' do
+        before(:each) do
+          subject.build!
+          allow_any_instance_of(Minimart::Cookbook).to receive(:download_metadata).and_return(
+            'source_type' => 'git',
+            'location' => 'spec/fixtures/sample_cookbook',
+            'commitish_type' => 'ref',
+            'commitish' => 'SHA')
+        end
+
+        it 'should raise an error' do
+          expect {
+            subject.build!
+          }.to raise_error Minimart::Error::BrokenDependency
+        end
+      end
     end
 
     describe 'when a cookbook with a local path is present' do

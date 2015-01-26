@@ -149,6 +149,12 @@ module Minimart
       end
     end
 
+    # Get any metadata about how this cookbook was downloaded.
+    # @return [Minimart::Mirror::DownloadMetadata]
+    def download_metadata
+      @download_metadata ||= Minimart::Mirror::DownloadMetadata.new(self.path)
+    end
+
     protected
 
     attr_reader :raw_cookbook
@@ -161,10 +167,6 @@ module Minimart
       Dir.glob(File.join(path, '*')).find do |file|
         File.basename(file, File.extname(file)) =~ /\A#{name}\z/i
       end
-    end
-
-    def download_metadata
-      @download_metadata ||= Minimart::Mirror::DownloadMetadata.new(self.path)
     end
   end
 end

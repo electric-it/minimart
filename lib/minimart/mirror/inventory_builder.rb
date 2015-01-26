@@ -43,6 +43,7 @@ module Minimart
           next unless requirement.explicit_location?
 
           requirement.fetch_cookbook do |cookbook|
+            validate_cookbook_against_local_store(cookbook, requirement)
             add_artifact_to_graph(cookbook)
             add_cookbook_to_local_store(cookbook.path, requirement.to_hash)
           end
@@ -101,6 +102,13 @@ module Minimart
 
       def non_required_version?(name, version)
         !inventory_requirements.version_required?(name, version)
+      end
+
+      # We need to validate that if this cookbook is in the store
+      # it came from the same source, otherwise we could
+      # possibly override a cookbook
+      def validate_cookbook_against_local_store(cookbook, requirement)
+        local_store.validate_resolved_requirement(cookbook, requirement)
       end
 
       def add_cookbook_to_local_store(cookbook_path, data = {})

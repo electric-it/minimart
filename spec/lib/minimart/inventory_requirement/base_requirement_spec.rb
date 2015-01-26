@@ -29,4 +29,10 @@ describe Minimart::InventoryRequirement::BaseRequirement do
       expect(subject.requirements).to eq 'mysql' => '> 1.0.0'
     end
   end
+
+  describe '#matching_source?' do
+    it 'should default to true' do
+      expect(subject.matching_source?({})).to eq true
+    end
+  end
 end

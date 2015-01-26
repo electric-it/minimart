@@ -4,7 +4,7 @@ require 'minimart/inventory_requirement/git_requirement'
 
 describe Minimart::InventoryRequirement::GitRequirement do
 
-  subject do
+  let(:requirement) do
     Minimart::InventoryRequirement::GitRequirement.new(
       'sample_cookbook',
       branch: 'new-feature-branch')
@@ -18,12 +18,12 @@ describe Minimart::InventoryRequirement::GitRequirement do
 
   describe '::new' do
     it 'should set the name' do
-      expect(subject.name).to eq 'sample_cookbook'
+      expect(requirement.name).to eq 'sample_cookbook'
     end
 
     context 'when a branch is provided' do
       it 'should set the branch' do
-        expect(subject.branch).to eq 'new-feature-branch'
+        expect(requirement.branch).to eq 'new-feature-branch'
       end
     end
 
@@ -43,16 +43,50 @@ describe Minimart::InventoryRequirement::GitRequirement do
   end
 
   describe '#explicit_location?' do
-    it 'should return true' do
-      expect(subject.explicit_location?).to eq true
-    end
+    subject { requirement.explicit_location? }
+    it { is_expected.to eq true }
   end
 
   describe '#requirements' do
-    before(:each) { subject.fetch_cookbook }
+    before(:each) { requirement.fetch_cookbook }
+    subject { requirement.requirements }
+    it { is_expected.to eq('yum' => '> 3.0.0') }
+  end
 
-    it 'should return the requirements specified in the cookbook metadata' do
-      expect(subject.requirements).to eq 'yum' => '> 3.0.0'
+  describe '#matching_source?' do
+    let(:metadata) do
+      { 'source_type' => 'git', 'commitish_type' => 'branch', 'commitish' => 'new-feature-branch'}
+    end
+
+    subject { requirement.matching_source?(metadata) }
+
+    it { is_expected.to eq true }
+
+    describe 'when the source type is not matching' do
+      before(:each) { metadata['source_type'] = 'local_path' }
+
+      it { is_expected.to eq false }
+    end
+
+    describe 'when the commitish type is not matching' do
+      before(:each) { metadata['commitish_type'] = 'tag' }
+
+      it { is_expected.to eq false }
+    end
+
+    describe 'when the commitish is not matching' do
+      before(:each) { metadata['commitish'] = 'another-branch' }
+
+      it { is_expected.to eq false }
+
+      context 'when the commitish type is a ref' do
+        before(:each) do
+          allow(requirement).to receive('commitish_type').and_return 'ref'
+          metadata['commitish_type'] = 'ref'
+        end
+
+        it { is_expected.to eq true }
+      end
     end
   end
 end

@@ -61,6 +61,14 @@ module Minimart
         {}
       end
 
+      # Determine if a cookbook in the inventory has metadata matching this requirement
+      # @param [Minimart::Mirror::DownloadMetadata] metadata The download metadata for a cookbook
+      #   in the inventory.
+      # @return [Boolean] Defaults to true
+      def matching_source?(metadata)
+        return true
+      end
+
       private
 
       # This method must be overridden by any subclasses.

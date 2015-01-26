@@ -49,6 +49,18 @@ module Minimart
         result
       end
 
+      # Determine if a Git cookbook in the inventory has metadata matching this requirement.
+      # This method will return true if the metadata has the same commit information
+      # as this requirement.
+      # @param [Minimart::Mirror::DownloadMetadata] metadata The download metadata for a cookbook
+      #   in the inventory.
+      # @return [Boolean] Defaults to true
+      def matching_source?(metadata)
+        metadata['source_type'] == 'git' &&
+          metadata['commitish_type'] == commitish_type.to_s &&
+          (metadata['commitish_type'] == 'ref' ? true : metadata['commitish'] == commitish.to_s)
+      end
+
       private
 
       def download_cookbook(&block)
