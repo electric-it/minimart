@@ -93,7 +93,7 @@ describe Minimart::Download::Cookbook do
       it 'should download the cookbook using Ridley' do
         expect(Ridley).to receive(:open).
           with(conf.merge(server_url: 'http://supermarket.chef.io', ssl: {verify: true})).
-          and_return chef_connection
+          and_yield chef_connection
 
         subject.fetch
       end

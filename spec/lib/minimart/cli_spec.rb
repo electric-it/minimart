@@ -42,6 +42,18 @@ describe Minimart::Cli do
 
       Minimart::Cli.start %w[mirror --inventory_config=./my-test.yml --inventory_directory=./test-dir]
     end
+
+    context 'when an error is raised' do
+      before(:each) do
+        allow_any_instance_of(Minimart::Commands::Mirror).to receive(:execute!).and_raise Minimart::Error::BaseError
+      end
+
+      it 'should handle the error' do
+        expect(Minimart::Error).to receive(:handle_exception)
+
+        Minimart::Cli.start %w[mirror --inventory_config=./my-test.yml --inventory_directory=./test-dir]
+      end
+    end
   end
 
   describe '#web' do
@@ -71,6 +83,22 @@ describe Minimart::Cli do
         --inventory-directory=./my-inventory
         --no-html]
     end
-  end
 
+    context 'when an error is raised' do
+      before(:each) do
+        allow_any_instance_of(Minimart::Commands::Web).to receive(:execute!).and_raise Minimart::Error::BaseError
+      end
+
+      it 'should handle the error' do
+        expect(Minimart::Error).to receive(:handle_exception)
+
+        Minimart::Cli.start %w[
+          web
+          --host=http://example.com
+          --web-directory=./my-web
+          --inventory-directory=./my-inventory
+          --no-html]
+      end
+    end
+  end
 end

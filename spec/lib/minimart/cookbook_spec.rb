@@ -124,4 +124,14 @@ describe Minimart::Cookbook do
     it { is_expected.to eq 'June 01, 2001' }
   end
 
+  describe '#normalized_platforms' do
+    subject { cookbook.normalized_platforms }
+    it { is_expected.to eq('question' => 'Not Specified') }
+
+    context 'when the cookbook has platforms' do
+      before(:each) { allow(cookbook).to receive(:platforms).and_return %w[amazon] }
+      it { is_expected.to eq('aws' => 'Amazon') }
+    end
+  end
+
 end
