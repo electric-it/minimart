@@ -87,8 +87,7 @@ describe Minimart::Web::UniverseGenerator do
 
     it 'should generate an archive for the cookbook in the correct path' do
       expect(Minimart::Utils::Archive).to receive(:pack_archive).with(
-        '/spec/fixtures',
-        'sample_cookbook',
+        cookbook,
         File.join(cookbook_dir, '1_2_3/sample_cookbook-1.2.3.tar.gz'))
 
       subject.generate

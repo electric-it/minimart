@@ -66,10 +66,7 @@ module Minimart
       def generate_archive_file(cookbook)
         FileUtils.mkdir_p(archive_directory(cookbook))
 
-        Utils::Archive.pack_archive(
-          cookbook.path.dirname.to_s,
-          cookbook.path.basename.to_s,
-          archive_name(cookbook))
+        Utils::Archive.pack_archive(cookbook, archive_name(cookbook))
       end
 
       def archive_name(cookbook)
