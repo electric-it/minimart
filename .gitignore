@@ -33,3 +33,6 @@ nbproject
 
 .ruby-version
 .ruby-gemset
+.yardoc/
+coverage/
+doc/
