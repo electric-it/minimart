@@ -1,6 +1,6 @@
-require 'minimart/mirror/supermarket_requirements_builder'
-require 'minimart/mirror/git_requirements_builder'
-require 'minimart/mirror/local_requirements_builder'
+require 'minimart/inventory_requirement/supermarket_requirements_builder'
+require 'minimart/inventory_requirement/git_requirements_builder'
+require 'minimart/inventory_requirement/local_requirements_builder'
 
 module Minimart
   module Mirror
@@ -83,15 +83,15 @@ module Minimart
       end
 
       def market_requirements(name, reqs)
-        SupermarketRequirementsBuilder.new(name, reqs).build
+        InventoryRequirement::SupermarketRequirementsBuilder.new(name, reqs).build
       end
 
       def git_requirements(name, reqs)
-        GitRequirementsBuilder.new(name, reqs).build
+        InventoryRequirement::GitRequirementsBuilder.new(name, reqs).build
       end
 
       def local_path_requirements(name, reqs)
-        LocalRequirementsBuilder.new(name, reqs).build
+        InventoryRequirement::LocalRequirementsBuilder.new(name, reqs).build
       end
     end
   end

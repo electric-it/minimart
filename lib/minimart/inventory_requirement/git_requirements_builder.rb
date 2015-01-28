@@ -1,7 +1,7 @@
 require 'minimart/inventory_requirement/git_requirement'
 
 module Minimart
-  module Mirror
+  module InventoryRequirement
     # This class is used to parse any Git requirements specified in the inventory
     # and build Minimart::Inventory::GitRequirements from them.
     class GitRequirementsBuilder

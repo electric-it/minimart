@@ -1,7 +1,7 @@
 require 'minimart/inventory_requirement/local_path_requirement'
 
 module Minimart
-  module Mirror
+  module InventoryRequirement
     # This class is used to parse any local path requirements specified in the inventory
     # and build Minimart::Inventory::LocalPathRequirements from them.
     class LocalRequirementsBuilder

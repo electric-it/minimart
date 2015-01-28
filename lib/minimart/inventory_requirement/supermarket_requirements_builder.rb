@@ -1,7 +1,7 @@
 require 'minimart/inventory_requirement/base_requirement'
 
 module Minimart
-  module Mirror
+  module InventoryRequirement
 
     # This class is used to parse any Supermarket requirements specified in the inventory
     # and build Minimart::Inventory::BaseRequirements from them.

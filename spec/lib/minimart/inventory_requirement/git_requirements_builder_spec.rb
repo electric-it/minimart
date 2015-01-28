@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Minimart::Mirror::GitRequirementsBuilder do
+describe Minimart::InventoryRequirement::GitRequirementsBuilder do
 
   let(:raw_requirements) do
     {
@@ -14,7 +14,7 @@ describe Minimart::Mirror::GitRequirementsBuilder do
   end
 
   subject do
-    Minimart::Mirror::GitRequirementsBuilder.new('mysql', raw_requirements)
+    Minimart::InventoryRequirement::GitRequirementsBuilder.new('mysql', raw_requirements)
   end
 
   describe '::new' do
@@ -118,7 +118,7 @@ describe Minimart::Mirror::GitRequirementsBuilder do
 
     context 'when there are no git requirements' do
       subject do
-        Minimart::Mirror::GitRequirementsBuilder.new('mysql', {})
+        Minimart::InventoryRequirement::GitRequirementsBuilder.new('mysql', {})
       end
 
       it 'should return an empty array' do

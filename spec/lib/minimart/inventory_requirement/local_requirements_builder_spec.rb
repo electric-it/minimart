@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Minimart::Mirror::LocalRequirementsBuilder do
+describe Minimart::InventoryRequirement::LocalRequirementsBuilder do
 
   describe '#build' do
     subject do
-      Minimart::Mirror::LocalRequirementsBuilder.new('mysql', 'path' => '/my/local/path')
+      Minimart::InventoryRequirement::LocalRequirementsBuilder.new('mysql', 'path' => '/my/local/path')
     end
 
     it 'should return a single requirement' do
@@ -21,7 +21,7 @@ describe Minimart::Mirror::LocalRequirementsBuilder do
 
     context 'when no path is provided' do
       subject do
-        Minimart::Mirror::LocalRequirementsBuilder.new('mysql', {})
+        Minimart::InventoryRequirement::LocalRequirementsBuilder.new('mysql', {})
       end
 
       it 'should return empty' do

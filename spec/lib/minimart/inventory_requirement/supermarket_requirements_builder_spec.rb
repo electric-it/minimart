@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Minimart::Mirror::SupermarketRequirementsBuilder do
+describe Minimart::InventoryRequirement::SupermarketRequirementsBuilder do
 
   let(:versions) { ['> 1.0.0', '~> 0.1'] }
 
