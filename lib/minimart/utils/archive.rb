@@ -20,7 +20,6 @@ module Minimart
       # @param [Minimart::Cookbook] cookbook The cookbook to archive
       # @param [String] destination The path to store the tar.gz archive
       def self.pack_archive(cookbook, destination)
-
         Dir.mktmpdir do |tmp|
           Dir.chdir(tmp) do
             archive_dir = File.join(tmp, cookbook.name)

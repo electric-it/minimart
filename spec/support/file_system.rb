@@ -6,6 +6,10 @@ module Minimart
         'spec/tmp'
       end
 
+      def test_directory_contents
+        Dir.glob(File.join(test_directory, '*/**'))
+      end
+
       def make_test_directory
         FileUtils.mkdir_p(test_directory)
       end

@@ -34,6 +34,18 @@ describe Minimart::Download::GitCache do
     end
   end
 
+  describe '#local_path_for' do
+    let(:stubbed_repo) { double('git_repository', repo: double('repo', path: '/path')) }
+
+    before(:each) do
+      allow(subject).to receive(:get_repository).and_return stubbed_repo
+    end
+
+    it 'should return the path' do
+      expect(subject.local_path_for('repo')).to eq '/path'
+    end
+  end
+
   describe '#clear' do
     let(:path) { Dir.mktmpdir }
     let(:repo) { double('base', repo: double('repo', 'path' => path)) }

@@ -23,6 +23,14 @@ module Minimart
         cache[repo_location] ||= clone_bare_repo(repo_location)
       end
 
+      # Get the local path to the repository passed in. This repository will be cloned,
+      # if it hasn't been already.
+      # @param [String] repo_location Any location that can be cloned by Git (Path, URL).
+      # @return [String] The path to the repository
+      def local_path_for(repo_location)
+        get_repository(repo_location).repo.path
+      end
+
       # This method will empty the GitCache.
       def clear
         cache.values.each do |git|

@@ -18,18 +18,18 @@ module Minimart
       # @param commitish The commit, branch, or tag to clone for the given location.
       # @yield [Dir] Tmp directory containing the repository. This directory will be removed when the block exits.
       def fetch(commitish, &block)
-        Dir.mktmpdir do |path|
-          result_repo = Git.clone(bare_repo_path, path)
+        Dir.mktmpdir do |tmpdir|
+          result_repo = Git.clone(bare_repo_path, tmpdir)
           result_repo.fetch(bare_repo_path, tags: true)
           result_repo.reset_hard(bare_repo.revparse(commitish))
-          block.call(path)
+          block.call(tmpdir) if block
         end
       end
 
       private
 
       def bare_repo_path
-        bare_repo.repo.path
+        @bare_repo_path ||= Download::GitCache.instance.local_path_for(location)
       end
 
       def bare_repo
