@@ -1,4 +1,8 @@
 require 'octokit'
+require 'ridley'
+
+require 'minimart/utils/archive'
+require 'minimart/utils/http'
 
 module Minimart
   module Download

@@ -3,6 +3,7 @@ require 'semverse'
 
 require 'minimart/web/markdown_parser'
 require 'minimart/web/template_helper'
+require 'minimart/utils/file_helper'
 
 module Minimart
 

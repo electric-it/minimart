@@ -1,4 +1,5 @@
 require 'minimart/mirror/download_metadata'
+require 'minimart/utils/file_helper'
 
 module Minimart
   module Mirror

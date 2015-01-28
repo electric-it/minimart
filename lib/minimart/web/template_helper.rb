@@ -1,6 +1,8 @@
 require 'erb'
 require 'tilt/erb'
 
+require 'minimart/utils/http'
+
 module Minimart
   module Web
     # Various methods to help with template rendering

@@ -1,6 +1,8 @@
 require 'yaml'
 require 'erb'
+
 require 'minimart/mirror/inventory_requirements'
+require 'minimart/utils/file_helper'
 
 module Minimart
   module Mirror

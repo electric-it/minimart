@@ -1,5 +1,7 @@
-require 'minimart/cookbook'
 require 'forwardable'
+
+require 'minimart/cookbook'
+require 'minimart/utils/file_helper'
 
 module Minimart
   module Web

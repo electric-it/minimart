@@ -1,11 +1,3 @@
-require 'minimart/mirror/dependency_graph'
-require 'minimart/mirror/inventory_builder'
-require 'minimart/mirror/inventory_configuration'
-require 'minimart/mirror/local_store'
-require 'minimart/mirror/source_cookbook'
-require 'minimart/mirror/source'
-require 'minimart/mirror/sources'
-
 module Minimart
   module Commands
     # Mirror is the main entrance point for the mirroring portion of Minimart.

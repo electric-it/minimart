@@ -1,3 +1,5 @@
+require 'minimart/utils/http'
+
 module Minimart
   module Mirror
 

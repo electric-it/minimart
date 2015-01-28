@@ -1,3 +1,6 @@
+require 'minimart/utils/archive'
+require 'minimart/utils/http'
+
 module Minimart
   module Web
     # This class is responsible for generating the universe.json file, and the

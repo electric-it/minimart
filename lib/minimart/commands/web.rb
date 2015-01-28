@@ -1,6 +1,3 @@
-require 'minimart/web/universe_generator'
-require 'minimart/web/html_generator'
-
 module Minimart
   module Commands
     # Web is the main entrance point for building the web interface for Minimart.
