@@ -1,6 +1,6 @@
 # MiniMart
 
-MiniMart is a lightweight alternative to the Chef Supermarket that uses only static files.
+MiniMart is a RubyGem that makes it simple to build a repository of Chef cookbooks using only static files.
 
 Minimart is made up of two main components:
 
