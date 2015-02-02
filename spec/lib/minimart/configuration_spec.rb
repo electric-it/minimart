@@ -9,7 +9,7 @@ describe Minimart::Configuration do
 
   describe '#chef_server_config' do
     subject { Minimart::Configuration.chef_server_config }
-    it { is_expected.to eq({}) }
+    it { is_expected.to eq({ssl: {verify: true}}) }
 
     context 'when a value is set' do
       let(:conf) { {'client_name' => 'berkshelf', 'client_key' => 'key_path'} }
@@ -17,13 +17,13 @@ describe Minimart::Configuration do
       before(:each) { Minimart::Configuration.chef_server_config = conf }
       after(:each) { Minimart::Configuration.chef_server_config = nil }
 
-      it { is_expected.to eq conf }
+      it { is_expected.to include conf }
     end
   end
 
   describe '#github_config' do
     subject { Minimart::Configuration.github_config }
-    it { is_expected.to eq({}) }
+    it { is_expected.to eq({:connection_options=>{:ssl=>{:verify=>true}}}) }
 
     context 'when a value is set' do
       let(:conf) { {'organization' => 'org', 'api_endpoint' => 'api'} }
@@ -31,7 +31,7 @@ describe Minimart::Configuration do
       before(:each) { Minimart::Configuration.github_config = conf }
       after(:each) { Minimart::Configuration.github_config = nil }
 
-      it { is_expected.to eq conf }
+      it { is_expected.to include conf }
     end
   end
 

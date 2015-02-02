@@ -45,12 +45,12 @@ describe Minimart::Mirror::InventoryConfiguration do
 
       it 'should set the github config to the proper value' do
         subject
-        expect(Minimart::Configuration.github_config).to eq('github' => 'config')
+        expect(Minimart::Configuration.github_config).to include('github' => 'config')
       end
 
       it 'should set the chef config to the proper value' do
         subject
-        expect(Minimart::Configuration.chef_server_config).to eq('chef' => 'config')
+        expect(Minimart::Configuration.chef_server_config).to include('chef' => 'config')
       end
     end
   end

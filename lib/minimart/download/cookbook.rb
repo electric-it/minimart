@@ -45,21 +45,16 @@ module Minimart
       end
 
       def download_chef_server(dir)
-        conn = Minimart::Configuration.chef_server_config.merge(
-          server_url: cookbook.location_path,
-          ssl: {verify: Minimart::Configuration.verify_ssl})
+        opts = Minimart::Configuration.chef_server_config.merge(server_url: cookbook.location_path)
 
-        Ridley.open(conn) do |ridley_client|
+        Ridley.open(opts) do |ridley_client|
           ridley_client.cookbook.download(cookbook.name, cookbook.version, dir)
         end
       end
 
       def download_github(dir)
-        conn = Minimart::Configuration.github_config.merge(
-          connection_options: {ssl: {verify: Minimart::Configuration.verify_ssl}})
-
         location_path = cookbook.location_path_uri.path.gsub(/\A\//, '')
-        client        = Octokit::Client.new(conn)
+        client        = Octokit::Client.new(Minimart::Configuration.github_config)
         url           = client.archive_link(location_path, ref: "v#{cookbook.version}")
 
         get_archive(url, dir)

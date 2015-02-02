@@ -22,7 +22,7 @@ module Minimart
       end
 
       def chef_server_config
-        (@chef_server || {})
+        (@chef_server || {}).merge(ssl: {verify: verify_ssl})
       end
 
       def github_config=(config)
@@ -30,7 +30,7 @@ module Minimart
       end
 
       def github_config
-        (@github_config || {})
+        (@github_config || {}).merge(connection_options: {ssl: {verify: verify_ssl}})
       end
 
       def verify_ssl
