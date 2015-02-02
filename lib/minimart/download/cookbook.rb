@@ -58,9 +58,9 @@ module Minimart
         conn = Minimart::Configuration.github_config.merge(
           connection_options: {ssl: {verify: Minimart::Configuration.verify_ssl}})
 
-        location_path = cookbook.location_path_uri
+        location_path = cookbook.location_path_uri.path.gsub(/\A\//, '')
         client        = Octokit::Client.new(conn)
-        url           = client.archive_link(location_path.path.gsub(/\A\//, ''), ref: "v#{cookbook.version}")
+        url           = client.archive_link(location_path, ref: "v#{cookbook.version}")
 
         get_archive(url, dir)
       end
