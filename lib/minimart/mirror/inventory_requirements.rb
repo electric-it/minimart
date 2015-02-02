@@ -26,6 +26,12 @@ module Minimart
         requirements.values.flatten.each &block
       end
 
+      def each_with_explicit_location(&block)
+        each do |req|
+          block.call(req) if req.explicit_location?
+        end
+      end
+
       # This method will determine whether or not a version of a cookbook
       # resolves a constraint defined in the inventory file. This method
       # can be used to verify that we aren't downloading a non specified version

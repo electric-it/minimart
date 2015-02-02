@@ -39,9 +39,7 @@ module Minimart
       # These cookbooks and their associated metadata (any dependencies they have) take
       # precedence over information found elsewhere.
       def install_cookbooks_with_explicit_location
-        inventory_requirements.each do |requirement|
-          next unless requirement.explicit_location?
-
+        inventory_requirements.each_with_explicit_location do |requirement|
           requirement.fetch_cookbook do |cookbook|
             validate_cookbook_against_local_store(cookbook, requirement)
             add_artifact_to_graph(cookbook)
