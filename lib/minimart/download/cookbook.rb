@@ -35,12 +35,10 @@ module Minimart
 
       private
 
-      def download_supermarket(dir)
+      def download_opscode(dir)
         details = Utils::Http.get_json(cookbook.location_path, "cookbooks/#{cookbook.name}/versions/#{cookbook.web_friendly_version}")
         get_archive(details['file'], dir)
       end
-
-      alias_method :download_opscode, :download_supermarket
 
       def download_uri(dir)
         get_archive(cookbook.location_path, dir)
