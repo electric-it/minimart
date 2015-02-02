@@ -21,11 +21,11 @@ module Minimart
       def add_artifact(cookbook)
         return if source_cookbook_added?(cookbook.name, cookbook.version)
 
-        graph.artifact(cookbook.name, cookbook.version)
-
-        cookbook.dependencies.each do |dependency|
-          name, requirements = dependency
-          graph.artifact(cookbook.name, cookbook.version).depends(name, requirements)
+        graph.artifact(cookbook.name, cookbook.version).tap do |artifact|
+          cookbook.dependencies.each do |dependency|
+            name, requirements = dependency
+            artifact.depends(name, requirements)
+          end
         end
       end
 
