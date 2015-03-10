@@ -162,6 +162,41 @@ can be pulled down from a repository and then ran by Jenkins.
     aws s3 sync web s3://$BUCKET_NAME
 
 
+### Example Jenkins Script
+This is an example of a script that can be used by Jenkins to sync the
+cookbooks to the S3 bucket. This script can be placed in the same
+directory as the `inventory.yml` file created by `minimart init`. This
+can be pulled down from a repository and then ran by Jenkins.
+
+    #!/bin/bash
+
+    # Exit 1 if any command fails
+    set -e
+
+    # Name of the repository bucket
+    BUCKET_NAME=your.s3.bucket.name
+
+    echo Changing to special RVM and gemset...
+    rvm 2.1.2
+
+    echo Updating required gems...
+    bundle install
+
+    echo Mirroring cookbooks...
+    minimart mirror
+
+    echo Generating market...
+    minimart web --host=$BUCKET_NAME
+
+    echo Syncing web site up to s3://$BUCKET_NAME
+    aws s3 sync web s3://$BUCKET_NAME --acl public-read --exclude
+    "web/universe"
+    aws s3 cp web/universe s3://$BUCKET_NAME --acl public-read
+
+    echo cleaning up Jenkins...
+    rm -rf ./inventory
+
+
 ## Contributing
 
 1. Fork it ( https://github.com/electric-it/minimart/fork )
@@ -169,3 +204,25 @@ can be pulled down from a repository and then ran by Jenkins.
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+
+## License
+
+``
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing,
+        software
+        distributed under the License is distributed on an "AS IS"
+        BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+        implied.
+        See the License for the specific language governing permissions
+        and
+        limitations under the License.
+
+        ```
