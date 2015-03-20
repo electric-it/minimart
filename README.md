@@ -132,35 +132,6 @@ If you are using berkshelf-api, you can add chef, and github configuration optio
         api_endpoint: "https://api.github.com/"
         web_endpoint: "https://api.github.com/"
 
-### Example Jenkins Script
-This is an example of a script that can be used by Jenkins to sync the
-cookbooks to the S3 bucket. This script can be placed in the same
-directory as the `inventory.yml` file created by `minimart init`. This
-can be pulled down from a repository and then ran by Jenkins.
-
-    #!/bin/bash
-
-    # Exit 1 if any command fails
-    set -e
-
-    # Name of the repository bucket
-    BUCKET_NAME=your.s3.bucket.name
-
-    echo Changing to special RVM and gemset...
-    rvm 2.1.2
-
-    echo Updating required gems...
-    bundle install
-
-    echo Mirroring cookbooks...
-    minimart mirror
-
-    echo Generating market...
-    minimart web --host=$BUCKET_NAME
-
-    echo Syncing web site up to s3://$BUCKET_NAME
-    aws s3 sync web s3://$BUCKET_NAME
-
 
 ### Example Jenkins Script
 This is an example of a script that can be used by Jenkins to sync the
