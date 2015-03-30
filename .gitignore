@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-/.bundle/
-/.yardoc
-/Gemfile.lock
-/_yardoc/
-/coverage/
-/doc/
-/pkg/
-/spec/reports/
-/tmp/
-/.sass-cache/
-/_site/
-*.bundle
-*.so
-*.o
-*.a
-*.gem
-mkmf.log
-.ruby-version
-.ruby-gemset
-.rvmrc
-vendor/
-=======
 # Ignore compiled docs
 _gh_pages
 _site
@@ -59,4 +36,3 @@ nbproject
 .yardoc/
 coverage/
 doc/
->>>>>>> 5074966a24c60cd49934189568cd65ff0407603e
