@@ -1,0 +1,12 @@
+
+/* Scroll reveal */
+
+.scroll-reveal {
+  opacity: 0;
+  @include transition(all 1.5s ease);
+  @include transform(translate3d(0px, 50px, 0px));
+  &.is-visible {
+    opacity: 1;
+    @include transform(translate3d(0px, 0px, 0px));
+  }
+}

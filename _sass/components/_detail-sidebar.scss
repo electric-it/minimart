@@ -1,0 +1,25 @@
+
+/* Detail sidebar */
+
+.detail-sidebar {
+  padding: 10px;
+  float: right;
+  width: 275px;
+  border: 1px solid $base-mid;
+  border-radius: $radius;
+  background: $base-lightest;
+  margin-top: 70px;
+  font-size: 14px;
+  h3, h4, dt {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+  h4 {
+    text-transform: uppercase;
+  }
+}
+  .detail-sidebar__button {
+    width: 100%;
+    margin-top: 20px;
+  }

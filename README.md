@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # MiniMart
 
 MiniMart is a RubyGem that makes it simple to build a repository of Chef cookbooks using only static files.
@@ -196,3 +197,14 @@ You may obtain a copy of the License at
         and
         limitations under the License.
 ```
+=======
+Minimart Site
+============
+
+## Development
+
+    bundle install
+    bundle exec jekyll serve --watch
+
+The server will then be running at [http://localhost:4000](http://localhost:4000).
+>>>>>>> 5074966a24c60cd49934189568cd65ff0407603e

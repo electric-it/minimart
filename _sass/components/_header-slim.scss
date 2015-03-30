@@ -1,0 +1,17 @@
+/* App page header */
+
+.header-slim {
+  height: 220px;
+  border-top: solid 5px $action;
+  padding-top: 70px;
+  background: url(/images/header-slim.jpg) bottom center no-repeat $blue-dark;
+}
+  .header-slim__container {
+    padding-left: 540px;
+    width: 1080px;
+    margin: 0 auto;
+  }
+  .header-slim__subtitle {
+    font-size: 28px;
+    color: #fff;
+  }

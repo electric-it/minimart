@@ -1,0 +1,94 @@
+
+body {
+  background: $base-light;
+  color: $font-standard;
+  font-weight: 600;
+  font-family: $ff-open;
+  font-size: 18px;
+  line-height: 1;
+  &.body-dark {
+    background: #13171a;
+  }
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: 600;
+  color: $action;
+}
+h2 {
+  font-size: 28px;
+  font-weight: 600;
+}
+h3 {
+  font-size: 24px;
+  font-weight: 600;
+}
+h4 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+ul {
+  margin-bottom: 20px;
+  list-style: none;
+  padding-left: 0;
+  margin-left: 10px;
+  li {
+    line-height: 1.5;
+    &:before {
+      content: "\002022";
+      color: $font-dark;
+      padding-right: 10px;
+    }
+  }
+}
+
+/* Wrappers */
+
+.outer-wrapper {
+  width: 1080px;
+  margin: 0 auto;
+  @include clearfix;
+}
+
+.inner-wrapper {
+  width: 850px;
+  margin: 0 auto;
+}
+
+/* Code blocks */
+
+code {
+  font-family: $ff-maven;
+  white-space: pre;
+  background-color: $base-dark;
+  border-radius: $radius;
+  color: $font-dark;
+  padding: 10px 20px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 25px;
+  &:first-line {
+    line-height: 0;
+  }
+}
+/* so Firefox displays the code blocks with equal padding, top and bottom */
+body:not(:-moz-handler-blocked) code {
+  padding-bottom: 30px;
+}
+
+/* Forms */
+
+form {
+  border-bottom: 1px solid $base-mid;
+}

@@ -1,0 +1,203 @@
+/* Home page hero */
+
+.home-hero {
+  z-index: 0;
+  height: 670px;
+  text-align: center;
+  text-shadow: 1px 0 1px rgba(#000, 0.35);
+  background: #333;
+  overflow: hidden;
+  position: relative;
+}
+
+.home-hero__inner {
+  width: 766px;
+  margin: 0 auto;
+  height: 100%;
+  position: relative;
+  background: url(/images/home-hero-bg.png) no-repeat -550px 0 #27323a;
+}
+
+.home-hero__moon {
+  position: absolute;
+  left: 50px;
+  top: 0;
+  margin-top: 200px;
+  width: 64px;
+  height: 80px;
+  background: url(/images/home-hero-moon.png) no-repeat 0 0;
+  @include transform(translate3d(0px, 0px, 0px));
+}
+.home-hero__buildings-bg {
+  position: absolute;
+  left: 0px;
+  bottom: 0;
+  width: 902px;
+  height: 348px;
+  background: url(/images/home-hero-buildings-bg.png) no-repeat 0 0;
+  @include transform(translate3d(0px, 0px, 0px));
+}
+
+.home-hero__title {
+  font-weight: 700;
+  padding-top: 60px;
+}
+
+.home-hero__subtitle {
+  font-size: 24px;
+  color: #fff;
+  .home-hero__title+& {
+    margin-top: -4px;
+  }
+}
+
+.home-hero__bg {
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  background: none no-repeat 0 100% #1d252a;
+  z-index: 1;
+  width: 0;
+}
+
+.home-hero__bg--left {
+  margin-left: -999px;
+  padding-left: 999px;
+  left: 0;
+  background-position: 100% 100%;
+  background-image: url(/images/home-hero-bg-left.png);
+}
+
+.home-hero__bg--right {
+  margin-right: -999px;
+  padding-right: 999px;
+  right: 0;
+  background-image: url(/images/home-hero-bg-right.png);
+}
+
+.home-hero__stars {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  @include transform(translate3d(0px, 0px, 0px));
+  .home-hero__star {
+    position: absolute;
+    left: 200px;
+    top: 100px;
+    background: #f9f7b2;
+    width: 4px;
+    height: 4px;
+    border-radius: 50px;
+    opacity: 0;
+    @include animation(twinkle 5s 1s ease-in);
+    @include animation-iteration-count(infinite);
+    &:nth-child(2) {
+      left: 250px;
+      top: 120px;
+      @include animation-delay(0.3s);
+    }
+    &:nth-child(3) {
+      top: 125px;
+      left: 280px;
+      width: 2px;
+      height: 2px;
+      @include animation-delay(4s);
+    }
+    &:nth-child(4) {
+      top: 220px;
+      left: 320px;
+      @include animation-delay(4s);
+    }
+    &:nth-child(5) {
+      left: 600px;
+      top: 250px;
+      opacity: 1;
+      @include animation-delay(0.3s);
+    }
+    &:nth-child(6) {
+      left: 630px;
+      top: 210px;
+      opacity: 1;
+      width: 2px;
+      height: 2px;
+      @include animation-delay(4s);
+    }
+    &:nth-child(7) {
+      left: 550px;
+      top: 255px;
+      @include animation-delay(4s);
+    }
+    &:nth-child(8) {
+      left: 400px;
+      top: 225px;
+    }
+  }
+}
+
+.home-hero__buildings {
+  background-image: url(/images/home-hero-buildings.png);
+  background-repeat: no-repeat;
+  background-position: 70px 0;
+  width: 902px;
+  height: 392px;
+  position: absolute;
+  bottom: -14px
+}
+
+/* Lamp post */
+
+.wrapper-for-lamppost {
+  position: relative;
+}
+
+.wrapper-for-lamppost__inner {
+  position: relative;
+  height: 100%;
+}
+
+.lamppost {
+  position: absolute;
+  width: 439px;
+  height: 364px;
+  bottom: -47px;
+  right: -69px;
+}
+
+.lamppost__main,
+.lamppost__bulb,
+.lamppost__highlight {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.lamppost__main {
+  background: url(/images/lamppost.png) no-repeat 0 0;
+}
+
+.lamppost__bulb {
+  background: url(/images/lamppost-bulb.png) no-repeat 0 0;
+  @include animation(flicker 5s 1s ease-in);
+  @include animation-iteration-count(infinite);
+}
+
+.lamppost__highlight {
+  background: url(/images/lamppost-highlight.png) no-repeat 0 0;
+  @include animation(flicker 5s 1s ease-in);
+  @include animation-iteration-count(infinite);
+}
+
+.ground-highlight {
+  background: url(/images/ground-highlight.png) no-repeat 0 0;
+  width: 621px;
+  height: 31px;
+  position: absolute;
+  bottom: -31px;
+  right: -131px;
+  @include animation(flicker 5s 1s ease-in);
+  @include animation-iteration-count(infinite);
+}

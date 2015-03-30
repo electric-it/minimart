@@ -1,0 +1,61 @@
+$radius: 3px;
+$base-lightest: #f5f5f5;
+$base-light: #e6e6e6;
+$base-mid: #d9d9d9;
+$base-dark: #cecece;
+$blue-dark: #1d252a;
+$action: #d14e4e;
+$action-hover: darken($action,10);
+$font-standard: #677987;
+$font-dark: #1d252a;
+$font-lighter: #718493;
+$font-lightest: #94a7b4;
+$bar-bg: #181f22;
+$ff-maven: 'Maven Pro', sans-serif;
+$ff-open: 'Open Sans', sans-serif;
+
+/* Extra reset */
+
+h1, h2, h3, h4, p, ul, ol, dl { margin: 0; }
+html { @include box-sizing(border-box); -webkit-font-smoothing: antialiased; }
+*, *:before, *:after { @include box-sizing(inherit); }
+a { color: inherit; text-decoration: none; }
+
+@include keyframes(twinkle) {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 0;
+  }
+}
+
+@include keyframes(flicker) {
+  0% {
+    opacity: 1;
+  }
+  2% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  48% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  55% {
+    opacity: 1;
+  }
+  57% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+}
