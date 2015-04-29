@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Minimart::VERSION
   spec.authors       = %w{Author Names}
   spec.email         = %w{Email}
-  spec.summary       = %q{A lightweight alternative to Chef Supermarket.}
-  spec.description   = %q{A lightweight alternative to Chef Supermarket.}
+  spec.summary       = %q{MiniMart is a RubyGem that makes it simple to build a repository of Chef cookbooks using only static files.}
+  spec.description   = %q{MiniMart is a RubyGem that makes it simple to build a repository of Chef cookbooks using only static files.}
   spec.homepage      = ""
   spec.license       = ""
 
