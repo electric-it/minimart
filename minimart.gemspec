@@ -6,12 +6,12 @@ require 'minimart/version'
 Gem::Specification.new do |spec|
   spec.name          = "minimart"
   spec.version       = Minimart::VERSION
-  spec.authors       = %w{Author Names}
-  spec.email         = %w{Email}
+  spec.authors       = %w{Bernie Durfee}
+  spec.email         = %w{minimart@cobzilla.com}
   spec.summary       = %q{MiniMart is a RubyGem that makes it simple to build a repository of Chef cookbooks using only static files.}
   spec.description   = %q{MiniMart is a RubyGem that makes it simple to build a repository of Chef cookbooks using only static files.}
-  spec.homepage      = ""
-  spec.license       = ""
+  spec.homepage      = 'http://electric-it.github.io/minimart/'
+  spec.license       = 'Apache License, v2.0'
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
