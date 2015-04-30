@@ -14,7 +14,6 @@ Minimart is made up of two main components:
 * A web tool that will generate a Berkshelf compatible index of the cookbooks in your inventory, and a user friendly web interface for browsing cookbooks.
 
 ## Installing Minimart
-
 Add this line to your application's Gemfile:
 
 ```ruby
@@ -32,13 +31,11 @@ Or install it yourself as:
 ## Basic Usage
 
 ### Getting Started
-
 After installing the `minimart` gem, you can start a new MiniMart by running the following command:
 
     $ minimart init
 
 ### Mirroring Cookbooks
-
 The `init` command will generate a sample `inventory.yml` file for you to use as a reference when building your own inventory. A real inventory may look like the following:
 
     sources:
@@ -79,7 +76,6 @@ The above inventory file would download multiple versions of the `apache2`, and 
     ├── ... (directories and files for other cookbooks)
 
 ### Generating a MiniMart Endpoint
-
 Once you are satisfied with the cookbooks in your inventory, you can use the `web` command to generate the MiniMart index file, archived cookbook directories, and static HTML for browsing any mirrored cookbooks. This directory structure will be built in your local directory (wherever you are running `minimart`), and can be synced to your web server, s3, etc...
 
 The `web` command requires the user to specify a `host` to build a proper index file. The `host` should be the domain name, or IP you plan to use to host Minimart. To generate a MiniMart that would be hosted on `example.com` you would run:
@@ -181,7 +177,6 @@ can be pulled down from a repository and then ran by Jenkins.
 
 
 ## Contributing
-
 1. Fork it ( https://github.com/electric-it/minimart/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
@@ -190,21 +185,12 @@ can be pulled down from a repository and then ran by Jenkins.
 
 
 ## License
-
 ```
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 
-    http://www.apache.org/licenses/LICENSE-2.0
+You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-        Unless required by applicable law or agreed to in writing,
-        software
-        distributed under the License is distributed on an "AS IS"
-        BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-        implied.
-        See the License for the specific language governing permissions
-        and
-        limitations under the License.
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+See the License for the specific language governing permissions and limitations under the License.
 ```
