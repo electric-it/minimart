@@ -1,6 +1,7 @@
 # MiniMart
 [![Stories in Ready](https://badge.waffle.io/electric-it/minimart.png?label=ready&title=Ready)](https://waffle.io/electric-it/minimart)
 [![Build Status](https://travis-ci.org/electric-it/minimart.svg?branch=develop)](https://travis-ci.org/electric-it/minimart)
+[![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 [Fancy Homepage](https://electric-it.github.io/minimart/)
 
