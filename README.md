@@ -1,4 +1,5 @@
 # MiniMart
+[![Build Status](https://travis-ci.org/electric-it/minimart.svg?branch=develop)](https://travis-ci.org/electric-it/minimart)
 
 MiniMart is a RubyGem that makes it simple to build a repository of Chef cookbooks using only static files.
 
