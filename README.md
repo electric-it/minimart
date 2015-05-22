@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/electric-it/minimart.png?label=ready&title=Ready)](https://waffle.io/electric-it/minimart)
 # MiniMart
 [![Build Status](https://travis-ci.org/electric-it/minimart.svg?branch=develop)](https://travis-ci.org/electric-it/minimart)
 
