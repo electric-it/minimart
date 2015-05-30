@@ -162,7 +162,7 @@ can be pulled down from a repository and then ran by Jenkins.
     minimart web --host=$BUCKET_NAME
 
     echo Syncing web site up to s3://$BUCKET_NAME
-    aws s3 sync web s3://$BUCKET_NAME --acl public-read --exclude
+    aws s3 sync web s3://$BUCKET_NAME --size-only --acl public-read --exclude
     "web/universe"
     aws s3 cp web/universe s3://$BUCKET_NAME --acl public-read
 
