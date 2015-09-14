@@ -99,8 +99,8 @@ describe Minimart::Mirror::DependencyGraph do
         expect(subject.resolved_requirements).to include ['apt', '2.0.0']
       end
 
-      it 'should return a resolved yum version for the mysql dependency' do
-        expect(subject.resolved_requirements).to include ['yum', '5.0.0']
+      it 'should not return a resolved yum version for the mysql dependency' do
+        expect(subject.resolved_requirements).to_not include ['yum', '5.0.0']
       end
     end
 
@@ -111,10 +111,10 @@ describe Minimart::Mirror::DependencyGraph do
         subject.add_requirement('mysql' => '= 1.0.0')
       end
 
-      it 'should raise an error' do
+      it 'should not raise an error' do
         expect {
           subject.resolved_requirements
-        }.to raise_error Minimart::Error::UnresolvedDependency
+        }.to_not raise_error Minimart::Error::UnresolvedDependency
       end
     end
   end
