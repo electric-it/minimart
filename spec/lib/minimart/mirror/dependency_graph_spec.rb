@@ -14,9 +14,6 @@ describe Minimart::Mirror::DependencyGraph do
   end
 
   describe '#add_artifact' do
-    let(:cookbook_dependencies) do
-      subject.find_graph_artifact(cookbook).dependencies.map(&:name)
-    end
 
     before(:each) do
       subject.add_artifact(cookbook)
@@ -26,8 +23,12 @@ describe Minimart::Mirror::DependencyGraph do
       expect(subject.source_cookbook_added?(cookbook.name, cookbook.version)).to eq true
     end
 
-    it 'should add any possible dependencies to the graph' do
-      expect(cookbook_dependencies).to include 'yum'
+    it 'should not have any dependencies' do
+      expect(subject.find_graph_artifact(cookbook).dependencies).to eq []
+    end
+
+    it 'should not add any possible dependencies to the graph' do
+      expect(subject.find_graph_artifact(cookbook).dependencies.map(&:name)).to_not include 'yum'
     end
 
     context 'when the cookbook has already been added' do
@@ -43,12 +44,9 @@ describe Minimart::Mirror::DependencyGraph do
       end
 
       it 'should not add any new dependencies' do
-        expect(cookbook_dependencies).to_not include 'apt'
+        expect(subject.find_graph_artifact(cookbook).dependencies.map(&:name)).to_not include 'apt'
       end
 
-      it 'should leave existing dependencies in place' do
-        expect(cookbook_dependencies).to include 'yum'
-      end
     end
   end
 

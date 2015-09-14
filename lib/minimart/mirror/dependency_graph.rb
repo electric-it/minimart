@@ -19,14 +19,17 @@ module Minimart
       # Add an artifact (cookbook), and its dependencies to the graph.
       # @param [Minimart::Mirror::SourceCookbook] cookbook
       def add_artifact(cookbook)
+        require "pry"; binding.pry
         return if source_cookbook_added?(cookbook.name, cookbook.version)
 
-        graph.artifact(cookbook.name, cookbook.version).tap do |artifact|
-          cookbook.dependencies.each do |dependency|
-            name, requirements = dependency
-            artifact.depends(name, requirements)
-          end
-        end
+        graph.artifact(cookbook.name, cookbook.version)
+        #graph.artifact(cookbook.name, cookbook.version).tap do |artifact|
+          # I think this is where we can just not add dependencies to the artifact
+          #cookbook.dependencies.each do |dependency|
+            #name, requirements = dependency
+            #artifact.depends(name, requirements)
+          #end
+        #end
       end
 
       # Determine whether or not the graph has a given cookbook.
