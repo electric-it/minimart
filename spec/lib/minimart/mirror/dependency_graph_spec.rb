@@ -91,11 +91,11 @@ describe Minimart::Mirror::DependencyGraph do
         subject.add_requirement('mysql' => '= 1.0.0')
       end
 
-      it 'should return a resolved mysql version' do
+      it 'should not return a resolved mysql version' do
         expect(subject.resolved_requirements).to include ['mysql', '1.0.0']
       end
 
-      it 'should return a resolved apt version' do
+      it 'should not return a resolved apt version' do
         expect(subject.resolved_requirements).to include ['apt', '2.0.0']
       end
 
