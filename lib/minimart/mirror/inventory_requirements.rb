@@ -66,7 +66,6 @@ module Minimart
       # Build Minimart::Inventory requirements from the inventory.
       def parse_cookbooks
         raw_cookbooks.each do |name, reqs|
-          require "pry"; binding.pry
           @requirements[name] = build_requirements_for(name, (reqs || {}))
         end
       end

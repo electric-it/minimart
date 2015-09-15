@@ -35,7 +35,7 @@ module Minimart
         # if this cookbook has it's location specified, we instead return it's
         # dependencies as we don't need to resolve them elsewhere
         #explicit_location? ? cookbook.dependencies : {name => version_requirement}
-        load_dependencies? ? cookbook.dependencies : {name => version_requirement}
+        (explicit_location? && load_dependencies?) ? cookbook.dependencies : {name => version_requirement}
       end
 
       def load_dependencies?
