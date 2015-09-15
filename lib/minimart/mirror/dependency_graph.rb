@@ -59,6 +59,7 @@ module Minimart
         Solve.it!(graph, [requirement])
 
       rescue Solve::Errors::NoSolutionError => e
+        require "pry"; binding.pry
         raise Error::UnresolvedDependency, e.message
       end
 

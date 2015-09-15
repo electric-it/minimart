@@ -1,6 +1,7 @@
 module Minimart
   module Utils
     # FileHelper contains helper methods for dealing with the file system.
+    class NoCookbooksFoundError < StandardError; end
     module FileHelper
 
       # Find the first cookbook in the given path
@@ -13,6 +14,7 @@ module Minimart
       # List all of the cookbooks in a given directory
       # @param [String] path The directory to find cookbooks in
       # @return [Array<String>] An array of paths to any cookbooks found in the supplied path.
+      #raise NoCookbooksFoundError if cookbooks.empty?
       def self.find_cookbooks_in_directory(path)
         Dir.glob(File.join(path, '/*/')).select { |d| cookbook_in_path?(d) }
       end

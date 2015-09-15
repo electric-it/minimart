@@ -34,7 +34,12 @@ module Minimart
       def requirements
         # if this cookbook has it's location specified, we instead return it's
         # dependencies as we don't need to resolve them elsewhere
-        explicit_location? ? cookbook.dependencies : {name => version_requirement}
+        #explicit_location? ? cookbook.dependencies : {name => version_requirement}
+        load_dependencies? ? cookbook.dependencies : {name => version_requirement}
+      end
+
+      def load_dependencies?
+        !!ENV['LOAD_DEPENDENCIES']
       end
 
       # Download a cookbook that has it's location explicitly defined (see #explicit_location?)

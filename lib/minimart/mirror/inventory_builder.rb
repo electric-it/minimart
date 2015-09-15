@@ -40,6 +40,7 @@ module Minimart
       # precedence over information found elsewhere.
       def install_cookbooks_with_explicit_location
         inventory_requirements.each_with_explicit_location do |requirement|
+          require "pry"; binding.pry
           requirement.fetch_cookbook do |cookbook|
             validate_cookbook_against_local_store(cookbook, requirement)
             add_artifact_to_graph(cookbook)
