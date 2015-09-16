@@ -27,7 +27,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Wed, 16 Sep 2015 19:28:47 GMT
+      - Wed, 16 Sep 2015 22:07:49 GMT
       Etag:
       - W/"727ffede01d1ad3e6c87303608b87fb0"
       Server:
@@ -39,9 +39,9 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       X-Request-Id:
-      - 2ee609a6-55a6-4cca-b62c-4a95cd4976bd
+      - fcf7f2d0-4853-44a7-857b-93f8f711198e
       X-Runtime:
-      - '0.013240'
+      - '0.013294'
       X-Xss-Protection:
       - 1; mode=block
       Content-Length:
@@ -57,7 +57,7 @@ http_interactions:
         yg7vW/xLCIZFbl6bf+j/zuPvUsHPUBzTI/pEo/aOnDmOHK1jgf4FyxzWH+Za
         54Q5uroo9rBfbYwevN/fawxKiCgBAAA=
     http_version: 
-  recorded_at: Wed, 16 Sep 2015 19:28:47 GMT
+  recorded_at: Wed, 16 Sep 2015 22:07:49 GMT
 - request:
     method: get
     uri: https://supermarket.getchef.com/api/v1/cookbooks/mysql/versions/5.5.4/download
@@ -83,7 +83,7 @@ http_interactions:
       Content-Type:
       - text/html; charset=utf-8
       Date:
-      - Wed, 16 Sep 2015 19:28:47 GMT
+      - Wed, 16 Sep 2015 22:07:49 GMT
       Location:
       - https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/8173/original/mysql20141007-39112-pokv7k.tar.gz?1412718328
       Server:
@@ -95,9 +95,9 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       X-Request-Id:
-      - ca89baae-f7ce-49c0-acd7-e2903449b76a
+      - a36413b5-ece2-454c-832d-faf6418e86dc
       X-Runtime:
-      - '0.021628'
+      - '0.021164'
       X-Xss-Protection:
       - 1; mode=block
       Content-Length:
@@ -108,7 +108,7 @@ http_interactions:
       encoding: UTF-8
       string: <html><body>You are being <a href="https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/8173/original/mysql20141007-39112-pokv7k.tar.gz?1412718328">redirected</a>.</body></html>
     http_version: 
-  recorded_at: Wed, 16 Sep 2015 19:28:47 GMT
+  recorded_at: Wed, 16 Sep 2015 22:07:49 GMT
 - request:
     method: get
     uri: https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/8173/original/mysql20141007-39112-pokv7k.tar.gz?1412718328
@@ -132,11 +132,11 @@ http_interactions:
       message: OK
     headers:
       X-Amz-Id-2:
-      - OsstIU0KQCndYWqESIWuJ5wgzgrpyIa0gDneSta9AnO2QY2E3nr6P+4eFhKDttsv
+      - FL0oMYeSub8KzS17MyGD0EQEceWdYT5gqTJQ7YHItTw6DWlT3CFCGtX4d4w5qXwvbyN8/TiSbO0=
       X-Amz-Request-Id:
-      - 48EFBF9E9597CA36
+      - CDC7BFA3EB2AB2CF
       Date:
-      - Wed, 16 Sep 2015 19:28:49 GMT
+      - Wed, 16 Sep 2015 22:07:51 GMT
       Last-Modified:
       - Tue, 07 Oct 2014 21:45:30 GMT
       Etag:
@@ -646,5 +646,5 @@ http_interactions:
         Fzn2tcwh7jQQi//FDCOLe1CaSL4VE8ki/r8JA8BC/b+T5v/w3/L+h608m9X/
         d2JKLiVH0J13VrQCaPTHX8cAENcvVf9S9S+f8imf8imf3Of/A1J/xSYAjAIA
     http_version: 
-  recorded_at: Wed, 16 Sep 2015 19:28:48 GMT
+  recorded_at: Wed, 16 Sep 2015 22:07:50 GMT
 recorded_with: VCR 2.9.3
