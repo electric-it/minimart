@@ -5,18 +5,14 @@ module Minimart
     # will generate an inventory.
     class Mirror
 
-      # @return [String] The path to the inventory configuration file.
-      attr_reader :inventory_config
-
-      # @return [String] The directory to store the inventory.
-      attr_reader :inventory_directory
-
+      attr_reader :inventory_config, :inventory_directory, :load_deps
 
       # @param [Hash] opts
       # @option opts [String] :inventory_directory The directory to store the inventory.
       # @option opts [String] :inventory_config The path to the inventory configuration file.
       def initialize(opts)
         @inventory_directory = opts[:inventory_directory]
+        Minimart::Configuration.load_deps = opts[:load_deps] if opts[:load_deps]
         @inventory_config    = Minimart::Mirror::InventoryConfiguration.new(opts[:inventory_config])
       end
 

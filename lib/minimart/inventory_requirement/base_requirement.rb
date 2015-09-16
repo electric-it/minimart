@@ -5,14 +5,7 @@ module Minimart
     # BaseRequirement is a generic interface for other inventory requirements.
     class BaseRequirement
 
-      # @return [String] The name of the cookbook
-      attr_reader :name
-
-      # @return [String] The SemVer requirement for the cookbook
-      attr_reader :version_requirement
-
-      # @return [Minimart::Cookbook] The resolved cookbook
-      attr_reader :cookbook
+      attr_reader :name, :version_requirement, :cookbook
 
       # @param [String] name The name of the cookbook
       # @param [Hash] opts
@@ -43,7 +36,7 @@ module Minimart
       end
 
       def load_dependencies?
-        !!ENV['LOAD_DEPENDENCIES']
+        Minimart::Configuration.load_deps
       end
 
       # Download a cookbook that has it's location explicitly defined (see #explicit_location?)

@@ -4,14 +4,7 @@ module Minimart
     # InventoryBuilder coordinates downloading any cookbooks, and their dependencies.
     class InventoryBuilder
 
-      # @return [Minimart::Mirror::InventoryConfiguration] The user specified inventory config.
-      attr_reader :inventory_configuration
-
-      # @return [Minimart::Mirror::DependencyGraph]
-      attr_reader :graph
-
-      # @return [Minimart::Mirror::LocalStore] the local store manages the inventory directory contents
-      attr_reader :local_store
+      attr_reader :inventory_configuration, :graph, :local_store, :load_deps
 
       # @param [String] inventory_directory The directory to store the inventory.
       # @param [Minimart::Mirror::InventoryConfiguration] inventory_configuration The inventory as defined by a user of Minimart.

@@ -33,7 +33,7 @@ describe Minimart::Mirror::InventoryBuilder do
 
       it 'should not add any dependencies of the cookbook to the local store' do
         subject.build!
-        expect(subject.local_store.installed?('yum', '3.5.1')).to eq true
+        expect(subject.local_store.installed?('yum', '3.5.1')).to eq false
       end
 
       it 'should clear the git cache' do
@@ -90,7 +90,7 @@ describe Minimart::Mirror::InventoryBuilder do
 
       it 'should not add any dependencies of the cookbook to the local store' do
         subject.build!
-        expect(subject.local_store.installed?('yum', '3.5.1')).to eq true
+        expect(subject.local_store.installed?('yum', '3.5.1')).to eq false
       end
 
       it 'should store metadata about downloading the cookbook' do
@@ -144,14 +144,14 @@ describe Minimart::Mirror::InventoryBuilder do
 
         it 'should not add any resolved dependencies to the local store' do
           subject.build!
-          expect(subject.local_store.installed?('yum', '3.5.1')).to_not eq true
-          expect(subject.local_store.installed?('yum-mysql-community', '0.1.10')).to_not eq true
+          expect(subject.local_store.installed?('yum', '3.5.1')).to eq false
+          expect(subject.local_store.installed?('yum-mysql-community', '0.1.10')).to eq false
         end
 
         it 'should actually not add the dependent cookbooks to the local inventory' do
           subject.build!
-          expect(Dir.exists?(File.join(test_directory, 'yum-3.5.1'))).to_not eq true
-          expect(Dir.exists?(File.join(test_directory, 'yum-mysql-community-0.1.10'))).to_not eq true
+          expect(Dir.exists?(File.join(test_directory, 'yum-3.5.1'))).to eq false
+          expect(Dir.exists?(File.join(test_directory, 'yum-mysql-community-0.1.10'))).to eq false
         end
 
         it 'should store metadata about downloading the cookbook' do
@@ -159,7 +159,7 @@ describe Minimart::Mirror::InventoryBuilder do
           metadata = JSON.parse(File.open(File.join(test_directory, 'mysql-5.5.4', '.minimart.json')).read)
           expect(metadata).to include(
             'source_type'    => 'opscode',
-            'location'       => 'https://supermarket.chef.io/api/v1')
+            'location'       => 'https://supermarket.chef.io:443/api/v1')
         end
 
         context 'when a cookbook has already been installed' do
