@@ -30,17 +30,19 @@ describe Minimart::Cli do
     it 'should call the mirroring command with the proper options' do
       expect(Minimart::Commands::Mirror).to receive(:new).with(
         'inventory_config'    => './inventory.yml',
-        'inventory_directory' => './inventory').and_return command_double
+        'inventory_directory' => './inventory',
+        "load_deps"=>"true").and_return command_double
 
-      Minimart::Cli.start %w[mirror]
+      Minimart::Cli.start %w[mirror -l true]
     end
 
     it 'should allow users to override the default settings' do
       expect(Minimart::Commands::Mirror).to receive(:new).with(
         'inventory_config'    => './my-test.yml',
-        'inventory_directory' => './test-dir').and_return command_double
+        'inventory_directory' => './test-dir',
+        "load_deps"=>"true").and_return command_double
 
-      Minimart::Cli.start %w[mirror --inventory_config=./my-test.yml --inventory_directory=./test-dir]
+      Minimart::Cli.start %w[mirror -l true --inventory_config=./my-test.yml --inventory_directory=./test-dir]
     end
 
     context 'when an error is raised' do
@@ -51,7 +53,7 @@ describe Minimart::Cli do
       it 'should handle the error' do
         expect(Minimart::Error).to receive(:handle_exception)
 
-        Minimart::Cli.start %w[mirror --inventory_config=./my-test.yml --inventory_directory=./test-dir]
+        Minimart::Cli.start %w[mirror -l true --inventory_config=./my-test.yml --inventory_directory=./test-dir]
       end
     end
   end

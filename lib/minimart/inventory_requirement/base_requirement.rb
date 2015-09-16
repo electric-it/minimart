@@ -36,7 +36,6 @@ module Minimart
       end
 
       def load_dependencies?
-        require "pry"; binding.pry
         Minimart::Configuration.load_deps
       end
 
