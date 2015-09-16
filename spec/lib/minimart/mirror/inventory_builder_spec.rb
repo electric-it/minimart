@@ -21,11 +21,19 @@ describe Minimart::Mirror::InventoryBuilder do
         VCR.use_cassette('location_specific_cookbooks') { e.call }
       end
 
+
+      #Failure/Error: subject.build!
+      #Minimart::Error::BrokenDependency:
+      #The dependency mysql-6.1.0 could not be installed.
+      #This is because a cookbook listed in the inventory depends on a version of 'mysql'
+      #that does not match the explicit requirements for the 'mysql' cookbook.
+        # broken
       it 'should add the cookbook to the graph' do
         subject.build!
         expect(subject.graph.source_cookbook_added?('sample_cookbook', '1.2.3')).to eq true
       end
 
+        # broken
       it 'should add the cookbook to the local store' do
         subject.build!
         expect(subject.local_store.installed?('sample_cookbook', '1.2.3')).to eq true
