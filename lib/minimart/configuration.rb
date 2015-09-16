@@ -17,8 +17,8 @@ module Minimart
         @output = Minimart::Output.new(io)
       end
 
-      def load_deps= load_deps
-        @load_deps
+      def load_deps=(load_deps)
+        @load_deps = (load_deps == "true")
       end
 
       def load_deps
