@@ -20,7 +20,15 @@ module Minimart
       # @param [Minimart::Mirror::SourceCookbook] cookbook
       def add_artifact(cookbook)
         return if source_cookbook_added?(cookbook.name, cookbook.version)
-        graph.artifact(cookbook.name, cookbook.version)
+
+        graph.artifact(cookbook.name, cookbook.version).tap do |artifact|
+          if load_dependencies?
+            cookbook.dependencies.each do |dependency|
+              name, requirements = dependency
+              artifact.depends(name, requirements)
+            end
+          end
+        end
       end
 
       # Determine whether or not the graph has a given cookbook.
@@ -54,6 +62,10 @@ module Minimart
       end
 
       private
+
+      def load_dependencies?
+        Minimart::Configuration.load_deps
+      end
 
       def resolve_requirement(requirement)
         Solve.it!(graph, [requirement])

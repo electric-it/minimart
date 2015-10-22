@@ -45,9 +45,10 @@ YML
     ##
     desc 'mirror', 'Mirror cookbooks specified in an inventory file.'
     option :load_deps,
-      aliases: :l,
-      required: true,
+      type:    :boolean,
+      default: false,
       desc:     'This is the flag to allow loading dependencies when cookbooks from inventory are mirrored.'
+
     option :inventory_config,
       default: DEFAULT_INVENTORY_CONFIG,
       desc:    'The path to the Minimart config file. Minimart will create the file if it does not exist.'
