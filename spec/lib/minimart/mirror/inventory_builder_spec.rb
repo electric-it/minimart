@@ -39,16 +39,19 @@ describe Minimart::Mirror::InventoryBuilder do
         expect(subject.local_store.installed?('sample_cookbook', '1.2.3')).to eq true
       end
 
+        # broken
       it 'should not add any dependencies of the cookbook to the local store' do
         subject.build!
         expect(subject.local_store.installed?('yum', '3.5.1')).to eq false
       end
 
+        # broken
       it 'should clear the git cache' do
         expect_any_instance_of(Minimart::Download::GitCache).to receive :clear
         subject.build!
       end
 
+        # broken
       it 'should store metadata about downloading the cookbook' do
         subject.build!
         metadata = JSON.parse(File.open(File.join(test_directory, 'sample_cookbook-1.2.3', '.minimart.json')).read)
@@ -69,6 +72,7 @@ describe Minimart::Mirror::InventoryBuilder do
             'commitish' => 'SHA')
         end
 
+        # broken
         it 'should raise an error' do
           expect {
             subject.build!
