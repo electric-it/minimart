@@ -18,7 +18,7 @@ module Minimart
       end
 
       def load_deps=(load_deps)
-        @load_deps = (load_deps == "true")
+        @load_deps = load_deps
       end
 
       def load_deps
