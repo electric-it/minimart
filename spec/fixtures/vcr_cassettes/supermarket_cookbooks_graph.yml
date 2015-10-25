@@ -8,9 +8,11 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - "*/*; q=0.5, application/xml"
+      - application/json
       Accept-Encoding:
       - gzip, deflate
+      Verify-Ssl:
+      - 'true'
       User-Agent:
       - Ruby
   response:
@@ -25,9 +27,11 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 04 Dec 2014 15:23:43 GMT
+      - Wed, 16 Sep 2015 22:07:49 GMT
+      Etag:
+      - W/"727ffede01d1ad3e6c87303608b87fb0"
       Server:
-      - nginx/1.4.6 (Ubuntu)
+      - nginx/1.8.0
       Status:
       - 200 OK
       X-Content-Type-Options:
@@ -35,9 +39,9 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       X-Request-Id:
-      - 76aebda9-1ec8-4e56-ac4e-2bdcadeaf812
+      - fcf7f2d0-4853-44a7-857b-93f8f711198e
       X-Runtime:
-      - '0.015053'
+      - '0.013294'
       X-Xss-Protection:
       - 1; mode=block
       Content-Length:
@@ -53,7 +57,7 @@ http_interactions:
         yg7vW/xLCIZFbl6bf+j/zuPvUsHPUBzTI/pEo/aOnDmOHK1jgf4FyxzWH+Za
         54Q5uroo9rBfbYwevN/fawxKiCgBAAA=
     http_version: 
-  recorded_at: Thu, 04 Dec 2014 15:23:42 GMT
+  recorded_at: Wed, 16 Sep 2015 22:07:49 GMT
 - request:
     method: get
     uri: https://supermarket.getchef.com/api/v1/cookbooks/mysql/versions/5.5.4/download
@@ -65,6 +69,8 @@ http_interactions:
       - "*/*; q=0.5, application/xml"
       Accept-Encoding:
       - gzip, deflate
+      Verify-Ssl:
+      - 'true'
       User-Agent:
       - Ruby
   response:
@@ -77,11 +83,11 @@ http_interactions:
       Content-Type:
       - text/html; charset=utf-8
       Date:
-      - Thu, 04 Dec 2014 15:23:44 GMT
+      - Wed, 16 Sep 2015 22:07:49 GMT
       Location:
       - https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/8173/original/mysql20141007-39112-pokv7k.tar.gz?1412718328
       Server:
-      - nginx/1.4.6 (Ubuntu)
+      - nginx/1.8.0
       Status:
       - 302 Found
       X-Content-Type-Options:
@@ -89,9 +95,9 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       X-Request-Id:
-      - 5194bcae-b898-4e7f-8f31-173c6df13d24
+      - a36413b5-ece2-454c-832d-faf6418e86dc
       X-Runtime:
-      - '0.017186'
+      - '0.021164'
       X-Xss-Protection:
       - 1; mode=block
       Content-Length:
@@ -102,7 +108,7 @@ http_interactions:
       encoding: UTF-8
       string: <html><body>You are being <a href="https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/8173/original/mysql20141007-39112-pokv7k.tar.gz?1412718328">redirected</a>.</body></html>
     http_version: 
-  recorded_at: Thu, 04 Dec 2014 15:23:43 GMT
+  recorded_at: Wed, 16 Sep 2015 22:07:49 GMT
 - request:
     method: get
     uri: https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/8173/original/mysql20141007-39112-pokv7k.tar.gz?1412718328
@@ -114,6 +120,10 @@ http_interactions:
       - "*/*; q=0.5, application/xml"
       Accept-Encoding:
       - gzip, deflate
+      Verify-Ssl:
+      - 'true'
+      Cookie:
+      - ''
       User-Agent:
       - Ruby
   response:
@@ -122,11 +132,11 @@ http_interactions:
       message: OK
     headers:
       X-Amz-Id-2:
-      - iQt7e8FPKkK8ztpC3oZHOtrjnGyjB2FyYfZ31b6qmK0J0D13d6m5gAGsAj/iy0Uz
+      - FL0oMYeSub8KzS17MyGD0EQEceWdYT5gqTJQ7YHItTw6DWlT3CFCGtX4d4w5qXwvbyN8/TiSbO0=
       X-Amz-Request-Id:
-      - B50B5C3CE75E2AA2
+      - CDC7BFA3EB2AB2CF
       Date:
-      - Thu, 04 Dec 2014 15:23:45 GMT
+      - Wed, 16 Sep 2015 22:07:51 GMT
       Last-Modified:
       - Tue, 07 Oct 2014 21:45:30 GMT
       Etag:
@@ -636,270 +646,5 @@ http_interactions:
         Fzn2tcwh7jQQi//FDCOLe1CaSL4VE8ki/r8JA8BC/b+T5v/w3/L+h608m9X/
         d2JKLiVH0J13VrQCaPTHX8cAENcvVf9S9S+f8imf8imf3Of/A1J/xSYAjAIA
     http_version: 
-  recorded_at: Thu, 04 Dec 2014 15:23:43 GMT
-- request:
-    method: get
-    uri: https://supermarket.getchef.com/api/v1/cookbooks/yum-mysql-community/versions/0_1_10
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - "*/*; q=0.5, application/xml"
-      Accept-Encoding:
-      - gzip, deflate
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Cache-Control:
-      - max-age=0, private, must-revalidate
-      Content-Encoding:
-      - gzip
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Thu, 04 Dec 2014 15:23:45 GMT
-      Server:
-      - nginx/1.4.6 (Ubuntu)
-      Status:
-      - 200 OK
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Request-Id:
-      - 6f8e76d4-db01-417b-a5bb-23034800c8f8
-      X-Runtime:
-      - '0.009210'
-      X-Xss-Protection:
-      - 1; mode=block
-      Content-Length:
-      - '203'
-      Connection:
-      - keep-alive
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        H4sIAAAAAAAAA62QTY7CMAyFr4K8LjGFYVMJJE5SmdSUiPwRp6CCuDtGzNxg
-        Ft7Yz/7e8xO8sxyFoYNDJnvmxdqsoIFK5Uje9yfnuRf3UMH2Z7Nt4MZFXIqq
-        X5nWtB8taY9G7gtVF0fo4uR9Azaly1FLledas3SIMmUugcqFqxm5Ku1kbApI
-        2eGtxb8NwXkKyzDL1S91HKbo6qycj5d/uoa/MQS/KXBI9+gTDYoZOHMcOFrH
-        At0T1IxS97vFRj/zer0BXKhxazMBAAA=
-    http_version: 
-  recorded_at: Thu, 04 Dec 2014 15:23:44 GMT
-- request:
-    method: get
-    uri: https://supermarket.getchef.com/api/v1/cookbooks/yum-mysql-community/versions/0.1.10/download
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - "*/*; q=0.5, application/xml"
-      Accept-Encoding:
-      - gzip, deflate
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 302
-      message: Found
-    headers:
-      Cache-Control:
-      - no-cache
-      Content-Type:
-      - text/html; charset=utf-8
-      Date:
-      - Thu, 04 Dec 2014 15:23:45 GMT
-      Location:
-      - https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/7119/original/yum-mysql-community20140721-45637-imvboj.tar.gz?1405996586
-      Server:
-      - nginx/1.4.6 (Ubuntu)
-      Status:
-      - 302 Found
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Request-Id:
-      - 67307e77-4ed8-4c93-9f6c-d91f88fe7993
-      X-Runtime:
-      - '0.018253'
-      X-Xss-Protection:
-      - 1; mode=block
-      Content-Length:
-      - '218'
-      Connection:
-      - keep-alive
-    body:
-      encoding: UTF-8
-      string: <html><body>You are being <a href="https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/7119/original/yum-mysql-community20140721-45637-imvboj.tar.gz?1405996586">redirected</a>.</body></html>
-    http_version: 
-  recorded_at: Thu, 04 Dec 2014 15:23:45 GMT
-- request:
-    method: get
-    uri: https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/7119/original/yum-mysql-community20140721-45637-imvboj.tar.gz?1405996586
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - "*/*; q=0.5, application/xml"
-      Accept-Encoding:
-      - gzip, deflate
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      X-Amz-Id-2:
-      - G50Cd50n3RoY+Hs4bftAe0ljhO5Bi4SadKO52p0Cc5I0A+kQSSgHqszpMzbn+1Km
-      X-Amz-Request-Id:
-      - 9A993BEEB468DB70
-      Date:
-      - Thu, 04 Dec 2014 15:23:46 GMT
-      Last-Modified:
-      - Tue, 22 Jul 2014 02:36:28 GMT
-      Etag:
-      - '"2146585a4f415e84d32bd305ca8f017b"'
-      Accept-Ranges:
-      - bytes
-      Content-Type:
-      - application/gzip
-      Content-Length:
-      - '5435'
-      Server:
-      - AmazonS3
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        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
-    http_version: 
-  recorded_at: Thu, 04 Dec 2014 15:23:45 GMT
+  recorded_at: Wed, 16 Sep 2015 22:07:50 GMT
 recorded_with: VCR 2.9.3

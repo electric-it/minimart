@@ -17,6 +17,14 @@ module Minimart
         @output = Minimart::Output.new(io)
       end
 
+      def load_deps=(load_deps)
+        @load_deps = load_deps
+      end
+
+      def load_deps
+        @load_deps
+      end
+
       def chef_server_config=(config)
         @chef_server = config
       end

@@ -8,6 +8,8 @@ end
 
 begin; require 'pry'; rescue LoadError; end
 
+require 'dotenv'
+Dotenv.load
 require 'rspec'
 require 'vcr'
 require 'webmock/rspec'

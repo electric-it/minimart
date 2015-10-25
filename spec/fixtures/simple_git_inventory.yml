@@ -1,7 +1,7 @@
 sources:
   - "https://supermarket.getchef.com"
 cookbooks:
-  mysql:
+  sample_cookbook:
     git:
       location: spec/fixtures/sample_cookbook
       tags:
