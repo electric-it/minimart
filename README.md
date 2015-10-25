@@ -60,7 +60,7 @@ Once you are done modifying the `inventory.yml` file, you can run the `mirror` c
     $ minimart mirror
 
 By default this will not load the dependencies of the cookbooks in your
-`inventory.yml` file if you require it to also grab all the dependencies
+`inventory.yml` file. If you require it to also grab all the dependencies
 then you should use the `--load-deps` option. Warning, this may be very
 slow if you have a large inventory file.
 
