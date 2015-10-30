@@ -8,7 +8,10 @@ describe Minimart::Cli do
     Dir.chdir(test_directory)
   end
 
-  after(:each) { Dir.chdir(@pwd) }
+  after(:each) do
+    Dir.chdir(@pwd)
+    Minimart::Configuration.load_deps = false
+  end
 
   describe '#init' do
     context 'when a config file option is provided' do
