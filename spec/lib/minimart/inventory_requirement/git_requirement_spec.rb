@@ -50,7 +50,7 @@ describe Minimart::InventoryRequirement::GitRequirement do
   describe '#requirements' do
     before(:each) { requirement.fetch_cookbook }
     subject { requirement.requirements }
-    it { is_expected.to_not eq('yum' => '> 3.0.0') }
+    it { is_expected.to eq('yum' => '> 3.0.0') }
   end
 
   describe '#matching_source?' do
