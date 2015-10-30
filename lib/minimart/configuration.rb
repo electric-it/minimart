@@ -25,7 +25,7 @@ module Minimart
         if defined? @load_deps
           @load_deps
         else
-          true
+         false 
         end
       end
 
