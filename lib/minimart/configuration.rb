@@ -22,7 +22,11 @@ module Minimart
       end
 
       def load_deps
-        @load_deps
+        if defined? @load_deps
+          @load_deps
+        else
+          true
+        end
       end
 
       def chef_server_config=(config)
