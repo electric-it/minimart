@@ -27,9 +27,13 @@ module Minimart
             "Minimart cannot download #{cookbook.name} because it has an unknown location type #{cookbook.location_type}"
         end
 
-        Dir.mktmpdir do |dir|
-          send("download_#{cookbook.location_type}", dir)
-          block.call(Minimart::Cookbook.from_path(dir)) if block
+        begin
+          Dir.mktmpdir do |dir|
+            send("download_#{cookbook.location_type}", dir)
+            block.call(Minimart::Cookbook.from_path(dir)) if block
+          end
+        rescue Exception => ex
+          Configuration.output.puts_yellow %{failed to download #{cookbook.name} #{cookbook.version} with error message \"#{ex.message}\"}
         end
       end
 

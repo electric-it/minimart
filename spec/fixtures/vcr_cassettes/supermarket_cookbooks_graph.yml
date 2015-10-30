@@ -85,7 +85,7 @@ http_interactions:
       Date:
       - Wed, 16 Sep 2015 22:07:49 GMT
       Location:
-      - https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/8173/original/mysql20141007-39112-pokv7k.tar.gz?1412718328
+      - https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/8173/original/mysql20141007-39112-pokv7k.tar.gz?1412718328=true
       Server:
       - nginx/1.8.0
       Status:
@@ -106,12 +106,12 @@ http_interactions:
       - keep-alive
     body:
       encoding: UTF-8
-      string: <html><body>You are being <a href="https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/8173/original/mysql20141007-39112-pokv7k.tar.gz?1412718328">redirected</a>.</body></html>
+      string: <html><body>You are being <a href="https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/8173/original/mysql20141007-39112-pokv7k.tar.gz?1412718328=true">redirected</a>.</body></html>
     http_version: 
   recorded_at: Wed, 16 Sep 2015 22:07:49 GMT
 - request:
     method: get
-    uri: https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/8173/original/mysql20141007-39112-pokv7k.tar.gz?1412718328
+    uri: https://s3.amazonaws.com/community-files.opscode.com/cookbook_versions/tarballs/8173/original/mysql20141007-39112-pokv7k.tar.gz?1412718328=true
     body:
       encoding: US-ASCII
       string: ''
