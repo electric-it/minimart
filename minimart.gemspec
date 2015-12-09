@@ -6,7 +6,6 @@ require 'minimart/version'
 Gem::Specification.new do |spec|
   spec.name          = 'minimart'
   spec.version       = Minimart::VERSION
-  spec.version       = "#{spec.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if ENV['TRAVIS']
   spec.summary       = %q{MiniMart is a RubyGem that makes it simple to build a repository of Chef cookbooks using only static files.}
   spec.description   = %q{MiniMart is a RubyGem that makes it simple to build a repository of Chef cookbooks using only static files.}
   spec.authors       = 'MadGlory'
