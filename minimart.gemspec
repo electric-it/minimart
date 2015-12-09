@@ -17,13 +17,13 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'git', '~> 1.2.6'
+  spec.add_dependency 'git', '~> 1.2', '>= 1.2.6'
   spec.add_dependency 'minitar', '~> 0.5'
-  spec.add_dependency 'octokit', '~> 3.7.0'
+  spec.add_dependency 'octokit', '~> 3.7'
   spec.add_dependency 'redcarpet', '~> 3.2'
   spec.add_dependency 'rest-client', '~> 1.7'
   spec.add_dependency 'ridley', '~> 4.1'
-  spec.add_dependency 'solve', '~> 1.2.1'
+  spec.add_dependency 'solve', '~> 1.2', '>= 1.2.1'
   spec.add_dependency 'thor', '~> 0.19'
   spec.add_dependency 'tilt', '~> 2.0'
 
