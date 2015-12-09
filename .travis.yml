@@ -1,8 +1,8 @@
 language: ruby
+cache: bundler
 rvm:
-- 2.2.2
-- 2.1.1
-- 1.9.3
+  - 2.2.3
+  - 2.1.7
 deploy:
   provider: rubygems
   api_key:
