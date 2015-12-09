@@ -4,19 +4,18 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'minimart/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "minimart"
+  spec.name          = 'minimart'
   spec.version       = Minimart::VERSION
-  spec.authors       = %w{Bernie Durfee}
-  spec.email         = %w{minimart@cobzilla.com}
+  spec.version       = "#{spec.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if ENV['TRAVIS']
   spec.summary       = %q{MiniMart is a RubyGem that makes it simple to build a repository of Chef cookbooks using only static files.}
   spec.description   = %q{MiniMart is a RubyGem that makes it simple to build a repository of Chef cookbooks using only static files.}
   spec.homepage      = 'http://electric-it.github.io/minimart/'
   spec.license       = 'Apache License, v2.0'
 
-  spec.files         = `git ls-files -z`.split("\x0")
+  spec.files         = 'git ls-files -z'.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths = ["lib"]
+  spec.require_paths = ['lib']
 
   spec.add_dependency 'git', '~> 1.2.6'
   spec.add_dependency 'minitar', '~> 0.5'
