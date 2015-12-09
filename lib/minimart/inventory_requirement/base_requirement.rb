@@ -11,6 +11,7 @@ module Minimart
       # @param [Hash] opts
       # @option opts [String] :version_requirement The SemVer requirement for the cookbook
       def initialize(name, opts)
+        name = name.to_s unless name.is_a? String
         @name = name
         @version_requirement = opts[:version_requirement]
       end
