@@ -31,6 +31,16 @@ describe Minimart::Cookbook do
     it { is_expected.to eq 'MadGlory' }
   end
 
+  describe '#source_url' do
+    subject { cookbook.source_url }
+    it { is_expected.to eq 'https://github.com/electric-it/minimart'}
+  end
+
+  describe '#issues_url' do
+    subject { cookbook.issues_url }
+    it { is_expected.to eq 'https://github.com/electric-it/minimart/issues'}
+  end
+
   describe '#path' do
     subject { cookbook.path }
     it { is_expected.to eq Pathname.new('spec/fixtures/sample_cookbook') }

@@ -5,5 +5,7 @@ license          'All rights reserved'
 description      'Installs/Configures sample_cookbook'
 long_description 'Installs/Configures sample_cookbook'
 version          '1.2.3'
+source_url       'https://github.com/electric-it/minimart'
+issues_url       'https://github.com/electric-it/minimart/issues'
 
 depends 'yum', '> 3.0.0'

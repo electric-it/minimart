@@ -302,6 +302,12 @@ form {
   width: 100%;
   margin-top: 20px; }
 
+.detail-sidebar__halfbutton {
+  width: 49%;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
 /* Feature blocks */
 .feature-block {
   padding-top: 90px;
