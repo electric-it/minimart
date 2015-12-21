@@ -19,7 +19,7 @@ module Minimart
       new (Ridley::Chef::Cookbook.from_path(path))
     end
 
-    # @param [Ridley::Chef::Cookbok] raw_cookbook
+    # @param [Ridley::Chef::Cookbook] raw_cookbook
     def initialize(raw_cookbook)
       @raw_cookbook = raw_cookbook
     end
@@ -52,6 +52,18 @@ module Minimart
     # @return [String]
     def maintainer
       metadata.maintainer
+    end
+
+    # Get the source url of the cookbook
+    # @return [String]
+    def source_url
+      metadata.source_url
+    end
+
+    # Get the issues url of the cookbook
+    # @return [String]
+    def issues_url
+      metadata.issues_url
     end
 
     # Get the path to the cookbook on the file system
@@ -112,7 +124,9 @@ module Minimart
         url:            cookbook_path(self),
         downloaded_at:  downloaded_at,
         download_date:  download_date,
-        platforms:      normalized_platforms
+        platforms:      normalized_platforms,
+        source_url:     source_url,
+        issues_url:     issues_url
       }
     end
 

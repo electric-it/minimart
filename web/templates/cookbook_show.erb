@@ -76,6 +76,12 @@
       <dd><i class="icon-<%= platform_key %>" title="<%= description %>"></i></dd>
     <% end %>
   </dl>
+  <% unless cookbook.source_url.empty? %>
+  <a href="<%= cookbook.source_url %>" class="button detail-sidebar__halfbutton">Source</a>
+  <% end %>
+  <% unless cookbook.issues_url.empty? %>
+  <a href="<%= cookbook.issues_url %>" class="button detail-sidebar__halfbutton">Issues</a>
+  <% end %>
   <a href="<%= cookbook_download_path(cookbook) %>" class="button detail-sidebar__button">Download</a>
 </div>
 
