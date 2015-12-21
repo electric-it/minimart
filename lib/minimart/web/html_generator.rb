@@ -1,3 +1,7 @@
+require 'sprockets'
+require 'sass'
+require 'uglifier'
+
 require 'minimart/web/dashboard_generator'
 require 'minimart/web/cookbook_show_page_generator'
 
@@ -8,11 +12,7 @@ module Minimart
     class HtmlGenerator
       include Minimart::Web::TemplateHelper
 
-      # @return [String] the directory to put any generated HTML in
-      attr_reader :web_directory
-
-      # @return [Minimart::Web::Cookbooks] the set of cookbooks to generate HTML for
-      attr_reader :cookbooks
+      attr_reader :web_directory, :cookbooks
 
       # @param [Hash] opts
       # @option opts [String] :web_directory The directory to put any generated HTML in
@@ -24,15 +24,39 @@ module Minimart
 
       # Generate any HTML!
       def generate
-        copy_assets
+        generate_assets
         generate_index
         generate_cookbook_show_pages
       end
 
       private
 
+      def generate_assets
+        generate_js
+        generate_css
+        copy_assets
+      end
+
       def copy_assets
-        FileUtils.cp_r(File.join(minimart_web_directory, 'assets'), web_directory)
+        FileUtils.cp_r(compiled_asset_directory, web_directory)
+      end
+
+      def generate_js
+        js_dir = Pathname.new(compiled_asset_directory).join('javascripts')
+        FileUtils.mkdir_p(js_dir)
+        sprockets = Sprockets::Environment.new(minimart_root_directory)
+        sprockets.js_compressor = :uglify
+        sprockets.append_path(Pathname.new(raw_asset_directory).join('javascripts'))
+        sprockets['manifest.js'].write_to(js_dir.join('application.min.js'))
+      end
+
+      def generate_css
+        css_dir = Pathname.new(compiled_asset_directory).join('stylesheets')
+        FileUtils.mkdir_p(css_dir)
+        sprockets = Sprockets::Environment.new(minimart_root_directory)
+        sprockets.css_compressor = :sass
+        sprockets.append_path(Pathname.new(raw_asset_directory).join('stylesheets'))
+        sprockets['manifest.css'].write_to(css_dir.join('application.min.css'))
       end
 
       def generate_index
