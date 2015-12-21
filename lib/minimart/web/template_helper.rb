@@ -42,6 +42,14 @@ module Minimart
         File.join(Minimart.root_path, '..', 'web')
       end
 
+      def raw_asset_directory
+        File.join(minimart_web_directory, '_assets')
+      end
+
+      def compiled_asset_directory
+        File.join(minimart_web_directory, 'assets')
+      end
+
       # Get the path for a web asset (CSS, JS, etc...)
       # @param [String] resource The asset to get a path for.
       # @return [String] The path to the asset within the Minimart web directory
