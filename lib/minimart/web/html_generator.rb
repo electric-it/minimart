@@ -42,20 +42,20 @@ module Minimart
       end
 
       def generate_js
-        js_dir = compiled_asset_directory.join('javascripts')
+        js_dir = Pathname.new(compiled_asset_directory).join('javascripts')
         FileUtils.mkdir_p(js_dir)
-        sprockets = Sprockets::Environment.new(ROOT)
-        sprockets.js_compressor  = :uglify
-        sprockets.append_path(raw_asset_directory.join('javascripts'))
+        sprockets = Sprockets::Environment.new(minimart_root_directory)
+        sprockets.js_compressor = :uglify
+        sprockets.append_path(Pathname.new(raw_asset_directory).join('javascripts'))
         sprockets['manifest.js'].write_to(js_dir.join('application.min.js'))
       end
 
       def generate_css
-        css_dir = compiled_asset_directory.join('stylesheets')
+        css_dir = Pathname.new(compiled_asset_directory).join('stylesheets')
         FileUtils.mkdir_p(css_dir)
-        sprockets = Sprockets::Environment.new(ROOT)
-        sprockets.css_compressor  = :sass
-        sprockets.append_path(raw_asset_directory.join('stylesheets'))
+        sprockets = Sprockets::Environment.new(minimart_root_directory)
+        sprockets.css_compressor = :sass
+        sprockets.append_path(Pathname.new(raw_asset_directory).join('stylesheets'))
         sprockets['manifest.css'].write_to(css_dir.join('application.min.css'))
       end
 

@@ -39,7 +39,11 @@ module Minimart
 
       # @return [String] The path to the Minimart web directory
       def minimart_web_directory
-        File.join(Minimart.root_path, '..', 'web')
+        File.join(minimart_root_directory, '..', 'web')
+      end
+
+      def minimart_root_directory
+        Minimart.root_path
       end
 
       def raw_asset_directory
