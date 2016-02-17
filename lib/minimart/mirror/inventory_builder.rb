@@ -1,3 +1,4 @@
+require 'ridley'
 module Minimart
   module Mirror
 
@@ -39,7 +40,7 @@ module Minimart
               add_artifact_to_graph(cookbook)
               add_cookbook_to_local_store(cookbook.path, requirement.to_hash)
             end
-          rescue => e
+          rescue Ridley::Errors::MissingNameAttribute
             #handle Ridley::Errors::MissingNameAttribute and other cookbook specific errors by ignoring them.
             #hopefuly the next version will be valid. eg. https://git.corp.adobe.com/EchoSignCommunity/apt/blob/1.5.0/metadata.rb
             next 
