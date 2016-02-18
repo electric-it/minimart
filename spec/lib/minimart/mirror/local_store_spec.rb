@@ -61,4 +61,39 @@ describe Minimart::Mirror::LocalStore do
     end
   end
 
+  describe '#cookbook_for_requirement' do
+    let(:sample_cookbook_path) { 'spec/fixtures/sample_cookbook' }
+    it 'should return cookbook name when requirement matches existing cookbook' do
+      subject.add_cookbook_from_path(sample_cookbook_path, {
+                                                             'source_type'    => 'git',
+                                                             'location'       => 'spec/fixtures/sample_cookbook',
+                                                             'commitish_type' => 'tag',
+                                                             'commitish'      => 'v1.2.3'})
+
+      requirement = Minimart::InventoryRequirement::GitRequirement.new('sample_cookbook', {
+                                                                           :tag => 'v1.2.3',
+                                                                           :location => 'spec/fixtures/sample_cookbook',
+                                                                           :version_requirement => '1.2.3'
+                                                                                              })
+
+      expect(subject.cookbook_for_requirement(requirement)).to eq 'sample_cookbook-1.2.3'
+    end
+
+    it 'should return nil when requirement does not match any existing cookbook' do
+      subject.add_cookbook_from_path(sample_cookbook_path, {
+                                                             'source_type'    => 'git',
+                                                             'location'       => 'spec/fixtures/sample_cookbook',
+                                                             'commitish_type' => 'tag',
+                                                             'commitish'      => 'v1.2.3'})
+
+      requirement = Minimart::InventoryRequirement::GitRequirement.new('sample_cookbook', {
+                                                                                            :branch => 'feature_branch',
+                                                                                            :location => 'spec/fixtures/sample_cookbook',
+                                                                                            :version_requirement => '1.2.3'
+                                                                                        })
+
+      expect(subject.cookbook_for_requirement(requirement)).to eq nil
+    end
+  end
+
 end

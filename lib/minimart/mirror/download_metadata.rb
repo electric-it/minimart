@@ -40,6 +40,10 @@ module Minimart
         metadata[key] if metadata
       end
 
+      def has_key?(key)
+        (metadata ? metadata.has_key?(key) : false)
+      end
+
       private
 
       def parse_file

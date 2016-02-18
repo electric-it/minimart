@@ -56,9 +56,16 @@ module Minimart
       #   in the inventory.
       # @return [Boolean] Defaults to true
       def matching_source?(metadata)
-        metadata['source_type'] == 'git' &&
-          metadata['commitish_type'] == commitish_type.to_s &&
-          (metadata['commitish_type'] == 'ref' ? true : metadata['commitish'] == commitish.to_s)
+        if metadata.has_key?('metadata_version') && metadata['metadata_version'] == '2.0'
+          metadata['source_type'] == 'git' &&
+            metadata['location'] == @location &&
+            metadata['commitish_type'] == commitish_type.to_s &&
+            (metadata['commitish_type'] == 'ref' ? true : metadata['commitish'] == commitish.to_s)
+        else
+          metadata['source_type'] == 'git' &&
+            metadata['commitish_type'] == commitish_type.to_s &&
+            (metadata['commitish_type'] == 'ref' ? true : metadata['commitish'] == commitish.to_s)
+        end
       end
 
       private
