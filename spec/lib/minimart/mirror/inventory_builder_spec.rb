@@ -200,12 +200,12 @@ describe Minimart::Mirror::InventoryBuilder do
 
     context 'when a cookbook is missing name param in the metadata' do
       let(:inventory_config) do
-        Minimart::Mirror::InventoryConfiguration.new('spec/fixtures/bad_metadata_cookbook.yml')
+        Minimart::Mirror::InventoryConfiguration.new('spec/invalid/bad_metadata_cookbook.yml')
       end
 
       before(:each) do
         # stub out actually cloning the repo
-        allow_any_instance_of(Minimart::Download::GitRepository).to receive(:fetch).and_yield 'spec/fixtures/bad_metadata_cookbook'
+        allow_any_instance_of(Minimart::Download::GitRepository).to receive(:fetch).and_yield 'spec/invalid/bad_metadata_cookbook'
       end
 
       around(:each) do |e|
