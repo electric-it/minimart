@@ -1,3 +1,4 @@
+require 'ridley'
 module Minimart
   module Mirror
 
@@ -33,10 +34,16 @@ module Minimart
       # precedence over information found elsewhere.
       def install_cookbooks_with_explicit_location
         inventory_requirements.each_with_explicit_location do |requirement|
-          requirement.fetch_cookbook do |cookbook|
-            validate_cookbook_against_local_store(cookbook, requirement)
-            add_artifact_to_graph(cookbook)
-            add_cookbook_to_local_store(cookbook.path, requirement.to_hash)
+          begin
+            requirement.fetch_cookbook do |cookbook|
+              validate_cookbook_against_local_store(cookbook, requirement)
+              add_artifact_to_graph(cookbook)
+              add_cookbook_to_local_store(cookbook.path, requirement.to_hash)
+            end
+          rescue Ridley::Errors::MissingNameAttribute
+            #handle Ridley::Errors::MissingNameAttribute and other cookbook specific errors by ignoring them.
+            #hopefuly the next version will be valid. eg. https://git.corp.adobe.com/EchoSignCommunity/apt/blob/1.5.0/metadata.rb
+            next 
           end
         end
       end

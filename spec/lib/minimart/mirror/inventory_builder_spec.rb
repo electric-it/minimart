@@ -197,5 +197,26 @@ describe Minimart::Mirror::InventoryBuilder do
       end
 
     end
+
+    context 'when a cookbook is missing name param in the metadata' do
+      let(:inventory_config) do
+        Minimart::Mirror::InventoryConfiguration.new('spec/fixtures/bad_metadata_inventory.yml')
+      end
+
+      before(:each) do
+        # stub out actually cloning the repo
+        allow_any_instance_of(Minimart::Download::GitRepository).to receive(:fetch).and_yield 'spec/invalid/bad_metadata_cookbook'
+      end
+
+      around(:each) do |e|
+        VCR.use_cassette('location_specific_cookbooks') { e.call }
+      end
+
+      # broken
+      it 'should not include the cookbook in the graph' do
+        subject.build!
+        expect(subject.graph.source_cookbook_added?('bad_metadata_cookbook', '1.2.3')).to eq false
+      end
+    end
   end
 end

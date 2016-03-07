@@ -1,0 +1,10 @@
+maintainer       'MadGlory'
+maintainer_email 'YOUR_EMAIL'
+license          'All rights reserved'
+description      'Installs/Configures bad_metadata_cookbook'
+long_description 'Installs/Configures bad_metadata_cookbook'
+version          '1.2.3'
+source_url       'https://github.com/electric-it/minimart'
+issues_url       'https://github.com/electric-it/minimart/issues'
+
+depends 'yum', '> 3.0.0'

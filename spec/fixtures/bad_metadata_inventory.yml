@@ -1,0 +1,5 @@
+sources:
+  - "https://supermarket.getchef.com"
+cookbooks:
+  bad_metadata_cookbook:
+    path: spec/invalid/bad_metadata_cookbook
