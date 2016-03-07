@@ -6,3 +6,12 @@ rvm:
 notifications:
   flowdock:
     secure: s2EpKpFFZJL51GChkIM/B8CpoiAvj56aYp7iSfKcD5aZvdBRssXXt9i3t39TA/hD8NkWfM07eVbhL3tGAv2GcXhTOlXZSoljzGdzFdGROZZd4asd1pLK8VuJTQrEKPDfKp/+XsIfbfOrTFf19qhBAfk5A0TRUXVMITiMkVIo1D4=
+deploy:
+  provider: rubygems
+  api_key:
+    secure: WQnBmi+DIi18NXL+iCZZ9gV8YEEmLQ8LOQY/nZ7fnnX1ziHpUDZjneXAP7t762d6dNYib8f6Bs5n+HltAhrKiyY+t/jErmjS3DR1UV2uv+/lZgu0KwxA9WSph5LBLKDYw1R+fWf6E7nlnm4+fhhT19Qr5VaL7Wsf9ojiv+RCl9U=
+  gemspec: minimart.gemspec
+  gem: minimart
+  on:
+    tags: true
+    repo: electric-it/minimart
