@@ -1,3 +1,4 @@
+require 'ridley'
 module Minimart
   module Mirror
 

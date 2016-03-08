@@ -12,7 +12,7 @@ module Minimart
     class HtmlGenerator
       include Minimart::Web::TemplateHelper
 
-      attr_reader :web_directory, :cookbooks
+      attr_reader :web_directory, :cookbooks, :clean_cookbooks
 
       # @param [Hash] opts
       # @option opts [String] :web_directory The directory to put any generated HTML in
@@ -20,6 +20,7 @@ module Minimart
       def initialize(opts = {})
         @web_directory = opts[:web_directory]
         @cookbooks     = opts[:cookbooks]
+        @clean_cookbooks = opts.fetch(:clean_cookbooks, true)
       end
 
       # Generate any HTML!
@@ -68,7 +69,8 @@ module Minimart
       def generate_cookbook_show_pages
         CookbookShowPageGenerator.new(
           web_directory: web_directory,
-          cookbooks:     cookbooks).generate
+          cookbooks:     cookbooks,
+          clean_cookbooks: clean_cookbooks).generate
       end
 
     end

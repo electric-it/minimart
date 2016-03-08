@@ -23,10 +23,12 @@ module Minimart
       # @option opts [String] web_directory The directory to put the universe.json file in
       # @option opts [String] endpoint The base URL to use to build paths for cookbook files.
       # @option opts [Minimart::Web::Cookbooks] cookbooks The cookbooks to build a universe for
+      # @option opts [Boolean] clean_cookbooks Determines if we should clean the cookbook_files folder and recreate cookbook packages
       def initialize(opts = {})
         @web_directory = opts[:web_directory]
         @endpoint      = opts[:endpoint]
         @cookbooks     = opts[:cookbooks]
+        @clean_cookbooks = opts.fetch(:clean_cookbooks, true)
         @universe      = {}
       end
 
@@ -41,8 +43,9 @@ module Minimart
       private
 
       def clean_existing_cookbook_files
-        return unless Dir.exists?(cookbook_files_directory)
-        FileUtils.remove_entry(cookbook_files_directory)
+        if Dir.exists?(cookbook_files_directory) && @clean_cookbooks
+          FileUtils.remove_entry(cookbook_files_directory)
+        end
       end
 
       def make_cookbook_files_directory
@@ -51,8 +54,10 @@ module Minimart
 
       def create_universe
         cookbooks.individual_cookbooks.each do |cookbook|
-          make_cookbook_directory(cookbook)
-          generate_archive_file(cookbook)
+          unless Dir.exists?(archive_directory(cookbook))
+            make_cookbook_directory(cookbook)
+            generate_archive_file(cookbook)
+          end
           add_cookbook_to_universe(cookbook)
         end
       end

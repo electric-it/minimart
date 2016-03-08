@@ -10,12 +10,15 @@ module Minimart
       # @return [Minimart::Web::Cookbooks] the cookbooks to generate show pages for
       attr_reader :cookbooks
 
+      attr_reader :clean_cookbooks
+
       # @param [Hash] opts
       # @option opts [String] :web_directory The directory to put any generated HTML in
       # @option opts [String] :cookbooks The cookbooks to generate show pages for
       def initialize(opts = {})
         @web_directory = opts[:web_directory]
         @cookbooks     = opts[:cookbooks]
+        @clean_cookbooks = opts.fetch(:clean_cookbooks, true)
       end
 
       # Generate the HTML!
@@ -28,8 +31,9 @@ module Minimart
       private
 
       def clean_web_cookbooks_directory
-        return unless Dir.exists?(cookbooks_directory)
-        FileUtils.remove_entry(cookbooks_directory)
+        if Dir.exists?(cookbooks_directory) && @clean_cookbooks
+          FileUtils.remove_entry(cookbooks_directory)
+        end
       end
 
       def make_web_cookbooks_directory
@@ -39,7 +43,7 @@ module Minimart
       def create_html_files
         cookbooks.each do |cookbook_name, versions|
           versions.each do |cookbook|
-            write_to_file(file(cookbook), template_content(cookbook, versions))
+            write_to_file(file(cookbook), template_content(cookbook, versions)) unless File.exists?(file(cookbook))
           end
         end
       end
