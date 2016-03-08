@@ -87,6 +87,7 @@ YML
       desc:    'Flag to determine whether or not to generate HTML output along with the universe endpoint.'
 
     option :clean_cookbooks,
+      type: :boolean,
       default: true,
       desc: 'Flag to determine whether or not existing cookbook packages are deleted and recreated'
     # Generate a web interface to download any mirrored cookbooks.
