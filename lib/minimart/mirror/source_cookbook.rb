@@ -51,6 +51,9 @@ module Minimart
       # @return [Hash]
       def to_hash
         {
+          metadata_version: '2.0',
+          name: @name,
+          version: @version,
           source_type: location_type,
           location:    location_path
         }

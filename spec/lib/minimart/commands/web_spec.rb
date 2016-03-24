@@ -44,6 +44,7 @@ describe Minimart::Commands::Web do
       expect(Minimart::Web::UniverseGenerator).to receive(:new).with(
         web_directory: subject.web_directory,
         endpoint: subject.web_endpoint,
+        clean_cookbooks: true,
         cookbooks: an_instance_of(Minimart::Web::Cookbooks)).and_return generator_double
 
       subject.execute!
@@ -52,7 +53,8 @@ describe Minimart::Commands::Web do
     it 'should generate the static HTML files' do
       expect(Minimart::Web::HtmlGenerator).to receive(:new).with(
         web_directory: subject.web_directory,
-        cookbooks: an_instance_of(Minimart::Web::Cookbooks)).and_return generator_double
+        cookbooks: an_instance_of(Minimart::Web::Cookbooks),
+        clean_cookbooks: true).and_return generator_double
 
       subject.execute!
     end

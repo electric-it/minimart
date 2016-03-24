@@ -35,6 +35,12 @@ module Minimart
       def install_cookbooks_with_explicit_location
         inventory_requirements.each_with_explicit_location do |requirement|
           begin
+            requirement_cookbook = local_store.cookbook_for_requirement(requirement)
+            if requirement_cookbook
+              Configuration.output.puts_yellow("cookbook already installed: #{requirement_cookbook}.")
+              next
+            end
+            
             requirement.fetch_cookbook do |cookbook|
               validate_cookbook_against_local_store(cookbook, requirement)
               add_artifact_to_graph(cookbook)

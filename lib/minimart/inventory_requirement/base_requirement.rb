@@ -60,7 +60,10 @@ module Minimart
       # Convert the requirement to a Hash.
       # @return [Hash]
       def to_hash
-        {}
+        {
+            :metadata_version => '2.0', #metadata document version.
+            :name => @name
+        }
       end
 
       # Determine if a cookbook in the inventory has metadata matching this requirement
@@ -68,7 +71,12 @@ module Minimart
       #   in the inventory.
       # @return [Boolean] Defaults to true
       def matching_source?(metadata)
-        return true
+        if metadata.has_key?('metadata_version') && metadata['metadata_version'] == '2.0'
+          metadata['name'] == @name &&
+            metadata['version'] == @version_requirement
+        else
+          true
+        end
       end
 
       private

@@ -17,17 +17,21 @@ module Minimart
       # @return [Boolean] Determine whether or not to generate HTML output
       attr_reader :can_generate_html
 
+      # @return [Boolean] Determine whether or not to clean the cookbook_files folder and recreate
+      attr_reader :clean_cookbooks
 
       # @param [Hash] opts
       # @option opts [String] :inventory_directory The directory that the inventory is stored in.
       # @option opts [String] :web_directory The directory to store the web output.
       # @option opts [String] :host The web endpoint where Minimart will be hosted.
       # @option opts [Boolean] :can_generate_html Determine whether or not to generate HTML output
+      # @option opts [Boolean] :clean_cookbooks Determine whether or not to clean the cookbook_files folder and recreate
       def initialize(opts = {})
         @inventory_directory = File.expand_path(opts[:inventory_directory])
         @web_directory       = File.expand_path(opts[:web_directory])
         @web_endpoint        = opts[:host]
         @can_generate_html   = opts.fetch(:html, true)
+        @clean_cookbooks     = opts.fetch(:clean_cookbooks, true)
       end
 
       # Generate the web output.
@@ -52,7 +56,9 @@ module Minimart
         generator = Minimart::Web::UniverseGenerator.new(
           web_directory: web_directory,
           endpoint:      web_endpoint,
-          cookbooks:     cookbooks)
+          cookbooks:     cookbooks,
+          clean_cookbooks: clean_cookbooks
+        )
 
         generator.generate
       end
@@ -64,7 +70,9 @@ module Minimart
 
         generator = Minimart::Web::HtmlGenerator.new(
           web_directory: web_directory,
-          cookbooks:     cookbooks)
+          cookbooks:     cookbooks,
+          clean_cookbooks: clean_cookbooks
+        )
 
         generator.generate
       end

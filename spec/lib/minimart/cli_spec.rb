@@ -69,7 +69,8 @@ describe Minimart::Cli do
         'web_directory'       => './web',
         'inventory_directory' => './inventory',
         'host'                => 'http://example.com',
-        'html'                => true).and_return command_double
+        'html'                => true,
+        'clean_cookbooks'     => true).and_return command_double
 
       Minimart::Cli.start %w[web --host=http://example.com]
     end
@@ -79,7 +80,8 @@ describe Minimart::Cli do
         'web_directory'       => './my-web',
         'inventory_directory' => './my-inventory',
         'host'                => 'http://example.com',
-        'html'                => false).and_return command_double
+        'html'                => false,
+        'clean_cookbooks'     => true).and_return command_double
 
       Minimart::Cli.start %w[
         web

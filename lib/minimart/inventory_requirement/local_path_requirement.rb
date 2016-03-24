@@ -25,12 +25,18 @@ module Minimart
       # @return [Hash]
       def to_hash
         result = super
+        result[:path] = @path
         result[:source_type] = :local_path
         result
       end
 
       def matching_source?(metadata)
-        metadata['source_type'] == 'local_path'
+        if metadata.has_key?('metadata_version') && metadata['metadata_version'] == '2.0'
+          metadata['source_type'] == 'local_path' &&
+            metadata['path'] == @path
+        else
+          metadata['source_type'] == 'local_path'
+        end
       end
 
       private
