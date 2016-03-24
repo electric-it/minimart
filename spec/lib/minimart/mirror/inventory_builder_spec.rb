@@ -57,16 +57,12 @@ describe Minimart::Mirror::InventoryBuilder do
       end
 
       context 'when the same cookbook is present in the local store with a different source' do
-        before(:each) do
-          subject.build!
-          allow_any_instance_of(Minimart::Cookbook).to receive(:download_metadata).and_return(
-            'source_type' => 'git',
-            'location' => 'spec/fixtures/sample_cookbook',
-            'commitish_type' => 'ref',
-            'commitish' => 'SHA')
+        let(:inventory_config) do
+          Minimart::Mirror::InventoryConfiguration.new('spec/fixtures/bad_git_inventory.yml')
         end
 
-        # broken
+        # Will fail due to multiple cookbooks with same version coming
+        # from different Git locations
         it 'should raise an error' do
           expect {
             subject.build!

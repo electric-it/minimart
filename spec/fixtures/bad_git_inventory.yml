@@ -1,0 +1,9 @@
+sources:
+  - "https://supermarket.getchef.com"
+cookbooks:
+  sample_cookbook:
+    git:
+      location: spec/fixtures/sample_cookbook
+      tags:
+        - v1.2.3
+        - v2.3.4
