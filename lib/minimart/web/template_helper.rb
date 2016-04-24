@@ -27,7 +27,7 @@ module Minimart
       # @param [String] template_name The name of the template to build
       # @return [Tilt::ERBTemplate]
       def template(template_name)
-        Tilt::ERBTemplate.new(template_file(template_name))
+        Tilt::ERBTemplate.new(template_file(template_name), :default_encoding => 'utf-8')
       end
 
       # The path to a given template file
