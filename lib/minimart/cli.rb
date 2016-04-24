@@ -3,6 +3,7 @@ require 'thor'
 require 'minimart'
 require 'minimart/commands/mirror'
 require 'minimart/commands/web'
+require 'minimart/version'
 
 module Minimart
   # The command line interface for Minimart.
@@ -12,6 +13,14 @@ module Minimart
     DEFAULT_INVENTORY_CONFIG    = './inventory.yml'
     DEFAULT_INVENTORY_DIRECTORY = './inventory'
     DEFAULT_WEB_DIRECTORY       = './web'
+
+    ##
+    # Version
+    ##
+    desc 'version', 'Display Minimart version.'
+    def version
+      puts Minimart::VERSION
+    end
 
     ##
     # Init

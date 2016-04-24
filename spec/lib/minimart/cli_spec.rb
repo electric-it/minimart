@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'minimart/cli'
+require 'minimart/version'
 
 describe Minimart::Cli do
 
@@ -24,6 +25,12 @@ describe Minimart::Cli do
     it 'should create the default inventory file' do
       Minimart::Cli.start %w[init]
       expect(File.exists?('./inventory.yml')).to eq true
+    end
+  end
+
+  describe '#version' do
+    it 'should display the current version' do
+      expect{Minimart::Cli.start %w[version]}.to output("#{Minimart::VERSION}\n").to_stdout
     end
   end
 
