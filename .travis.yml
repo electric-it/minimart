@@ -1,8 +1,12 @@
 language: ruby
 cache: bundler
 rvm:
+  - 2.3.1
   - 2.2.3
   - 2.1.7
+script:
+  - bundle exec rake
+  - bundle exec rake install
 notifications:
   flowdock:
     secure: s2EpKpFFZJL51GChkIM/B8CpoiAvj56aYp7iSfKcD5aZvdBRssXXt9i3t39TA/hD8NkWfM07eVbhL3tGAv2GcXhTOlXZSoljzGdzFdGROZZd4asd1pLK8VuJTQrEKPDfKp/+XsIfbfOrTFf19qhBAfk5A0TRUXVMITiMkVIo1D4=
