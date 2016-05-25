@@ -59,6 +59,8 @@ Once you are done modifying the `inventory.yml` file, you can run the `mirror` c
 
     $ minimart mirror
 
+- NOTE: The ExecJS Gem requires a Javascript runtime to be installed before running this command. See https://github.com/rails/execjs for runtimes that can be used.
+
 By default this will not load the dependencies of the cookbooks in your
 `inventory.yml` file. If you require it to also grab all the dependencies
 then you should use the `--load-deps` option. Warning, this may be very
