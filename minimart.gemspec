@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{MiniMart is a RubyGem that makes it simple to build a repository of Chef cookbooks using only static files.}
   spec.authors       = ['MadGlory', 'Todd Pickell', 'Others']
   spec.homepage      = 'http://electric-it.github.io/minimart/'
-  spec.license       = 'Apache License, v2.0'
+  spec.license       = 'Apache-2.0'
 
   spec.required_ruby_version = '>= 2.2'
 
